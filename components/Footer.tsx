@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer>
       <div className="risk-disc">
-        ⚠️ RISK DISCLAIMER: Trading financial products on margin involves a
+        <span className="risk-disc-title">⚠️ RISK DISCLAIMER:</span> Trading financial products on margin involves a
         significant level of risk and may not be suitable for all investors.
         It&apos;s important to note that losses can exceed the initial investment.
         Therefore, it&apos;s crucial to fully comprehend the risks involved and take

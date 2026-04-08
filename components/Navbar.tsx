@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { PANEL_URL, PANEL_URL_REGISTER } from "@/lib/constants";
 import logo from "./logo.svg";
 
@@ -10,6 +11,8 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [introPhase, setIntroPhase] = useState<"enter" | "move" | "done">("enter");
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   const logoRef = useRef<HTMLDivElement | null>(null);
   const [introTransform, setIntroTransform] = useState({ dx: 0, dy: 0, scale: 1 });
@@ -22,6 +25,11 @@ export function Navbar() {
   }, [introPhase, scrolled]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  // Helper for anchor links - goes to home page if not on home page
+  const anchorHref = useCallback((anchor: string) => {
+    return isHomePage ? anchor : `/${anchor}`;
+  }, [isHomePage]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -131,33 +139,43 @@ export function Navbar() {
         </button>
         <ul className={`nav-links${menuOpen ? " active" : ""}`}>
         <li>
-          <a href="#why" onClick={closeMenu}>
+          <Link href={anchorHref("#why")} onClick={closeMenu}>
             Why Us
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#accounts" onClick={closeMenu}>
+          <Link href={anchorHref("#accounts")} onClick={closeMenu}>
             Accounts
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#market" onClick={closeMenu}>
+          <Link href={anchorHref("#market")} onClick={closeMenu}>
             Market
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#instruments" onClick={closeMenu}>
+          <Link href={anchorHref("#instruments")} onClick={closeMenu}>
             Trading
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#contact" onClick={closeMenu}>
+          <Link href={anchorHref("#contact")} onClick={closeMenu}>
             Contact
-          </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/education" onClick={closeMenu}>
+            Education
+          </Link>
         </li>
         <li>
           <Link href="/career" onClick={closeMenu}>
             Careers
+          </Link>
+        </li>
+        <li>
+          <Link href="/downloads" onClick={closeMenu}>
+            Downloads
           </Link>
         </li>
         <li className="mobile-only-cta">
