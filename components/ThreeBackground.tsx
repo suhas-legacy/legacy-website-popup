@@ -43,7 +43,7 @@ export function ThreeBackground() {
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
     camera.position.z = 5;
 
-    const symbols = ["€", "$", "₹", "₽", "£", "¥"];
+    const symbols = ["€", "$", "₿", "₽", "£", "¥"];
     const symbolPoints: THREE.Points[] = [];
     const symbolGeos: THREE.BufferGeometry[] = [];
     const symbolMats: THREE.PointsMaterial[] = [];

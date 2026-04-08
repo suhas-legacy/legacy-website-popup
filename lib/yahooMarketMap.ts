@@ -20,9 +20,9 @@ export const YAHOO_SYMBOL_BY_ID: Record<MarketId, string> = {
   ger30: "^GDAXI",
   fra40: "^FCHI",
   us30: "^DJI",
-  gold: "XAUUSD=X",
+  gold: "GC=F",        // COMEX Gold Futures
   eurusd: "EURUSD=X",
-  silver: "XAGUSD=X",
+  silver: "SI=F",      // COMEX Silver Futures
   spx: "^GSPC",
   btc: "BTC-USD",
 };

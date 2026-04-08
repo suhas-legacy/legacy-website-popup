@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Ticker } from "@/components/Ticker";
 import { PANEL_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -9,15 +10,17 @@ export const metadata: Metadata = {
 
 export default function CareerPage() {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#000",
-        color: "#fff",
-        padding: "6rem 2rem 4rem",
-        fontFamily: "var(--font-syne), sans-serif",
-      }}
-    >
+    <>
+      <Ticker />
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#000",
+          color: "#fff",
+          padding: "6rem 2rem 4rem",
+          fontFamily: "var(--font-syne), sans-serif",
+        }}
+      >
       <Link
         href="/"
         style={{
@@ -69,5 +72,6 @@ export default function CareerPage() {
         Client portal
       </a>
     </div>
+    </>
   );
 }
