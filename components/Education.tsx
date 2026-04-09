@@ -24,9 +24,11 @@ const instruments = [
   { symbol: "OANDA:USDJPY", name: "USD/JPY", price: 149.500, type: "forex" },
   { symbol: "OANDA:AUDUSD", name: "AUD/USD", price: 0.65800, type: "forex" },
   { symbol: "OANDA:USDCAD", name: "USD/CAD", price: 1.35200, type: "forex" },
-  { symbol: "OANDA:XAUUSD", name: "Gold", price: 4783.0, type: "metal" },
-  { symbol: "OANDA:XAGUSD", name: "Silver", price: 28.50, type: "metal" },
-  { symbol: "CAPITALCOM:USOIL", name: "US Oil", price: 74.500, type: "commodity" },
+  { symbol: "OANDA:USDCHF", name: "USD/CHF", price: 0.92400, type: "forex" },
+  { symbol: "OANDA:XAUUSD", name: "XAUUSD", price: 2650.0, type: "metal" },
+  { symbol: "OANDA:XAGUSD", name: "XAGUSD", price: 28.50, type: "metal" },
+  { symbol: "CAPITALCOM:USOIL", name: "USOIL", price: 74.500, type: "commodity" },
+  { symbol: "CAPITALCOM:UKOIL", name: "UKOIL", price: 78.200, type: "commodity" },
 ];
 
 // Fetch live prices from local API
@@ -139,28 +141,28 @@ function MarginCalculator({ initialLotType = "micro", initialInstrument, compact
 
   return (
     <div className="margin-calculator">
-      {/* Explanation Cards */}
-      <div className="explanation-cards">
-        <div className="explanation-card">
-          <div className="exp-icon">⚡</div>
-          <h4>What is Leverage?</h4>
-          <p>Leverage allows you to control a large position with a small amount of capital. With 1:100 leverage, you control $100,000 with just $1,000 margin.</p>
+      {/* Explanation Cards - Hidden in compact mode */}
+      {!compact && (
+        <div className="explanation-cards">
+          <div className="explanation-card">
+            <div className="exp-icon">⚡</div>
+            <h4>What is Leverage?</h4>
+            <p>Leverage allows you to control a large position with a small amount of capital. With 1:100 leverage, you control $100,000 with just $1,000 margin.</p>
+          </div>
+          <div className="explanation-card">
+            <div className="exp-icon">💰</div>
+            <h4>What is Margin?</h4>
+            <p>Margin is the required deposit to open and maintain a leveraged position. It acts as collateral for the borrowed funds.</p>
+          </div>
+          <div className="explanation-card">
+            <div className="exp-icon">📏</div>
+            <h4>Lot Size Impact</h4>
+            <p>Larger lot sizes increase both your position value and required margin proportionally. Always calculate risk before trading.</p>
+          </div>
         </div>
-        <div className="explanation-card">
-          <div className="exp-icon">💰</div>
-          <h4>What is Margin?</h4>
-          <p>Margin is the required deposit to open and maintain a leveraged position. It acts as collateral for the borrowed funds.</p>
-        </div>
-        <div className="explanation-card">
-          <div className="exp-icon">📏</div>
-          <h4>Lot Size Impact</h4>
-          <p>Larger lot sizes increase both your position value and required margin proportionally. Always calculate risk before trading.</p>
-        </div>
-      </div>
+      )}
 
-
-
-            {/* Formula Display */}
+      {/* Formula Display */}
       <div className="formula-display">
         <div className="formula-card-compact">
           <h5>Formula</h5>
@@ -495,6 +497,10 @@ const educationSections = [
         { pair: "USD/JPY", base: "US Dollar", quote: "Japanese Yen" },
         { pair: "GBP/USD", base: "British Pound", quote: "US Dollar" },
         { pair: "USD/CHF", base: "US Dollar", quote: "Swiss Franc" },
+        { pair: "XAUUSD", base: "Gold", quote: "USD" },
+        { pair: "XAGUSD", base: "Silver", quote: "USD" },
+        { pair: "UKOIL", base: "UK Oil", quote: "USD" },
+        { pair: "USOIL", base: "US Oil", quote: "USD" },
       ],
     },
   },
@@ -573,6 +579,10 @@ export function Education() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalLotType, setModalLotType] = useState<"micro" | "mini" | "standard">("micro");
   const [modalInstrument, setModalInstrument] = useState<typeof instruments[0] | undefined>(undefined);
+  
+  // Search and filter state for currency pairs
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState<"all" | "forex" | "metals" | "commodities" | "indices">("all");
 
   const activeSection = educationSections.find((s) => s.id === activeTab);
 
@@ -653,21 +663,65 @@ export function Education() {
               </div>
             )}
 
-            {/* Currency Pairs - Center-Focus Carousel */}
+            {/* Currency Pairs - Center-Focus Carousel with Search & Filters */}
             {activeSection.id === "currency-pairs" && (
-              <CenterCarousel
-                items={activeSection.content.pairs || []}
-                onItemClick={(item) => {
-                  // Find matching instrument from the instruments array
-                  const matchingInstrument = instruments.find(
-                    (inst) => inst.name === item.pair
-                  );
-                  // Open margin calculator modal with selected currency pair
-                  setModalLotType("standard");
-                  setModalInstrument(matchingInstrument);
-                  setIsModalOpen(true);
-                }}
-              />
+              <div className="pairs-section">
+                {/* Search & Filters */}
+                <div className="pairs-controls">
+                  <div className="search-box">
+                    <input
+                      type="text"
+                      placeholder="Search pairs..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="search-input"
+                    />
+                  </div>
+                  <div className="filter-tabs">
+                    {["all", "forex", "metals", "commodities", "indices"].map((filter) => (
+                      <button
+                        key={filter}
+                        className={`filter-tab ${activeFilter === filter ? "active" : ""}`}
+                        onClick={() => setActiveFilter(filter as typeof activeFilter)}
+                      >
+                        {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Filtered Carousel */}
+                <CenterCarousel
+                  items={(activeSection.content.pairs || []).filter((item) => {
+                    // Search filter
+                    const matchesSearch = item.pair.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                         item.base.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                         item.quote.toLowerCase().includes(searchQuery.toLowerCase());
+                    
+                    // Category filter - map pair to instrument type
+                    const instrument = instruments.find((inst) => inst.name === item.pair);
+                    const type = instrument?.type || "forex";
+                    
+                    const matchesFilter = activeFilter === "all" || 
+                                         (activeFilter === "forex" && type === "forex") ||
+                                         (activeFilter === "metals" && type === "metal") ||
+                                         (activeFilter === "commodities" && type === "commodity") ||
+                                         (activeFilter === "indices" && type === "index");
+                    
+                    return matchesSearch && matchesFilter;
+                  })}
+                  onItemClick={(item) => {
+                    // Find matching instrument from the instruments array
+                    const matchingInstrument = instruments.find(
+                      (inst) => inst.name === item.pair
+                    );
+                    // Open margin calculator modal with selected currency pair
+                    setModalLotType("standard");
+                    setModalInstrument(matchingInstrument);
+                    setIsModalOpen(true);
+                  }}
+                />
+              </div>
             )}
 
             {/* PIPs and Spreads - Calculator Style */}
