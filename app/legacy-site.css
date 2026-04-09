@@ -249,8 +249,6 @@ nav.intro-running .nav-logo {
   line-height: 0.95;
   letter-spacing: 0.03em;
   margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.7s ease forwards;
 }
 .hero-h1 .gold-line {
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--amber), var(--gold));
@@ -258,7 +256,20 @@ nav.intro-running .nav-logo {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 3s infinite linear;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation:
+    shimmer 3s infinite linear,
+    typingLoop 6s ease-in-out infinite;
+  animation-delay: 1.2s, 1.2s;
+}
+
+@keyframes typingLoop {
+  0%, 10% { width: 0; }
+  40%, 60% { width: 100%; }
+  90%, 100% { width: 0; }
 }
 @keyframes shimmer { from{background-position:0%} to{background-position:200%} }
 .hero-sub {
@@ -331,6 +342,60 @@ nav.intro-running .nav-logo {
 @keyframes fadeUp {
   from { opacity:0; transform: translateY(30px); }
   to   { opacity:1; transform: translateY(0); }
+}
+
+/* Hero word directional animations */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+}
+
+.hero-word-build {
+  animation: slideFromLeft 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.3s;
+}
+
+.hero-word-your {
+  animation: slideFromTop 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.5s;
+}
+
+.hero-word-legacy {
+  animation: slideFromRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.7s;
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* SECTIONS COMMON */

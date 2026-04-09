@@ -32,7 +32,9 @@ export function Hero() {
       <div className="hero-overlay" />
       <div className="hero-content">
         <h1 className="hero-h1">
-          Build Your Legacy.
+          <span className="hero-word hero-word-build">Build</span>{" "}
+          <span className="hero-word hero-word-your">Your</span>{" "}
+          <span className="hero-word hero-word-legacy">Legacy.</span>
           <br />
           <span className="gold-line">One Trade at a Time.</span>
         </h1>
