@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ThreeBackground } from "./ThreeBackground";
 
 function useCountUp(end: number, durationMs: number, startWhen = true) {
@@ -23,7 +23,7 @@ function useCountUp(end: number, durationMs: number, startWhen = true) {
   return val;
 }
 
-export function Hero() {
+export const Hero = React.memo(function Hero() {
   const traders = useCountUp(10000, 2200);
 
   return (
@@ -72,4 +72,4 @@ export function Hero() {
       </div>
     </section>
   );
-}
+});

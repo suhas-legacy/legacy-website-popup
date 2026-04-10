@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { MailService } from "./mail.service"; // Import the mail service
+
 const SYSTEM_PROMPT = `You are Nithya, the official, warm and professional voice of Legacy Global Bank. Your name is always "Nithya" and you represent Legacy Global Bank with elegance, care, and excellence.
 
 === INITIAL GREETING (MUST FOLLOW STRICTLY) ===
@@ -71,31 +73,11 @@ Follow this exact sequence:
 - Never reveal the contact number or email outside of the completed workflow.
 - Stay elegant, helpful, and professional at all times.`;
 
-// A simple helper for retrying
-const fetchWithRetry = async (ai: GoogleGenAI, prompt: string, retries = 3) => {
-  for (let i = 0; i < retries; i++) {
-    try {
-      return await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-      });
-    } catch (error: any) {
-      if (error.status === 503 && i < retries - 1) {
-        const wait = Math.pow(2, i) * 1000;
-        await new Promise(resolve => setTimeout(resolve, wait));
-        continue;
-      }
-      throw error;
-    }
-  }
-};
-
 export async function POST(request: NextRequest) {
   try {
     const { messages, workflowStage, userData } = await request.json();
 
     const apiKey = process.env.GEMINI_API_KEY;
-
     if (!apiKey) {
       return NextResponse.json(
         { error: "Gemini API key not configured" },
@@ -105,22 +87,57 @@ export async function POST(request: NextRequest) {
 
     const ai = new GoogleGenAI({ apiKey });
 
-    // Build conversation content for Gemini
-    const conversationHistory = messages.map((msg: any) => 
-      `${msg.sender === "user" ? "User" : "Nithya"}: ${msg.content}`
-    ).join("\n\n");
+    // ✅ FIX 1: Use correct, fast model name
+    const model = "gemini-2.5-flash-lite";
 
-    const prompt = `${SYSTEM_PROMPT}\n\nCurrent workflow stage: ${workflowStage}\nUser data collected: ${JSON.stringify(userData)}\n\nConversation history:\n${conversationHistory}\n\nUser's latest message: ${messages[messages.length - 1]?.content || ""}`;
+    // ✅ FIX 2: Build proper multi-turn contents array for Gemini
+    // This is much faster than dumping everything into one giant string prompt
+    const contents = messages.map((msg: any) => ({
+      role: msg.sender === "user" ? "user" : "model",
+      parts: [{ text: msg.content }],
+    }));
 
-    const response = await fetchWithRetry(ai, prompt);
+    // Append context about workflow state to the last user message
+    if (contents.length > 0 && contents[contents.length - 1].role === "user") {
+      const contextNote = workflowStage !== "none"
+        ? `\n\n[System context: Current workflow stage = "${workflowStage}", collected data = ${JSON.stringify(userData)}]`
+        : "";
+      if (contextNote) {
+        contents[contents.length - 1].parts[0].text += contextNote;
+      }
+    }
 
-    const reply = response?.text || "I apologize, but I couldn't generate a response. Please try again.";
+    const response = await ai.models.generateContent({
+      model,
+      contents,
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+        // ✅ FIX 3: Limit output tokens for faster responses
+        maxOutputTokens: 500,
+        temperature: 0.7,
+      },
+    });
+
+    const reply =
+      response?.text ||
+      "I apologize, but I couldn't generate a response. Please try again.";
+
+    // Check if workflow is completed and send emails
+    if (workflowStage === "completed" && userData && userData.name && userData.phone && userData.city) {
+      try {
+        await MailService.sendContactEmails(userData);
+        console.log('Contact emails sent successfully from chat workflow');
+      } catch (emailError) {
+        console.error('Failed to send contact emails:', emailError);
+        // Don't fail the response, just log the error
+      }
+    }
 
     return NextResponse.json({ reply });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Chat API error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: error?.message },
       { status: 500 }
     );
   }

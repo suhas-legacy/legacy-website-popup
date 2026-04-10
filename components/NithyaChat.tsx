@@ -9,7 +9,7 @@ interface Message {
   timestamp: Date;
 }
 
-type WorkflowStage = "none" | "name" | "phone" | "email" | "city" | "completed";
+type WorkflowStage = "none" | "name" | "phone" | "email" | "city" | "completed" | "deal-name" | "deal-phone" | "deal-email" | "deal-city";
 
 export default function NithyaChat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -17,6 +17,7 @@ export default function NithyaChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [workflowStage, setWorkflowStage] = useState<WorkflowStage>("none");
   const [userData, setUserData] = useState({ name: "", phone: "", email: "", city: "" });
+  const [dealMessage, setDealMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -61,6 +62,12 @@ export default function NithyaChat() {
     addNithyaMessage("I'd be happy to connect you with our team. May I know your full name please?");
   };
 
+  const triggerDealWorkflow = (originalMessage: string) => {
+    setDealMessage(originalMessage);
+    setWorkflowStage("deal-name");
+    addNithyaMessage("I'd be happy to help you with our exclusive deals! To get started, may I know your full name please?");
+  };
+
   const processWorkflowInput = (userInput: string) => {
     const trimmedInput = userInput.trim().toLowerCase();
     switch (workflowStage) {
@@ -80,10 +87,93 @@ export default function NithyaChat() {
         addNithyaMessage("Thank you. Lastly, which city are you based in?");
         break;
       case "city":
-        setUserData((prev) => ({ ...prev, city: userInput.trim() }));
+        const finalUserData = { ...userData, city: userInput.trim() };
+        setUserData(finalUserData);
         setWorkflowStage("completed");
         addNithyaMessage(`Thank you so much, ${userData.name}.\nOur dedicated team will get back to you shortly.\n\nYou can reach us directly at:\n📞 +91 91484 26795\n✉️ contact@legacyglobalbank.com\n\nIs there anything else I can help you with today?`);
+        sendContactEmails(finalUserData);
         break;
+      // Deal workflow stages
+      case "deal-name":
+        setUserData((prev) => ({ ...prev, name: userInput.trim() }));
+        setWorkflowStage("deal-phone");
+        addNithyaMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
+        break;
+      case "deal-phone":
+        setUserData((prev) => ({ ...prev, phone: userInput.trim() }));
+        setWorkflowStage("deal-email");
+        addNithyaMessage("Got it, thank you. May I have your email address?");
+        break;
+      case "deal-email":
+        setUserData((prev) => ({ ...prev, email: userInput.trim() }));
+        setWorkflowStage("deal-city");
+        addNithyaMessage("Thank you. Lastly, which city are you based in?");
+        break;
+      case "deal-city":
+        setUserData((prev) => ({ ...prev, city: userInput.trim() }));
+        submitDealInquiry();
+        break;
+    }
+  };
+
+  const sendContactEmails = async (userData: any) => {
+  try {
+    const response = await fetch("http://localhost:3001/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: userData.name,
+        email: userData.email || '',
+        phone: userData.phone,
+        account: 'Chat Support Request',
+        message: `User requested contact through chat workflow.\nCity: ${userData.city}\nPrevious messages: Available in chat logs`
+      }),
+    });
+
+    if (response.ok) {
+      console.log('Contact emails sent successfully from chat workflow');
+    } else {
+      console.error('Failed to send contact emails');
+    }
+  } catch (error) {
+    console.error('Error sending contact emails:', error);
+  }
+};
+
+const submitDealInquiry = async () => {
+    try {
+      setIsLoading(true);
+      
+      const response = await fetch("/api/chat-deal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: userData.name,
+          phone: userData.phone,
+          email: userData.email,
+          city: userData.city,
+          message: dealMessage,
+          subject: "Deal Inquiry from Nithya Chatbot"
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        addNithyaMessage(`Thank you ${userData.name}! \u2709\ufe0f Your deal inquiry has been sent to our team.\nYou will also receive a confirmation email shortly.`);
+        
+        // Reset workflow and data
+        setWorkflowStage("none");
+        setUserData({ name: "", phone: "", email: "", city: "" });
+        setDealMessage("");
+      } else {
+        addNithyaMessage("I apologize, but there was an issue submitting your deal inquiry. Please try again or contact our support team directly.");
+      }
+    } catch (error) {
+      console.error("Error submitting deal inquiry:", error);
+      addNithyaMessage("I apologize, but I'm having trouble connecting right now. Please try again in a moment or contact our support team.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -92,13 +182,30 @@ export default function NithyaChat() {
     return keywords.some((k) => input.toLowerCase().includes(k));
   };
 
+  const shouldTriggerDealWorkflow = (input: string): boolean => {
+    const keywords = ["deal","offers","promotion","special offer","discount","interest rate","loan offer","investment deal","trading deal","account deal"];
+    return keywords.some((k) => input.toLowerCase().includes(k));
+  };
+
   const getAIResponse = async (userInput: string): Promise<string> => {
     try {
       setIsLoading(true);
+      
+      // ✅ FIX: Include the new user message in the payload directly,
+      // because setMessages is async and won't be reflected in `messages` yet
+      const updatedMessages = [
+        ...messages,
+        {
+          id: Date.now().toString(),
+          sender: "user" as const,
+          content: userInput,
+          timestamp: new Date(),
+        },
+      ];
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages, workflowStage, userData }),
+        body: JSON.stringify({ messages: updatedMessages, workflowStage, userData }),
       });
       if (!response.ok) {
         const errorData = await response.json();
@@ -133,6 +240,10 @@ export default function NithyaChat() {
     }
     if (shouldTriggerWorkflow(userInput)) {
       triggerContactWorkflow();
+      return;
+    }
+    if (shouldTriggerDealWorkflow(userInput)) {
+      triggerDealWorkflow(userInput);
       return;
     }
     setIsTyping(true);
