@@ -27,6 +27,40 @@ function makeSymbolTexture(symbol: string) {
   return tex;
 }
 
+function createCandlestickTexture(isGreen: boolean, bodyHeight: number) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 32;
+  canvas.height = 64;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return new THREE.Texture();
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0,0,0,0)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const bodyWidth = 12;
+  const wickWidth = 1.5;
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+
+  // Wick line
+  ctx.strokeStyle = isGreen ? "#00E676" : "#FF1744";
+  ctx.lineWidth = wickWidth;
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY - bodyHeight / 2 - 8);
+  ctx.lineTo(centerX, centerY + bodyHeight / 2 + 8);
+  ctx.stroke();
+
+  // Body
+  ctx.fillStyle = isGreen ? "#00E676" : "#FF1744";
+  ctx.fillRect(centerX - bodyWidth / 2, centerY - bodyHeight / 2, bodyWidth, bodyHeight);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.needsUpdate = true;
+  return tex;
+}
+
 export function ThreeBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -78,6 +112,62 @@ export function ThreeBackground() {
       symbolMats.push(mat);
     }
 
+    // Add organized candlestick chart formations
+    const chartGroups: THREE.Group[] = [];
+    const chartGeometries: THREE.BufferGeometry[] = [];
+    const chartMaterials: THREE.PointsMaterial[] = [];
+
+    function createChartFormation(startX: number, startY: number, candleCount: number, scale: number) {
+      const group = new THREE.Group();
+      group.position.set(startX, startY, -2);
+
+      let price = 0;
+      const candleWidth = 0.3;
+      const candleSpacing = 0.35;
+
+      for (let i = 0; i < candleCount; i++) {
+        const isGreen = Math.random() > 0.4;
+        const bodyHeight = (15 + Math.random() * 25) * 0.01 * scale;
+        const tex = createCandlestickTexture(isGreen, bodyHeight);
+
+        const geo = new THREE.BufferGeometry();
+        const pos = new Float32Array([i * candleSpacing, price, 0]);
+        geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+
+        const mat = new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 0.25 * scale,
+          map: tex,
+          transparent: true,
+          opacity: 0.6,
+          alphaTest: 0.2,
+          depthWrite: false,
+          blending: THREE.NormalBlending,
+          sizeAttenuation: true,
+        });
+
+        const candle = new THREE.Points(geo, mat);
+        group.add(candle);
+
+        chartGeometries.push(geo);
+        chartMaterials.push(mat);
+
+        // Price trend - generally upward with some volatility
+        const trend = (i / candleCount) * 3 * scale;
+        const volatility = (Math.random() - 0.5) * 1.5;
+        price += 0.15 + (isGreen ? 0.08 : -0.05);
+      }
+
+      scene.add(group);
+      chartGroups.push(group);
+    }
+
+    // Create multiple chart formations
+    createChartFormation(-6, -3, 30, 1);
+    createChartFormation(3, 2, 25, 0.8);
+    createChartFormation(-2, 4, 20, 0.6);
+    createChartFormation(5, -2, 28, 0.9);
+
     const gridMat = new THREE.LineBasicMaterial({
       color: 0x2a2a2a,
       transparent: true,
@@ -128,6 +218,10 @@ export function ThreeBackground() {
         symbolPoints[i].rotation.y += 0.00035 + i * 0.00002;
         symbolPoints[i].rotation.x += 0.00018 + i * 0.00001;
       }
+      for (let i = 0; i < chartGroups.length; i++) {
+        chartGroups[i].rotation.y += 0.0003 + i * 0.00002;
+        chartGroups[i].rotation.x += 0.00015 + i * 0.00001;
+      }
       camera.position.x += (-mx * 0.5 - camera.position.x) * 0.02;
       camera.position.y += (my * 0.3 - camera.position.y) * 0.02;
       renderer.render(scene, camera);
@@ -141,6 +235,12 @@ export function ThreeBackground() {
       renderer.dispose();
       symbolGeos.forEach((g) => g.dispose());
       symbolMats.forEach((m) => {
+        const map = m.map;
+        if (map) map.dispose();
+        m.dispose();
+      });
+      chartGeometries.forEach((g) => g.dispose());
+      chartMaterials.forEach((m) => {
         const map = m.map;
         if (map) map.dispose();
         m.dispose();
