@@ -32,11 +32,12 @@ export function Hero() {
       <div className="hero-overlay" />
       <div className="hero-content">
         <h1 className="hero-h1">
-          <span className="hero-word hero-word-build">Build</span>{" "}
-          <span className="hero-word hero-word-your">Your</span>{" "}
-          <span className="hero-word hero-word-legacy">Legacy.</span>
+        {/* TRADE THE WORLD */}
+          <span className="hero-word hero-word-build">TRADE</span>{" "}
+          <span className="hero-word hero-word-your">THE</span>{" "}
+          <span className="hero-word hero-word-legacy">WORLD.</span>
           <br />
-          <span className="gold-line">One Trade at a Time.</span>
+          <span className="gold-line">BUILD YOUR EMPIRE.</span>
         </h1>
         <p className="hero-sub">
           Your gateway to global financial markets — Forex, Stocks, Crypto,

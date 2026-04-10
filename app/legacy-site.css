@@ -2067,6 +2067,271 @@ footer {
   .table-header span, .table-row span { text-align: left; }
 }
 
+/* ====== EDUCATION POPUP ====== */
+.education-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.education-popup-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--glow-strong);
+  padding: 2rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.education-popup-content::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.education-popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.education-popup-close:hover {
+  background: var(--gold-dark);
+  transform: scale(1.1);
+}
+
+.popup-title {
+  color: var(--gold);
+  font-family: var(--font-bebas);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.popup-description {
+  color: var(--white);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.popup-table {
+  margin: 1.5rem 0;
+  background: var(--card-bg2);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+}
+
+.popup-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.popup-table th {
+  background: var(--gold);
+  color: var(--black);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-family: var(--font-bebas);
+  font-size: 0.9rem;
+}
+
+.popup-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border-gold);
+  color: var(--white);
+  font-size: 0.9rem;
+}
+
+.popup-table tr:last-child td {
+  border-bottom: none;
+}
+
+.popup-table.additional-table {
+  margin-top: 2rem;
+}
+
+.table-title {
+  color: var(--gold);
+  font-family: var(--font-bebas);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.popup-bullets {
+  margin: 1.5rem 0;
+}
+
+.popup-bullets ul {
+  list-style: none;
+  padding: 0;
+}
+
+.popup-bullets li {
+  color: var(--white);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.popup-bullets li:before {
+  content: ">";
+  color: var(--gold);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.popup-example {
+  background: var(--card-bg2);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.popup-example h4 {
+  color: var(--gold);
+  font-family: var(--font-bebas);
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.popup-example p {
+  color: var(--white);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.popup-note {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.popup-note p {
+  color: var(--gold-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.popup-broker-note {
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid var(--amber);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.popup-broker-note p {
+  color: var(--amber);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.card-popup-indicator {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--gold);
+  color: var(--black);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover .card-popup-indicator {
+  opacity: 1;
+}
+
+/* Education Popup Responsive */
+@media (max-width: 768px) {
+  .education-popup-overlay {
+    padding: 1rem;
+  }
+  
+  .education-popup-content {
+    padding: 1.5rem;
+    max-height: 95vh;
+  }
+  
+  .popup-title {
+    font-size: 1.5rem;
+  }
+  
+  .popup-table th,
+  .popup-table td {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .popup-bullets li {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .education-popup-content {
+    padding: 1rem;
+  }
+  
+  .popup-title {
+    font-size: 1.3rem;
+  }
+  
+  .popup-description {
+    font-size: 0.9rem;
+  }
+  
+  .popup-table th,
+  .popup-table td {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .popup-bullets li {
+    font-size: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+}
+
 /* ====== MARGIN CALCULATOR ====== */
 .margin-calculator {
   background: var(--card-bg);
