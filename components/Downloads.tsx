@@ -20,11 +20,19 @@ interface PlatformLink {
 
 const platforms: PlatformLink[] = [
   {
+    id: "web",
+    name: "Web",
+    icon: "🌐",
+    description: "Trade directly from your browser. No installation required. Accessible from any device with an internet connection.",
+    downloadUrl: "https://app.legacyglobalbank.com",
+    badge: "Open Web",
+  },
+  {
     id: "android",
     name: "Android",
     icon: androidIcon,
     description: "Trade on the go with our Android app. Full-featured mobile trading with real-time charts and instant execution.",
-    downloadUrl: "https://play.google.com/store/apps/details?id=com.traderprogram.android&hl=en_IN",
+    downloadUrl: "https://play.google.com/store/apps/details?id=com.spotware.ct",
     badge: "Google Play",
   },
   {
@@ -32,7 +40,7 @@ const platforms: PlatformLink[] = [
     name: "iOS",
     icon: appleIcon,
     description: "Download for iPhone and iPad. Seamless trading experience optimized for Apple devices.",
-    downloadUrl: "https://apps.apple.com/in/app/mobiustrader-7/id1355359598",
+    downloadUrl: "https://apps.apple.com/cy/app/spotware-ctrader/id767428811",
     badge: "App Store",
   },
   {
@@ -40,7 +48,7 @@ const platforms: PlatformLink[] = [
     name: "Windows",
     icon: windowsIcon,
     description: "Powerful desktop application for Windows. Advanced charting, multiple monitors support, and fast execution.",
-    downloadUrl: "/TheRiseFX-Terminal.win.exe",
+    downloadUrl: "/ctrader-legacyglobalbank-setup.exe",
     badge: "Download",
   },
   {
@@ -48,7 +56,7 @@ const platforms: PlatformLink[] = [
     name: "Mac",
     icon: MacIcon,
     description: "Download for macOS and Linux systems. AppImage format for universal compatibility.",
-    downloadUrl: "/TheRiseFX-Terminal.linux.AppImage",
+    downloadUrl: "https://getctradermac.com/legacyglobalbank/ctrader-legacyglobalbank-setup.dmg",
     badge: "Download",
   },
 ];
