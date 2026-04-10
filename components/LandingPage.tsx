@@ -1,6 +1,5 @@
 "use client";
 
-import Script from "next/script";
 import { AccountTypes } from "./AccountTypes";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
@@ -16,14 +15,11 @@ import { Testimonials } from "./Testimonials";
 import { Ticker } from "./Ticker";
 import { VirtualFunds } from "./VirtualFunds";
 import { WhyUs } from "./WhyUs";
+import NithyaChat from "./NithyaChat";
 
 export default function LandingPage() {
   return (
     <>
-      <Script
-        src="https://www.noupe.com/embed/019d664bc7277841abc3e6c3c97ea212ad77.js"
-        strategy="afterInteractive"
-      />
       <ScrollRevealInit />
       <Ticker />
       <Navbar />
@@ -39,6 +35,7 @@ export default function LandingPage() {
       <Contact />
       <Footer />
       <PromoPopup />
+      <NithyaChat />
     </>
   );
 }
