@@ -447,19 +447,6 @@ export function Career() {
         </div>
       </section>
 
-      {/* Navigation Footer */}
-      <section className="page-nav">
-        <Link href="/" className="back-link">
-          ← Back to Home
-        </Link>
-        <div className="nav-links-right">
-          <Link href="/education">Education</Link>
-          <Link href="/downloads">Downloads</Link>
-          <a href={PANEL_URL} className="btn-outline">Login</a>
-          <a href={PANEL_URL_REGISTER} className="btn-gold">Start Trading</a>
-        </div>
-      </section>
-
       <Footer />
     </div>
   );
