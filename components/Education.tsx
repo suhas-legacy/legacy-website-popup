@@ -5,6 +5,10 @@ import Link from "next/link";
 import { Footer } from "./Footer";
 import { Ticker } from "./Ticker";
 import { Navbar } from "./Navbar";
+import { PipCalculator } from "./PipCalculator";
+import { MarginCalculator } from "./MarginCalculator";
+import { LotSizeCalculator } from "./LotSizeCalculator";
+import { ProfitCalculator } from "./ProfitCalculator";
 
 // API symbols mapping
 const priceApiSymbols: Record<string, string> = {
@@ -68,253 +72,6 @@ const lotSizes = [
   { value: 0.1, label: "Mini (0.10)", units: 10000 },
   { value: 1, label: "Standard (1.00)", units: 100000 },
 ];
-
-const leverageOptions = [50, 100, 200, 300, 400, 500];
-
-interface MarginCalculatorProps {
-  initialLotType?: "micro" | "mini" | "standard";
-  initialInstrument?: typeof instruments[0];
-  compact?: boolean;
-}
-
-function MarginCalculator({ initialLotType = "micro", initialInstrument, compact = false }: MarginCalculatorProps) {
-  const defaultInstrument = initialInstrument || instruments[0];
-  const [selectedInstrument, setSelectedInstrument] = useState(defaultInstrument);
-  const [price, setPrice] = useState(defaultInstrument.price);
-  const [lotType, setLotType] = useState<"micro" | "mini" | "standard">(initialLotType);
-  const [numLots, setNumLots] = useState(1);
-  const [leverage, setLeverage] = useState(100);
-  const [margin, setMargin] = useState(0);
-  const [notionalValue, setNotionalValue] = useState(0);
-  const [totalUnits, setTotalUnits] = useState(0);
-  const [isLivePrice, setIsLivePrice] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-
-  const lotTypeConfig = {
-    micro: { value: 0.01, label: "Micro", multiplier: 1 },
-    mini: { value: 0.1, label: "Mini", multiplier: 10 },
-    standard: { value: 1, label: "Standard", multiplier: 100 },
-  };
-
-  const calculateMargin = useCallback(() => {
-    const config = lotTypeConfig[lotType];
-    // Total volume in lots
-    const volume = numLots * config.value;
-    // Contract size in units (Volume × 100)
-    const units = volume * 100;
-    // Notional value = Price × Contract Size
-    const notional = units * price;
-    // Margin Required = Notional Value / Leverage
-    const requiredMargin = notional / leverage;
-
-    setTotalUnits(units);
-    setNotionalValue(notional);
-    setMargin(requiredMargin);
-  }, [lotType, numLots, leverage, price]);
-
-  // Fetch live prices periodically
-  useEffect(() => {
-    const updatePrices = async () => {
-      const livePrices = await fetchLivePrices();
-      if (livePrices) {
-        const apiSymbol = priceApiSymbols[selectedInstrument.symbol];
-        const newPrice = livePrices[apiSymbol as keyof typeof livePrices];
-        if (newPrice) {
-          setPrice(newPrice);
-          setIsLivePrice(true);
-          setLastUpdated(new Date());
-        }
-      }
-    };
-
-    // Initial fetch
-    updatePrices();
-
-    // Update every 30 seconds
-    const interval = setInterval(updatePrices, 30000);
-    return () => clearInterval(interval);
-  }, [selectedInstrument]);
-
-  useEffect(() => {
-    calculateMargin();
-  }, [calculateMargin]);
-
-  return (
-    <div className="margin-calculator">
-      {/* Explanation Cards - Hidden in compact mode */}
-      {!compact && (
-        <div className="explanation-cards">
-          <div className="explanation-card">
-            <div className="exp-icon">⚡</div>
-            <h4>What is Leverage?</h4>
-            <p>Leverage allows you to control a large position with a small amount of capital. With 1:100 leverage, you control $100,000 with just $1,000 margin.</p>
-          </div>
-          <div className="explanation-card">
-            <div className="exp-icon">💰</div>
-            <h4>What is Margin?</h4>
-            <p>Margin is the required deposit to open and maintain a leveraged position. It acts as collateral for the borrowed funds.</p>
-          </div>
-          <div className="explanation-card">
-            <div className="exp-icon">📏</div>
-            <h4>Lot Size Impact</h4>
-            <p>Larger lot sizes increase both your position value and required margin proportionally. Always calculate risk before trading.</p>
-          </div>
-        </div>
-      )}
-
-      {/* Formula Display */}
-      <div className="formula-display">
-        <div className="formula-card-compact">
-          <h5>Formula</h5>
-          <code>
-            <span className="var">Margin</span>
-            <span className="operator">=</span>
-            <span className="operator">(</span>
-            <span className="var">Price</span>
-            <span className="operator">×</span>
-            <span className="var">Contract Size</span>
-            <span className="operator">)</span>
-            <span className="operator">/</span>
-            <span className="var">Leverage</span>
-          </code>
-          <div className="lot-multiplier">
-            <span>Contract Size = Lot Size × 100 units</span>
-          </div>
-        </div>
-      </div>
-
-
-      <div className="calculator-grid">
-        <div className="calculator-inputs">
-          <h4>Margin Calculator</h4>
-          
-          <div className="input-group">
-            <label>Instrument</label>
-            <select
-              value={selectedInstrument.symbol}
-              onChange={(e) => {
-                const inst = instruments.find((i) => i.symbol === e.target.value);
-                if (inst) setSelectedInstrument(inst);
-              }}
-            >
-              {instruments.map((inst) => (
-                <option key={inst.symbol} value={inst.symbol}>
-                  {inst.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="input-group">
-            <label>
-              Live Market Price
-              {isLivePrice && (
-                <span className="live-indicator">
-                  <span className="live-dot"></span> LIVE
-                </span>
-              )}
-            </label>
-            <div className="price-input-wrapper">
-              <input
-                type="number"
-                step="0.01"
-                value={price}
-                onChange={(e) => {
-                  setPrice(Number(e.target.value));
-                  setIsLivePrice(false);
-                }}
-                className={isLivePrice ? "live-price" : ""}
-              />
-              {lastUpdated && (
-                <span className="last-updated">
-                  Updated: {lastUpdated.toLocaleTimeString()}
-                </span>
-              )}
-            </div>
-            <small className="input-hint">
-              {isLivePrice 
-                ? "Price updates automatically every 30 seconds from live market data"
-                : "Price is manually set - click Calculate to use current value"}
-            </small>
-          </div>
-
-          <div className="input-group">
-            <label>Select Lot Type</label>
-            <div className="lot-type-buttons">
-              {Object.entries(lotTypeConfig).map(([key, config]) => (
-                <button
-                  key={key}
-                  className={`lot-type-btn ${lotType === key ? "active" : ""}`}
-                  onClick={() => setLotType(key as "micro" | "mini" | "standard")}
-                >
-                  <span className="btn-label">{config.label}</span>
-                  <span className="btn-value">{config.value}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="input-group">
-            <label>Number of Lots</label>
-            <input
-              type="number"
-              min="0.01"
-              step="0.01"
-              value={numLots}
-              onChange={(e) => setNumLots(Number(e.target.value))}
-            />
-            <small className="input-hint">
-              Enter quantity (e.g., 1, 2, 0.5)
-            </small>
-          </div>
-
-          <div className="input-group">
-            <label>Leverage</label>
-            <select
-              value={leverage}
-              onChange={(e) => setLeverage(Number(e.target.value))}
-            >
-              {leverageOptions.map((lev) => (
-                <option key={lev} value={lev}>
-                  1:{lev}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button className="calculate-btn" onClick={calculateMargin}>
-            Calculate Margin
-          </button>
-        </div>
-      </div>
-
-
-      {/* Live Results Display */}
-      <div className="live-results">
-        <h4>Calculation Results</h4>
-        <div className="results-grid">
-          <div className="result-card">
-            <span className="result-label">Position Size</span>
-            <span className="result-value">{totalUnits.toLocaleString()} units</span>
-          </div>
-          <div className="result-card highlight">
-            <span className="result-label">Total Exposure</span>
-            <span className="result-value">${notionalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-          </div>
-          <div className="result-card gold">
-            <span className="result-label">Required Margin</span>
-            <span className="result-value">${margin.toFixed(2)}</span>
-          </div>
-        </div>
-        <div className="calculation-breakdown">
-          <p>
-            <strong>Calculation:</strong> ${price.toFixed(2)} × {totalUnits.toLocaleString()} units / {leverage} = <strong>${margin.toFixed(2)}</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // Center-Focus Testimonial Carousel Component
 interface GalleryItem {
@@ -461,7 +218,8 @@ const educationSections = [
       description: "Foreign Exchange — known as Forex or FX — is the world's largest financial market, where currencies are bought and sold 24 hours a day. With over $7.5 trillion traded daily, Forex offers unmatched liquidity, flexibility and opportunity for traders of all levels.",
       cards: [
         {
-          label: "Operates 24 Hours a Day, 5 Days a Week",
+          label: "Operates 24 Hours a Day, 5 Days a Week ....",
+
           popup: {
             title: "FOREX NEVER SLEEPS — 24/5 MARKET ACCESS",
             description: "The Forex market operates continuously from Monday morning (Sydney open) to Friday evening (New York close) — giving traders around the world the freedom to trade at any time of day or night.",
@@ -484,6 +242,7 @@ const educationSections = [
         },
         {
           label: "Includes All Currencies of the World",
+          viewMore: true,
           popup: {
             title: "EVERY CURRENCY. ONE GLOBAL MARKET.",
             description: "The Forex market includes every official currency on the planet — from the US Dollar and Euro to exotic currencies like the Thai Baht or South African Rand. Currencies are always traded in pairs, meaning you simultaneously buy one currency and sell another.",
@@ -867,6 +626,110 @@ const educationSections = [
       },
     },
   },
+  {
+    id: "calculators",
+    title: "Calculators",
+    icon: "🧮",
+    content: {
+      heading: "Trading Calculators",
+      description: "Use our professional trading calculators to plan your trades, manage risk, and calculate potential profits and margins before you enter the market.",
+      cards: [
+        {
+          label: "PIP Calculator",
+          popup: {
+            title: "PIP CALCULATOR — MEASURE YOUR PRICE MOVEMENTS",
+            description: "The PIP Calculator helps you determine the value of a pip for different currency pairs and position sizes. This is essential for calculating your potential profit or loss per pip movement.",
+            table: {
+              headers: ["Input", "Description"],
+              rows: [
+                ["Currency Pair", "Select the pair you want to trade (e.g., EUR/USD, GBP/USD)"],
+                ["Position Size", "Enter your lot size (0.01, 0.1, 1.0, etc.)"],
+                ["Account Currency", "Your trading account's base currency"],
+                ["Current Price", "The current market price of the pair"]
+              ]
+            },
+            bullets: [
+              "Calculate pip value in your account currency",
+              "Plan your risk per trade accurately",
+              "Understand how much each pip movement affects your profit/loss",
+              "Works for all major, minor, and exotic currency pairs"
+            ],
+            example: "- EUR/USD at 1.0800 with 1 Standard Lot\n- Pip Value = $10 per pip\n- 50 pip movement = $500 profit or loss"
+          }
+        },
+        {
+          label: "Margin Calculator",
+          popup: {
+            title: "MARGIN CALCULATOR — KNOW YOUR REQUIRED CAPITAL",
+            description: "The Margin Calculator shows you exactly how much margin is required to open and maintain a leveraged position based on your instrument, lot size, and leverage.",
+            table: {
+              headers: ["Input", "Description"],
+              rows: [
+                ["Instrument", "Choose your trading instrument (currency pair, gold, oil, etc.)"],
+                ["Lot Size", "Micro (0.01), Mini (0.1), or Standard (1.0) lots"],
+                ["Leverage", "Your account leverage (1:50, 1:100, 1:500, etc.)"],
+                ["Current Price", "Live market price of the instrument"]
+              ]
+            },
+            bullets: [
+              "Calculate required margin before opening a trade",
+              "Prevent margin calls by planning your positions",
+              "Compare margin requirements across different instruments",
+              "Understand the impact of leverage on your capital"
+            ],
+            example: "- EUR/USD at 1.0800, 1 Standard Lot, 1:100 leverage\n- Required Margin = $1,080\n- You control $100,000 with just $1,080"
+          }
+        },
+        {
+          label: "Lot Size Calculator",
+          popup: {
+            title: "LOT SIZE CALCULATOR — MANAGE YOUR RISK PERFECTLY",
+            description: "The Lot Size Calculator helps you determine the optimal position size based on your account balance, risk percentage, and stop loss distance. This is crucial for proper risk management.",
+            table: {
+              headers: ["Input", "Description"],
+              rows: [
+                ["Account Balance", "Your total account balance in USD"],
+                ["Risk Percentage", "How much of your account you're willing to risk (1-2% recommended)"],
+                ["Stop Loss (pips)", "Your planned stop loss distance in pips"],
+                ["Currency Pair", "The pair you're trading"]
+              ]
+            },
+            bullets: [
+              "Automatically calculate the correct lot size for your risk level",
+              "Never risk more than your predetermined percentage per trade",
+              "Adjust position sizes based on stop loss distance",
+              "Protect your account from large drawdowns"
+            ],
+            example: "- Account: $10,000, Risk: 2%, Stop Loss: 50 pips\n- Risk Amount: $200\n- Recommended Lot Size: 0.4 lots (4 mini lots)"
+          }
+        },
+        {
+          label: "Profit Calculator",
+          popup: {
+            title: "PROFIT CALCULATOR — PLAN YOUR TRADES",
+            description: "The Profit Calculator estimates your potential profit or loss for a trade based on your entry price, exit price, and position size. Plan your trades before you execute them.",
+            table: {
+              headers: ["Input", "Description"],
+              rows: [
+                ["Instrument", "Select your trading instrument"],
+                ["Lot Size", "Your position size in lots"],
+                ["Open Price", "Your planned entry price"],
+                ["Close Price", "Your planned exit price (take profit)"],
+                ["Trade Direction", "Buy (Long) or Sell (Short)"]
+              ]
+            },
+            bullets: [
+              "Calculate potential profit before entering a trade",
+              "Set realistic take profit targets",
+              "Understand your risk-reward ratio",
+              "Plan multiple scenarios with different exit points"
+            ],
+            example: "- EUR/USD: Buy at 1.0800, Sell at 1.0850\n- Position: 1 Standard Lot\n- Pips Gained: 50 pips\n- Potential Profit: $500"
+          }
+        }
+      ]
+    },
+  },
 ];
 
 // Popup Component for Education Cards
@@ -989,6 +852,7 @@ export function Education() {
   const [modalLotType, setModalLotType] = useState<"micro" | "mini" | "standard">("micro");
   const [modalInstrument, setModalInstrument] = useState<typeof instruments[0] | undefined>(undefined);
   const [activePopup, setActivePopup] = useState<{ sectionId: string; cardIndex: number } | null>(null);
+  const [calculatorModal, setCalculatorModal] = useState<string | null>(null);
   
   // Search and filter state for currency pairs
   const [searchQuery, setSearchQuery] = useState("");
@@ -997,7 +861,13 @@ export function Education() {
   const activeSection = educationSections.find((s) => s.id === activeTab);
   
   const handleCardClick = (sectionId: string, cardIndex: number) => {
-    setActivePopup({ sectionId, cardIndex });
+    // If it's the calculators section, open calculator modal instead of popup
+    if (sectionId === "calculators") {
+      const calculatorNames = ["pip", "margin", "lot-size", "profit"];
+      setCalculatorModal(calculatorNames[cardIndex]);
+    } else {
+      setActivePopup({ sectionId, cardIndex });
+    }
   };
   
   const closePopup = () => {
@@ -1061,7 +931,8 @@ export function Education() {
             {/* Forex Basics & How It Works - Feature Cards with Popups */}
             {(activeSection.id === "forex-basics" ||
               activeSection.id === "trading-mechanics" ||
-              activeSection.id === "pips-spreads") && (
+              activeSection.id === "pips-spreads" ||
+              activeSection.id === "calculators") && (
               <div className="feature-cards">
                 {activeSection.content.cards?.map((card, idx) => (
                   <div
@@ -1085,7 +956,7 @@ export function Education() {
                     <div className="card-glow" />
                     {card.popup && (
                       <div className="card-popup-indicator">
-                        <span>ℹ️</span>
+                        Know More
                       </div>
                     )}
                   </div>
@@ -1221,6 +1092,16 @@ export function Education() {
             )}
           </p>
           <MarginCalculator initialLotType={modalLotType} initialInstrument={modalInstrument} compact={true} />
+        </div>
+      </Modal>
+
+      {/* Calculator Modal */}
+      <Modal isOpen={!!calculatorModal} onClose={() => setCalculatorModal(null)}>
+        <div className="modal-calculator">
+          {calculatorModal === "pip" && <PipCalculator />}
+          {calculatorModal === "margin" && <MarginCalculator />}
+          {calculatorModal === "lot-size" && <LotSizeCalculator />}
+          {calculatorModal === "profit" && <ProfitCalculator />}
         </div>
       </Modal>
 

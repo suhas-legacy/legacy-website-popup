@@ -68,26 +68,6 @@ export function Footer() {
           </div>
         </div>
         <div className="footer-col">
-          <h4>Trading</h4>
-          <ul>
-            <li>
-              <a href="#instruments">Forex</a>
-            </li>
-            <li>
-              <a href="#instruments">Commodities</a>
-            </li>
-            <li>
-              <a href="#instruments">Indices</a>
-            </li>
-            <li>
-              <a href="#instruments">Crypto</a>
-            </li>
-            <li>
-              <a href="#instruments">Metals</a>
-            </li>
-          </ul>
-        </div>
-        <div className="footer-col">
           <h4>Company</h4>
           <ul>
             <li>
@@ -97,19 +77,13 @@ export function Footer() {
               <Link href="/career">Careers</Link>
             </li>
             <li>
-              <a href="https://legacyglobalbank.com/privacy-policy.html">
-                Privacy Policy
-              </a>
+              <Link href="/privacy-policy">Privacy Policy</Link>
             </li>
             <li>
-              <a href="https://legacyglobalbank.com/terms-condition.html">
-                Terms &amp; Conditions
-              </a>
+              <Link href="/terms-and-conditions">Terms &amp; Conditions</Link>
             </li>
             <li>
-              <a href="https://legacyglobalbank.com/refund-policy.html">
-                Refund Policy
-              </a>
+              <Link href="/refund-policy">Refund Policy</Link>
             </li>
           </ul>
         </div>

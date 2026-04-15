@@ -6,7 +6,9 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  city: string;
   account: string;
+  connect: string;
   message: string;
 }
 
@@ -15,7 +17,9 @@ export function Contact() {
     name: '',
     email: '',
     phone: '',
+    city: '',
     account: 'Standard Account',
+    connect: 'Sales Support',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -82,7 +86,9 @@ export function Contact() {
           name: '',
           email: '',
           phone: '',
+          city: '',
           account: 'Standard Account',
+          connect: 'Sales Support',
           message: ''
         });
       } else {
@@ -172,8 +178,8 @@ export function Contact() {
             </div>
             <div className="form-field">
               <label htmlFor="cf-account">Account Type</label>
-              <select 
-                id="cf-account" 
+              <select
+                id="cf-account"
                 name="account"
                 value={formData.account}
                 onChange={handleInputChange}
@@ -182,6 +188,31 @@ export function Contact() {
                 <option>Classic Account</option>
                 <option>Pro Account</option>
                 <option>VIP Account</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-field">
+              <label htmlFor="cf-city">City</label>
+              <input
+                id="cf-city"
+                name="city"
+                type="text"
+                placeholder="Your city"
+                value={formData.city}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-field">
+              <label htmlFor="cf-connect">Connect</label>
+              <select
+                id="cf-connect"
+                name="connect"
+                value={formData.connect}
+                onChange={handleInputChange}
+              >
+                <option>Sales Support</option>
+                <option>Technical Support</option>
               </select>
             </div>
           </div>
