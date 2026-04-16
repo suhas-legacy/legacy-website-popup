@@ -93,26 +93,17 @@ export function ImportantNoticePopup() {
           
         </div>
         <h3 id="important-notice-title" className="popup-title">
-          Important Notice
+    Important Notice
         </h3>
         <div className="popup-desc" style={{ textAlign: "left" }}>
           <p>
-            Legacy GlobalBank does not offer, authorize, or endorse any third-party
-            fund managers, investment schemes, or external financial services.
+            <span style={{ fontWeight: "bold" }}>Risk Warning : </span> Forex trading involves significant risk. Approximately 70% of retail investors lose money. Never invest funds you cannot afford to lose.
           </p>
-          <p style={{ marginTop: "0.9rem" }}>
-            We do not guarantee fixed returns, assured income, or interest on any
-            investment products.
+          <p>
+            <span style={{ fontWeight: "bold" }}>No Third-Party Endorsements : </span> Legacy GlobalBank does not authorize, endorse, or partner with any third-party fund managers or external investment schemes. We do not guarantee fixed returns or assured income on any products.
           </p>
-          <p style={{ marginTop: "0.9rem" }}>
-            Clients are strongly advised to remain vigilant against fraud and
-            unauthorized communications. Any message claiming to represent Legacy
-            GlobalBank must be verified through our official communication
-            channels.
-          </p>
-          <p style={{ marginTop: "0.9rem" }}>
-            If you receive suspicious information, please report it immediately to
-            protect your account and personal data.
+          <p>
+            <span style={{ fontWeight: "bold" }}>Verify Your Communication : </span> Protect your data. All official communications must be verified through our official channels. Report any suspicious or unauthorized investment offers to our security team immediately.
           </p>
         </div>
 

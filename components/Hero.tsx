@@ -44,10 +44,10 @@ export const Hero = React.memo(function Hero() {
           Commodities, Indices &amp; more. Up to 1:500 leverage.
         </p>
         <div className="hero-btns">
-          <a href="#accounts" className="btn-gold">
+          <a href="/accounts" className="btn-gold">
             Open Live Account
           </a>
-          <a href="#virtual" className="btn-outline">
+          <a href="/demo" className="btn-outline">
             Try Demo — $10,000 Free
           </a>
         </div>

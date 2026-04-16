@@ -139,6 +139,80 @@ nav.intro-running .nav-logo {
   align-items: center;
 }
 .nav-ctas { display: flex; gap: 1rem; }
+.nav-item-with-dropdown {
+  position: relative;
+}
+.nav-dropdown-trigger {
+  background: transparent;
+  border: none;
+  color: var(--gray);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.3s;
+  padding: 0;
+}
+.nav-dropdown-trigger:hover {
+  color: var(--gold);
+}
+.dropdown-arrow {
+  font-size: 0.5rem;
+  transition: transform 0.3s;
+}
+.nav-item-with-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: rgba(10, 10, 10, 0.98);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  backdrop-filter: blur(10px);
+}
+.nav-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-dropdown li {
+  padding: 0;
+}
+.nav-dropdown a {
+  display: block;
+  padding: 0.6rem 1rem;
+  color: var(--gray);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.nav-dropdown a:hover,
+.nav-dropdown a.active {
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--gold);
+}
+.nav-item-with-dropdown:hover .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 .btn-outline {
   padding: 0.55rem 1.4rem;
   border: 1px solid var(--gold);
@@ -421,6 +495,7 @@ section { padding: 7rem 4rem; }
   letter-spacing: 0.04em;
   line-height: 1;
   margin-bottom: 1rem;
+  color: var(--white);
 }
 .gold-text {
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--amber));
@@ -442,16 +517,15 @@ section { padding: 7rem 4rem; }
   position: relative;
   overflow: hidden;
 }
+/* When MarketView is used inside a standalone page (not homepage) */
+.page-main #market {
+  padding-top: 0;
+}
 #market::before {
   content:'';
   position:absolute;
   inset:0;
   background: radial-gradient(ellipse at top left, rgba(255,215,0,0.03) 0%, transparent 60%);
-}
-.market-header {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap; gap: 1.5rem;
 }
 .market-tabs {
   display: flex; gap: 0.5rem; flex-wrap: wrap;
@@ -478,10 +552,10 @@ section { padding: 7rem 4rem; }
 /* Market Grid like Image 1 */
 .market-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.8rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
   grid-auto-flow: dense;
-  grid-auto-rows: 170px;
+  grid-auto-rows: 180px;
   align-items: stretch;
 }
 .mcard {
@@ -1232,6 +1306,33 @@ footer {
   .hero-stats { gap:2rem; flex-wrap: wrap; justify-content: center; width: 100%; }
   .mcard.large, .mcard.wide { grid-column: span 1; grid-row: span 1; }
   .mcard.large .mcard-chart { height: 60px; }
+  .nav-item-with-dropdown:hover .nav-dropdown {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+  }
+  .nav-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-dropdown {
+    position: static;
+    min-width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0.5rem 0 0.5rem 2rem;
+    transform: none;
+    backdrop-filter: none;
+  }
+  .nav-dropdown-trigger {
+    font-size: 1.2rem;
+  }
+  .nav-dropdown a {
+    padding: 0.8rem 0;
+    font-size: 1rem;
+  }
 }
 
 @media(max-width:768px) {
@@ -4573,5 +4674,180 @@ footer {
 @media (max-width: 480px) {
   .policy-container {
     padding: 0 10px;
+  }
+}
+
+/* ==================== NEW PAGE LAYOUTS ==================== */
+
+.page-main {
+  padding-top: 120px;
+  min-height: 100vh;
+}
+
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+  margin-top: 30px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb-link {
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumb-link:hover {
+  color: var(--gold);
+}
+
+.breadcrumb-separator {
+  color: var(--gray);
+  opacity: 0.5;
+}
+
+.breadcrumb-current {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Page Title & Subtitle */
+.page-title {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray);
+  max-width: 800px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+/* Active Nav Link */
+.nav-links a.active {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Page CTA Section */
+.page-cta {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 3rem;
+  background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,215,0,0.02));
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+}
+
+.page-cta h2 {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Preview Sections */
+.market-preview-section,
+.why-preview-section,
+.testimonials-preview-section {
+  padding: 4rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.market-preview-section .section-title,
+.why-preview-section .section-title,
+.testimonials-preview-section .section-title {
+  margin-bottom: 1.5rem;
+}
+
+.preview-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Demo Section */
+.demo-section {
+  padding: 4rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.counter-symbol {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--gold);
+}
+
+.counter-digit {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--white);
+  margin: 0 0.2rem;
+}
+
+.counter-machine {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.counter-row {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive for new pages */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .page-container {
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .market-preview-section,
+  .why-preview-section,
+  .testimonials-preview-section,
+  .demo-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .page-cta {
+    padding: 2rem 1.5rem;
+  }
+
+  .page-cta-buttons {
+    flex-direction: column;
+  }
+
+  .counter-symbol,
+  .counter-digit {
+    font-size: 2.5rem;
   }
 }

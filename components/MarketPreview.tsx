@@ -21,6 +21,7 @@ import type {
 } from "@/lib/marketQuotesTypes";
 import type { MarketId } from "@/lib/yahooMarketMap";
 import { TradingViewModal } from "./TradingViewModal";
+import Link from "next/link";
 
 Chart.register(
   LineController,
@@ -33,15 +34,12 @@ Chart.register(
 
 type MarketInstrument = {
   id: MarketId;
-  /** TradingView symbol (exchange:symbol) */
   tvSymbol: string;
-  /** Modal title */
   chartTitle: string;
   name: string;
   ticker?: string;
   large?: boolean;
   wide?: boolean;
-  /** Fallback % label when feed is offline */
   change: string;
   changeUp: boolean;
   flicker: { initial: number; vol?: number; decimals?: number };
@@ -51,72 +49,15 @@ type MarketInstrument = {
   icon: string;
   iconStyle?: CSSProperties;
 };
-// Add prop type
-interface MarketViewProps {
-  hideHeader?: boolean;
-}
+
 const MARKETS: MarketInstrument[] = [
-  {
-    id: "bitcoin",
-    tvSymbol: "BINANCE:BTCUSDT",
-    chartTitle: "Bitcoin / U.S. Dollar",
-    name: "Bitcoin",
-    ticker: "BTC/USD",
-    large: true,
-    change: "+5.23%",
-    changeUp: true,
-    flicker: { initial: 68000.0, vol: 0.005, decimals: 2 },
-    mini: { base: 68000, n: 30, vol: 0.01, up: true },
-    buyers: "80% are buyers now",
-    period: "30 days",
-    icon: "₿",
-    iconStyle: { background: "rgba(247,147,26,0.2)" },
-  },
-  {
-    id: "eurusd",
-    tvSymbol: "KRAKEN:EURUSD",
-    chartTitle: "Euro / U.S. Dollar",
-    name: "EUR/USD",
-    ticker: "EUR/USD",
-    change: "-0.01%",
-    changeUp: false,
-    flicker: { initial: 1.15151, vol: 0.00008, decimals: 5 },
-    mini: { base: 1.1515, n: 30, vol: 0.0008, up: false },
-    buyers: "52% are buyers now",
-    icon: "�",
-  },
-  {
-    id: "gbpusd",
-    tvSymbol: "FX:GBPUSD",
-    chartTitle: "British Pound / U.S. Dollar",
-    name: "GBP/USD",
-    ticker: "GBP/USD",
-    change: "+0.15%",
-    changeUp: true,
-    flicker: { initial: 1.26543, vol: 0.00008, decimals: 5 },
-    mini: { base: 1.265, n: 30, vol: 0.0008, up: true },
-    buyers: "48% are buyers now",
-    icon: "💷",
-  },
-  {
-    id: "usdjpy",
-    tvSymbol: "FX:USDJPY",
-    chartTitle: "U.S. Dollar / Japanese Yen",
-    name: "USD/JPY",
-    ticker: "USD/JPY",
-    change: "-0.32%",
-    changeUp: false,
-    flicker: { initial: 154.23, vol: 0.002, decimals: 2 },
-    mini: { base: 154.2, n: 30, vol: 0.008, up: false },
-    buyers: "61% are buyers now",
-    icon: "��",
-  },
   {
     id: "gold",
     tvSymbol: "OANDA:XAUUSD",
     chartTitle: "Gold Spot / U.S. Dollar",
-    name: "GOLD (XAU/USD)",
-    ticker: "XAU/USD",
+    name: "Gold",
+    ticker: "XAUUSD",
+    large: true,
     change: "+2.1%",
     changeUp: true,
     flicker: { initial: 4730.68, vol: 0.001 },
@@ -127,24 +68,26 @@ const MARKETS: MarketInstrument[] = [
     iconStyle: { background: "rgba(255,215,0,0.2)" },
   },
   {
-    id: "silver",
-    tvSymbol: "OANDA:XAGUSD",
-    chartTitle: "Silver Spot / U.S. Dollar",
-    name: "SILVER (XAG/USD)",
-    ticker: "XAG/USD",
-    change: "+0.5%",
-    changeUp: true,
-    flicker: { initial: 72.943, vol: 0.002, decimals: 3 },
-    mini: { base: 73, n: 20, vol: 0.015, up: true },
-    buyers: "65% are buyers now",
-    icon: "🥈",
+    id: "eurusd",
+    tvSymbol: "KRAKEN:EURUSD",
+    chartTitle: "Euro / U.S. Dollar",
+    name: "EUR/USD",
+    ticker: "EUR/USD",
+    wide: true,
+    change: "-0.01%",
+    changeUp: false,
+    flicker: { initial: 1.15151, vol: 0.00008, decimals: 5 },
+    mini: { base: 1.1515, n: 30, vol: 0.0008, up: false },
+    buyers: "Kraken · major FX pair",
+    icon: "💶",
   },
   {
     id: "oil",
     tvSymbol: "CXM:USOIL",
     chartTitle: "CFDs on Crude Oil (WTI)",
-    name: "OIL (WTI - USOIL)",
+    name: "Oil",
     ticker: "USOIL",
+    large: true,
     change: "+10.49%",
     changeUp: true,
     flicker: { initial: 104.316, vol: 0.002 },
@@ -154,31 +97,16 @@ const MARKETS: MarketInstrument[] = [
     icon: "🛢️",
   },
   {
-    id: "brent",
-    tvSymbol: "TVC:UKOIL",
-    chartTitle: "CFDs on Brent Crude Oil",
-    name: "UK-OIL (Brent - UKOIL)",
-    ticker: "UKOIL",
-    change: "+2.23%",
-    changeUp: true,
-    flicker: { initial: 93.62, vol: 0.002 },
-    mini: { base: 93.6, n: 20, vol: 0.012, up: true },
-    buyers: "49% are buyers now",
-    icon: "⛽",
-  },
-  {
-    id: "usoil",
-    tvSymbol: "CXM:USOIL",
-    chartTitle: "CFDs on Crude Oil (WTI)",
-    name: "US-OIL (WTI)",
-    ticker: "USOIL",
-    change: "+10.49%",
-    changeUp: true,
-    flicker: { initial: 104.316, vol: 0.002 },
-    mini: { base: 104, n: 30, vol: 0.012, up: true },
-    buyers: "55% are buyers now",
-    period: "30 days",
-    icon: "🛢️",
+    id: "us30",
+    tvSymbol: "SKILLING:US30",
+    chartTitle: "Dow Jones Industrial Average Index",
+    name: "Dow Jones Index",
+    ticker: "US30",
+    change: "-0.27%",
+    changeUp: false,
+    flicker: { initial: 46392.9, vol: 0.001 },
+    mini: { base: 46400, n: 20, vol: 0.008, up: false },
+    icon: "🇺🇸",
   },
 ];
 
@@ -425,21 +353,13 @@ function MarketCard({
   );
 }
 
-export function MarketView({ hideHeader = false }: MarketViewProps) {
-  const [activeTab, setActiveTab] = useState(0);
-  const [gridFlash, setGridFlash] = useState(false);
+export function MarketPreview() {
   const [chartModal, setChartModal] = useState<{
     symbol: string;
     title: string;
   } | null>(null);
 
-  const { quotes, feedOk } = useMarketQuotes(QUOTE_POLL_MS);
-
-  const onTab = (index: number) => {
-    setActiveTab(index);
-    setGridFlash(true);
-    window.setTimeout(() => setGridFlash(false), 200);
-  };
+  const { quotes } = useMarketQuotes(QUOTE_POLL_MS);
 
   const onOpenChart = useCallback((symbol: string, title: string) => {
     setChartModal({ symbol, title });
@@ -447,26 +367,8 @@ export function MarketView({ hideHeader = false }: MarketViewProps) {
 
   const closeChart = useCallback(() => setChartModal(null), []);
 
-  const filteredMarkets = (() => {
-    const tabId = (["all", "forex", "commodities", "indexes"] as const)[
-      activeTab
-    ];
-    if (tabId === "forex") {
-      return MARKETS.filter((m) => ["eurusd", "gbpusd", "usdjpy"].includes(m.id));
-    }
-    if (tabId === "commodities") {
-      return MARKETS.filter((m) =>
-        ["gold", "silver", "oil", "brent", "usoil"].includes(m.id)
-      );
-    }
-    if (tabId === "indexes") {
-      return MARKETS.filter((m) => ["ger30", "fra40", "us30"].includes(m.id));
-    }
-    return MARKETS.slice(0, 9);
-  })();
-
   return (
-    <section id="market" style={hideHeader ? { paddingTop: '0' } : undefined}>
+    <section className="market-preview-section">
       <TradingViewModal
         open={chartModal !== null}
         onClose={closeChart}
@@ -475,61 +377,13 @@ export function MarketView({ hideHeader = false }: MarketViewProps) {
         subtitle={chartModal?.symbol}
       />
 
-      {!hideHeader && (
-        <div className="market-header reveal">
-          <div>
-            <div className="section-label">Live Markets</div>
-            <h2 className="section-title">
-              Trade Intuitively on
-              <br />
-              <span className="gold-text">Thousands of CFDs</span>
-            </h2>
-            <p
-              className="section-desc"
-              style={{ marginTop: "0.5rem", marginBottom: 0 }}
-            >
-              Tap any instrument for a live TradingView chart. Card prices and
-              sparklines refresh about every {QUOTE_POLL_MS / 1000}s via Yahoo
-              Finance (unofficial feed; may be delayed).
-              {!feedOk ? (
-                <span style={{ display: "block", marginTop: "0.35rem" }}>
-                  Showing demo motion until quotes load.
-                </span>
-              ) : null}
-            </p>
-          </div>
-          <div className="market-tabs">
-          {(
-            [
-              ["all", "All"],
-              ["forex", "Forex"],
-              ["commodities", "Commodities"],
-              ["indexes", "Indexes"],
-            ] as const
-          ).map(([id, label], i) => (
-            <button
-              key={id}
-              type="button"
-              className={`mtab${activeTab === i ? " active" : ""}`}
-              onClick={() => onTab(i)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-      )}
-
-      <div
-        className="market-grid reveal"
-        id="market-grid"
-        style={{
-          opacity: gridFlash ? 0 : 1,
-          transform: gridFlash ? "translateY(10px)" : "translateY(0)",
-          transition: "opacity 0.4s, transform 0.4s",
-        }}
-      >
-        {filteredMarkets.map((m) => (
+      <div className="section-label reveal">Live Markets</div>
+      <h2 className="section-title reveal">
+        Trade Intuitively on <span className="gold-text">Global Markets</span>
+      </h2>
+      
+      <div className="market-grid reveal">
+        {MARKETS.slice(0, 4).map((m) => (
           <MarketCard
             key={m.id}
             instrument={m}
@@ -537,6 +391,12 @@ export function MarketView({ hideHeader = false }: MarketViewProps) {
             onOpenChart={onOpenChart}
           />
         ))}
+      </div>
+
+      <div className="preview-cta reveal">
+        <Link href="/market" className="btn-outline">
+          View All Markets →
+        </Link>
       </div>
     </section>
   );
