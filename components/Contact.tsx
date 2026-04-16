@@ -7,7 +7,7 @@ interface FormData {
   email: string;
   phone: string;
   city: string;
-  account: string;
+  priority: string;
   connect: string;
   message: string;
 }
@@ -18,7 +18,7 @@ export function Contact() {
     email: '',
     phone: '',
     city: '',
-    account: 'Standard Account',
+    priority: 'medium',
     connect: 'Sales Support',
     message: ''
   });
@@ -87,7 +87,7 @@ export function Contact() {
           email: '',
           phone: '',
           city: '',
-          account: 'Standard Account',
+          priority: 'medium',
           connect: 'Sales Support',
           message: ''
         });
@@ -177,17 +177,16 @@ export function Contact() {
               />
             </div>
             <div className="form-field">
-              <label htmlFor="cf-account">Account Type</label>
+              <label htmlFor="cf-priority">Priority</label>
               <select
-                id="cf-account"
-                name="account"
-                value={formData.account}
+                id="cf-priority"
+                name="priority"
+                value={formData.priority}
                 onChange={handleInputChange}
               >
-                <option>Standard Account</option>
-                <option>Classic Account</option>
-                <option>Pro Account</option>
-                <option>VIP Account</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
               </select>
             </div>
           </div>

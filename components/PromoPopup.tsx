@@ -21,7 +21,7 @@ export function PromoPopup() {
       typeof window !== "undefined" &&
       window.localStorage.getItem(STORAGE_KEY);
     if (!seen) {
-      const t = window.setTimeout(() => setOpen(true), 3000);
+      const t = window.setTimeout(() => setOpen(true), 35000);
       return () => clearTimeout(t);
     }
   }, []);

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Syne } from "next/font/google";
 import "./globals.css";
 import "./legacy-site.css";
+import { Ticker } from "@/components/Ticker";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${syne.variable} ${jetBrainsMono.variable} antialiased`}
       >
+        <Ticker />
         {children}
       </body>
     </html>

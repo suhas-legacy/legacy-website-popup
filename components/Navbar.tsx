@@ -14,6 +14,8 @@ export function Navbar() {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 
+  const isActiveLink = (path: string) => pathname === path;
+
   const logoRef = useRef<HTMLDivElement | null>(null);
   const [introTransform, setIntroTransform] = useState({ dx: 0, dy: 0, scale: 1 });
 
@@ -25,11 +27,6 @@ export function Navbar() {
   }, [introPhase, scrolled]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
-
-  // Helper for anchor links - goes to home page if not on home page
-  const anchorHref = useCallback((anchor: string) => {
-    return isHomePage ? anchor : `/${anchor}`;
-  }, [isHomePage]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -139,27 +136,27 @@ export function Navbar() {
         </button>
         <ul className={`nav-links${menuOpen ? " active" : ""}`}>
         <li>
-          <Link href={anchorHref("#why")} onClick={closeMenu}>
+          <Link href="/" onClick={closeMenu} className={isActiveLink("/") ? "active" : ""}>
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link href="/why-us" onClick={closeMenu} className={isActiveLink("/why-us") ? "active" : ""}>
             Why Us
           </Link>
         </li>
         <li>
-          <Link href={anchorHref("#accounts")} onClick={closeMenu}>
+          <Link href="/accounts" onClick={closeMenu} className={isActiveLink("/accounts") ? "active" : ""}>
             Accounts
           </Link>
         </li>
         <li>
-          <Link href={anchorHref("#market")} onClick={closeMenu}>
+          <Link href="/market" onClick={closeMenu} className={isActiveLink("/market") ? "active" : ""}>
             Market
           </Link>
         </li>
         <li>
-          <Link href={anchorHref("#instruments")} onClick={closeMenu}>
-            Trading
-          </Link>
-        </li>
-        <li>
-          <Link href={anchorHref("#contact")} onClick={closeMenu}>
+          <Link href="/contact" onClick={closeMenu} className={isActiveLink("/contact") ? "active" : ""}>
             Contact
           </Link>
         </li>
@@ -169,8 +166,8 @@ export function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/career" onClick={closeMenu}>
-            Careers
+          <Link href="/calculators" onClick={closeMenu}>
+            Calculators
           </Link>
         </li>
         <li>

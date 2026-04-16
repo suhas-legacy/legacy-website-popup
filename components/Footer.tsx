@@ -88,6 +88,23 @@ export function Footer() {
           </ul>
         </div>
         <div className="footer-col">
+          <h4>Trading Tools</h4>
+          <ul>
+            <li>
+              <Link href="/calculators/pip-calculator">Pip Calculator</Link>
+            </li>
+            <li>
+              <Link href="/calculators/profit-calculator">Profit Calculator</Link>
+            </li>
+            <li>
+              <Link href="/calculators/margin-calculator">Margin Calculator</Link>
+            </li>
+            <li>
+              <Link href="/calculators/lot-size-calculator">Lot Size Calculator</Link>
+            </li>
+          </ul>
+        </div>
+        <div className="footer-col">
           <h4>Support</h4>
           <ul>
             <li>
