@@ -56,9 +56,24 @@ interface MarketViewProps {
   hideHeader?: boolean;
 }
 const MARKETS: MarketInstrument[] = [
+    {
+    id: "gold",
+    tvSymbol: "FOREXCOM:XAUUSD",
+    chartTitle: "Gold Spot / U.S. Dollar",
+    name: "GOLD (XAU/USD)",
+    ticker: "XAU/USD",
+    change: "+0.34%",
+    changeUp: true,
+    flicker: { initial: 4730.68, vol: 0.001 },
+    mini: { base: 4700, n: 30, vol: 0.01, up: true },
+    buyers: "77% are buyers now",
+    period: "30 days",
+    icon: "🥇",
+    iconStyle: { background: "rgba(255,215,0,0.2)" },
+  },
   {
     id: "bitcoin",
-    tvSymbol: "BINANCE:BTCUSDT",
+    tvSymbol: "BTCUSDT",
     chartTitle: "Bitcoin / U.S. Dollar",
     name: "Bitcoin",
     ticker: "BTC/USD",
@@ -74,7 +89,7 @@ const MARKETS: MarketInstrument[] = [
   },
   {
     id: "eurusd",
-    tvSymbol: "KRAKEN:EURUSD",
+    tvSymbol: "EURUSD",
     chartTitle: "Euro / U.S. Dollar",
     name: "EUR/USD",
     ticker: "EUR/USD",
@@ -87,7 +102,7 @@ const MARKETS: MarketInstrument[] = [
   },
   {
     id: "gbpusd",
-    tvSymbol: "FX:GBPUSD",
+    tvSymbol: "GBPUSD",
     chartTitle: "British Pound / U.S. Dollar",
     name: "GBP/USD",
     ticker: "GBP/USD",
@@ -100,7 +115,7 @@ const MARKETS: MarketInstrument[] = [
   },
   {
     id: "usdjpy",
-    tvSymbol: "FX:USDJPY",
+    tvSymbol: "USDJPY",
     chartTitle: "U.S. Dollar / Japanese Yen",
     name: "USD/JPY",
     ticker: "USD/JPY",
@@ -109,26 +124,12 @@ const MARKETS: MarketInstrument[] = [
     flicker: { initial: 154.23, vol: 0.002, decimals: 2 },
     mini: { base: 154.2, n: 30, vol: 0.008, up: false },
     buyers: "61% are buyers now",
-    icon: "��",
+    icon: "💷",
   },
-  {
-    id: "gold",
-    tvSymbol: "OANDA:XAUUSD",
-    chartTitle: "Gold Spot / U.S. Dollar",
-    name: "GOLD (XAU/USD)",
-    ticker: "XAU/USD",
-    change: "+2.1%",
-    changeUp: true,
-    flicker: { initial: 4730.68, vol: 0.001 },
-    mini: { base: 4700, n: 30, vol: 0.01, up: true },
-    buyers: "77% are buyers now",
-    period: "30 days",
-    icon: "🥇",
-    iconStyle: { background: "rgba(255,215,0,0.2)" },
-  },
+
   {
     id: "silver",
-    tvSymbol: "OANDA:XAGUSD",
+    tvSymbol: "XAGUSD",
     chartTitle: "Silver Spot / U.S. Dollar",
     name: "SILVER (XAG/USD)",
     ticker: "XAG/USD",
@@ -141,7 +142,7 @@ const MARKETS: MarketInstrument[] = [
   },
   {
     id: "oil",
-    tvSymbol: "CXM:USOIL",
+    tvSymbol: "USOIL",
     chartTitle: "CFDs on Crude Oil (WTI)",
     name: "OIL (WTI - USOIL)",
     ticker: "USOIL",
@@ -155,7 +156,7 @@ const MARKETS: MarketInstrument[] = [
   },
   {
     id: "brent",
-    tvSymbol: "TVC:UKOIL",
+    tvSymbol: "UKOIL",
     chartTitle: "CFDs on Brent Crude Oil",
     name: "UK-OIL (Brent - UKOIL)",
     ticker: "UKOIL",
@@ -168,7 +169,7 @@ const MARKETS: MarketInstrument[] = [
   },
   {
     id: "usoil",
-    tvSymbol: "CXM:USOIL",
+    tvSymbol: "USOIL",
     chartTitle: "CFDs on Crude Oil (WTI)",
     name: "US-OIL (WTI)",
     ticker: "USOIL",

@@ -3,6 +3,8 @@ import { JetBrains_Mono, Syne } from "next/font/google";
 import "./globals.css";
 import "./legacy-site.css";
 import { Ticker } from "@/components/Ticker";
+import NithyaChat from "@/components/NithyaChat";
+import DataCollectionProvider from "@/components/DataCollectionProvider";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -33,6 +35,8 @@ export default function RootLayout({
       >
         <Ticker />
         {children}
+        <NithyaChat />
+        <DataCollectionProvider />
       </body>
     </html>
   );

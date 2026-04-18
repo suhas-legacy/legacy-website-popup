@@ -95,7 +95,7 @@ export function ImportantNoticePopup() {
         <h3 id="important-notice-title" className="popup-title">
     Important Notice
         </h3>
-        <div className="popup-desc" style={{ textAlign: "left" }}>
+        <div className="popup-desc" style={{ textAlign: "justify" }}>
           <p>
             <span style={{ fontWeight: "bold" }}>Risk Warning : </span> Forex trading involves significant risk. Approximately 70% of retail investors lose money. Never invest funds you cannot afford to lose.
           </p>

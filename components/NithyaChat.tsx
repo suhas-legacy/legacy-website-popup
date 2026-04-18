@@ -1,17 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { BotMessageSquare, X } from "lucide-react";
 
 interface Message {
   id: string;
-  sender: "user" | "nithya";
+  sender: "user" | "fxguru";
   content: string;
   timestamp: Date;
 }
 
 type WorkflowStage = "none" | "name" | "phone" | "email" | "city" | "completed" | "deal-name" | "deal-phone" | "deal-email" | "deal-city";
 
-export default function NithyaChat() {
+export default function FXGuruChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -20,33 +21,57 @@ export default function NithyaChat() {
   const [dealMessage, setDealMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [showBubble, setShowBubble] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const INITIAL_GREETING =
-    "Hello! This is Nithya from Legacy Global Bank. 👋\nHow may I assist you today? Feel free to chat here with any questions.";
+    "Hello! This is FXGuru from Legacy Global Bank. 👋\nHow may I assist you today? Feel free to chat here with any questions.";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const playWelcomeSound = () => {
+    try {
+      const audio = new Audio('/fxguru2.wav');
+      audio.play().catch(error => {
+        console.log('Audio playback failed:', error);
+      });
+    } catch (error) {
+      console.log('Audio creation failed:', error);
+    }
   };
 
   useEffect(() => { scrollToBottom(); }, [messages]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
+      playWelcomeSound();
       setIsTyping(true);
       setTimeout(() => {
         setIsTyping(false);
-        addNithyaMessage(INITIAL_GREETING);
+        addFXGuruMessage(INITIAL_GREETING);
       }, 1200);
     }
-    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
+    if (isOpen) {
+      setShowBubble(false);
+      setTimeout(() => inputRef.current?.focus(), 300);
+    }
   }, [isOpen]);
 
-  const addNithyaMessage = (content: string) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowBubble(false);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const addFXGuruMessage = (content: string) => {
     setMessages((prev) => [...prev, {
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      sender: "nithya", content, timestamp: new Date(),
+      sender: "fxguru", content, timestamp: new Date(),
     }]);
   };
 
@@ -59,13 +84,13 @@ export default function NithyaChat() {
 
   const triggerContactWorkflow = () => {
     setWorkflowStage("name");
-    addNithyaMessage("I'd be happy to connect you with our team. May I know your full name please?");
+    addFXGuruMessage("I'd be happy to connect you with our team. May I know your full name please?");
   };
 
   const triggerDealWorkflow = (originalMessage: string) => {
     setDealMessage(originalMessage);
     setWorkflowStage("deal-name");
-    addNithyaMessage("I'd be happy to help you with our exclusive deals! To get started, may I know your full name please?");
+    addFXGuruMessage("I'd be happy to help you with our exclusive deals! To get started, may I know your full name please?");
   };
 
   const processWorkflowInput = (userInput: string) => {
@@ -74,40 +99,40 @@ export default function NithyaChat() {
       case "name":
         setUserData((prev) => ({ ...prev, name: userInput.trim() }));
         setWorkflowStage("phone");
-        addNithyaMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
+        addFXGuruMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
         break;
       case "phone":
         setUserData((prev) => ({ ...prev, phone: userInput.trim() }));
         setWorkflowStage("email");
-        addNithyaMessage("Got it, thank you. May I have your email address? (It's optional — you can simply reply 'skip' if you prefer)");
+        addFXGuruMessage("Got it, thank you. May I have your email address? (It's optional — you can simply reply 'skip' if you prefer)");
         break;
       case "email":
         setUserData((prev) => ({ ...prev, email: trimmedInput === "skip" ? "" : userInput.trim() }));
         setWorkflowStage("city");
-        addNithyaMessage("Thank you. Lastly, which city are you based in?");
+        addFXGuruMessage("Thank you. Lastly, which city are you based in?");
         break;
       case "city":
         const finalUserData = { ...userData, city: userInput.trim() };
         setUserData(finalUserData);
         setWorkflowStage("completed");
-        addNithyaMessage(`Thank you so much, ${userData.name}.\nOur dedicated team will get back to you shortly.\n\nYou can reach us directly at:\n📞 +91 91484 26795\n✉️ contact@legacyglobalbank.com\n\nIs there anything else I can help you with today?`);
+        addFXGuruMessage(`Thank you so much, ${userData.name}.\nOur dedicated team will get back to you shortly.\n\nYou can reach us directly at:\n📞 +91 91484 26795\n✉️ contact@legacyglobalbank.com\n\nIs there anything else I can help you with today?`);
         sendContactEmails(finalUserData);
         break;
       // Deal workflow stages
       case "deal-name":
         setUserData((prev) => ({ ...prev, name: userInput.trim() }));
         setWorkflowStage("deal-phone");
-        addNithyaMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
+        addFXGuruMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
         break;
       case "deal-phone":
         setUserData((prev) => ({ ...prev, phone: userInput.trim() }));
         setWorkflowStage("deal-email");
-        addNithyaMessage("Got it, thank you. May I have your email address?");
+        addFXGuruMessage("Got it, thank you. May I have your email address?");
         break;
       case "deal-email":
         setUserData((prev) => ({ ...prev, email: userInput.trim() }));
         setWorkflowStage("deal-city");
-        addNithyaMessage("Thank you. Lastly, which city are you based in?");
+        addFXGuruMessage("Thank you. Lastly, which city are you based in?");
         break;
       case "deal-city":
         setUserData((prev) => ({ ...prev, city: userInput.trim() }));
@@ -118,7 +143,7 @@ export default function NithyaChat() {
 
   const sendContactEmails = async (userData: any) => {
   try {
-    const response = await fetch("http://localhost:3001/api/contact", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -153,25 +178,25 @@ const submitDealInquiry = async () => {
           email: userData.email,
           city: userData.city,
           message: dealMessage,
-          subject: "Deal Inquiry from Nithya Chatbot"
+          subject: "Deal Inquiry from FXGuru Chatbot"
         }),
       });
 
       const data = await response.json();
       
       if (data.success) {
-        addNithyaMessage(`Thank you ${userData.name}! \u2709\ufe0f Your deal inquiry has been sent to our team.\nYou will also receive a confirmation email shortly.`);
+        addFXGuruMessage(`Thank you ${userData.name}! \u2709\ufe0f Your deal inquiry has been sent to our team.\nYou will also receive a confirmation email shortly.`);
         
         // Reset workflow and data
         setWorkflowStage("none");
         setUserData({ name: "", phone: "", email: "", city: "" });
         setDealMessage("");
       } else {
-        addNithyaMessage("I apologize, but there was an issue submitting your deal inquiry. Please try again or contact our support team directly.");
+        addFXGuruMessage("I apologize, but there was an issue submitting your deal inquiry. Please try again or contact our support team directly.");
       }
     } catch (error) {
       console.error("Error submitting deal inquiry:", error);
-      addNithyaMessage("I apologize, but I'm having trouble connecting right now. Please try again in a moment or contact our support team.");
+      addFXGuruMessage("I apologize, but I'm having trouble connecting right now. Please try again in a moment or contact our support team.");
     } finally {
       setIsLoading(false);
     }
@@ -231,7 +256,7 @@ const submitDealInquiry = async () => {
 
     if (workflowStage !== "none" && workflowStage !== "completed" && userInput.toLowerCase().includes("stop")) {
       setWorkflowStage("none");
-      addNithyaMessage("No problem at all. Let me know how else I can assist you today.");
+      addFXGuruMessage("No problem at all. Let me know how else I can assist you today.");
       return;
     }
     if (workflowStage !== "none" && workflowStage !== "completed") {
@@ -249,7 +274,7 @@ const submitDealInquiry = async () => {
     setIsTyping(true);
     getAIResponse(userInput).then((response) => {
       setIsTyping(false);
-      addNithyaMessage(response);
+      addFXGuruMessage(response);
     });
   };
 
@@ -257,7 +282,7 @@ const submitDealInquiry = async () => {
     date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   // Rich message renderer: detects numbered lists, bold (**text**), and emoji prefixes
-  const renderMessageContent = (content: string, sender: "user" | "nithya") => {
+  const renderMessageContent = (content: string, sender: "user" | "fxguru") => {
     if (sender === "user") {
       return <p className="bubble-text">{content}</p>;
     }
@@ -406,14 +431,15 @@ const submitDealInquiry = async () => {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
 
         :root {
-          --navy: #0a1628;
-          --navy-mid: #122040;
-          --navy-light: #1a2f58;
+          --navy:#0c1635;
+          --navy-mid: #0c1635;
+          --navy-light: #0c1635;
           --gold: #c9a84c;
           --gold-light: #e2c47a;
           --gold-pale: #f5e6c0;
           --cream: #fdf8f0;
           --text-light: #8a9bb5;
+          --color-green-700: #15803d;
         }
 
         .chat-widget * { box-sizing: border-box; }
@@ -434,10 +460,17 @@ const submitDealInquiry = async () => {
           align-items: center;
           justify-content: center;
           transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+          
         }
         .chat-toggle:hover {
           transform: scale(1.1) translateY(-2px);
           box-shadow: 0 12px 40px rgba(10,22,40,0.55), 0 0 0 2px rgba(201,168,76,0.5);
+        }
+        .chat-gif {
+          width: 70px;
+          height: 70px;
+          object-fit: contain;
+          margin-bottom: 4px;
         }
         .chat-toggle-ring {
           position: absolute;
@@ -537,13 +570,14 @@ const submitDealInquiry = async () => {
         .header-badge {
           font-family: 'DM Sans', sans-serif;
           font-size: 10px;
-          font-weight: 400;
-          color: var(--gold);
-          background: rgba(201,168,76,0.12);
-          border: 1px solid rgba(201,168,76,0.25);
+          font-weight: 600;
+          color: var(--color-green-700);
+          background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+          border: 1px solid #86efac;
           border-radius: 20px;
-          padding: 3px 9px;
+          padding: 4px 10px;
           letter-spacing: 0.05em;
+          box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
         }
 
         .messages-area {
@@ -722,22 +756,77 @@ const submitDealInquiry = async () => {
           letter-spacing: 0.06em;
         }
         .footer-brand span { color: var(--gold); }
+
+        .chat-bubble-message {
+          position: fixed;
+          bottom: 95px;
+          right: 85px;
+          z-index: 9998;
+          background: linear-gradient(135deg, #0a1628 0%, #1a2f58 100%);
+          border-radius: 12px;
+          padding: 12px 16px;
+          max-width: 200px;
+          box-shadow: 0 4px 20px rgba(10, 22, 40, 0.45), 0 0 0 1px rgba(201, 168, 76, 0.3);
+          animation: bubbleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes bubbleIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px) scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .chat-bubble-message p {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.9);
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .chat-bubble-message::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          right: 20px;
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-top: 8px solid #1a2f58;
+        }
+
+        @media (max-width: 480px) {
+          .chat-bubble-message {
+            bottom: 80px;
+            right: 70px;
+            max-width: 180px;
+          }
+        }
       `}</style>
 
       <div className="chat-widget">
         {/* Toggle Button */}
-        <button className="chat-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Chat with Nithya">
+        <button className="chat-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Chat with FXGuru">
           <div className="chat-toggle-ring" />
           {isOpen ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.9)" strokeWidth="2.5" strokeLinecap="round">
-              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <X size={20} color="rgba(201,168,76,0.9)" strokeWidth={2.5} />
           ) : (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.9)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
+            <img src="/robot1.gif" alt="Chat" className="chat-gif" />
           )}
         </button>
+
+        {/* Chat Bubble Message */}
+        {showBubble && !isOpen && (
+          <div className="chat-bubble-message">
+            <p> 👋 Hello! U want know more about forex? Click Me ✌️</p>
+          </div>
+        )}
 
         {/* Chat Window */}
         {isOpen && (
@@ -750,10 +839,10 @@ const submitDealInquiry = async () => {
                   <div className="online-dot" />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="header-name">Nithya</div>
+                  <div className="header-name">FXGuru</div>
                   <div className="header-sub">Legacy Global Bank</div>
                 </div>
-                <div className="header-badge">● Online</div>
+                <div className="header-badge" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '70px' }}>● Online</div>
               </div>
             </div>
 
@@ -767,7 +856,7 @@ const submitDealInquiry = async () => {
 
               {messages.map((msg) => (
                 <div key={msg.id} className={`msg-row ${msg.sender}`}>
-                  {msg.sender === "nithya" && (
+                  {msg.sender === "fxguru" && (
                     <div className="msg-avatar">👩‍💼</div>
                   )}
                   <div className={`bubble ${msg.sender}`}>
