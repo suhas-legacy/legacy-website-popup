@@ -59,7 +59,12 @@ export const PromoPopup = () => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/80 backdrop-blur-md mt-100px">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closePopup();
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.7, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -67,16 +72,22 @@ export const PromoPopup = () => {
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="relative w-full max-w-[420px] mx-4 bg-black border border-yellow-500/30 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(234,179,8,0.15)]"
             style={{ marginTop: "120px" }}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
-            <button
-              onClick={closePopup}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white z-20 w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+            {/* <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                closePopup();
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white z-[9999] w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="Close"
             >
               ✕
-            </button>
+            </button> */}
 
-            <div className="p-6 text-center relative z-10 mt-10px">
+            <div className="p-6 text-center relative z-10">
               <motion.div 
                 animate={{ y: [-4, 4, -4] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
