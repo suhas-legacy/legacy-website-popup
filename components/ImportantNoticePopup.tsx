@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AlertTriangle } from 'lucide-react';
+import { WarningGraphic } from "@/components/ui/warning-graphic";
 
 const STORAGE_KEY = "legacyImportantNoticeSeen";
 
@@ -51,33 +51,7 @@ export function ImportantNoticePopup() {
       }}
     >
       <div className="popup-modal">
-        <style jsx>{`
-          .popup-badge {
-            background: #dc2626;
-            color: #ffffff;
-            border-radius: 9999px;
-            width: 44px;
-            height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            animation: legacy-alert-blink 1s infinite;
-          }
 
-          @keyframes legacy-alert-blink {
-            0%,
-            100% {
-              transform: scale(1);
-              box-shadow: 0 0 0 rgba(220, 38, 38, 0);
-              filter: brightness(1);
-            }
-            50% {
-              transform: scale(1.06);
-              box-shadow: 0 0 0.75rem rgba(220, 38, 38, 0.55);
-              filter: brightness(1.1);
-            }
-          }
-        `}</style>
         <button
           ref={closeBtnRef}
           type="button"
@@ -88,9 +62,13 @@ export function ImportantNoticePopup() {
           ×
         </button>
 
-        <div className="popup-badge">
-          <AlertTriangle size={20} />
-          
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+          <WarningGraphic
+            width={280}
+            height={91}
+            enableAnimations={true}
+            animationSpeed={1.2}
+          />
         </div>
         <h3 id="important-notice-title" className="popup-title">
     Important Notice

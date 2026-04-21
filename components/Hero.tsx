@@ -37,11 +37,10 @@ export const Hero = React.memo(function Hero() {
           <span className="hero-word hero-word-your">THE</span>{" "}
           <span className="hero-word hero-word-legacy">WORLD.</span>
           <br />
-          <span className="gold-line">BUILD YOUR EMPIRE.</span>
+          <span className="gold-line">BEGIN YOUR TRADING JOURNEY.</span>
         </h1>
         <p className="hero-sub">
-          Your gateway to global financial markets — Forex, Stocks, Crypto,
-          Commodities, Indices &amp; more. Up to 1:500 leverage.
+         500+ instruments. 150+ countries. Up to 1:500 leverage. Trade Forex, Stocks, Crypto, Commodities & Indices on one globally trusted platform on a globally accessible trading platform
         </p>
         <div className="hero-btns">
           <a href="/accounts" className="btn-gold">

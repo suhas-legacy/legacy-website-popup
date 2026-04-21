@@ -9,6 +9,7 @@ import { PipCalculator } from "./PipCalculator";
 import { MarginCalculator } from "./MarginCalculator";
 import { LotSizeCalculator } from "./LotSizeCalculator";
 import { ProfitCalculator } from "./ProfitCalculator";
+import { CompactMarginCalculator } from "./CompactMarginCalculator";
 
 // API symbols mapping
 const priceApiSymbols: Record<string, string> = {
@@ -215,7 +216,7 @@ const educationSections = [
     icon: "📊",
     content: {
       heading: "WHAT IS FOREX (FX)?",
-      description: "Foreign Exchange — known as Forex or FX — is the world's largest financial market, where currencies are bought and sold 24 hours a day. With over $7.5 trillion traded daily, Forex offers unmatched liquidity, flexibility and opportunity for traders of all levels.",
+      description: "Foreign Exchange (Forex or FX) is the world's largest financial market where currencies are traded 24 hours a day, 5 days a week. With over $7.5 trillion traded daily, Forex offers high liquidity, flexibility and opportunity for traders at all levels.",
       cards: [
         {
           label: "Operates 24 Hours a Day, 5 Days a Week ....",
@@ -611,125 +612,6 @@ const educationSections = [
       ],
     },
   },
-  {
-    id: "leverage-margin",
-    title: "Leverage & Margin",
-    icon: "⚡",
-    content: {
-      heading: "Leverage and Margin",
-      description: "Leverage allows traders to control a large position with a small amount of capital. Margin is the money required to open a position.",
-      formula: "Margin = (Current Market Price × Lot Size × Volume) / Leverage",
-      example: {
-        leverage: "1:500",
-        capital: "$200",
-        control: "$100,000",
-      },
-    },
-  },
-  {
-    id: "calculators",
-    title: "Calculators",
-    icon: "🧮",
-    content: {
-      heading: "Trading Calculators",
-      description: "Use our professional trading calculators to plan your trades, manage risk, and calculate potential profits and margins before you enter the market.",
-      cards: [
-        {
-          label: "PIP Calculator",
-          popup: {
-            title: "PIP CALCULATOR — MEASURE YOUR PRICE MOVEMENTS",
-            description: "The PIP Calculator helps you determine the value of a pip for different currency pairs and position sizes. This is essential for calculating your potential profit or loss per pip movement.",
-            table: {
-              headers: ["Input", "Description"],
-              rows: [
-                ["Currency Pair", "Select the pair you want to trade (e.g., EUR/USD, GBP/USD)"],
-                ["Position Size", "Enter your lot size (0.01, 0.1, 1.0, etc.)"],
-                ["Account Currency", "Your trading account's base currency"],
-                ["Current Price", "The current market price of the pair"]
-              ]
-            },
-            bullets: [
-              "Calculate pip value in your account currency",
-              "Plan your risk per trade accurately",
-              "Understand how much each pip movement affects your profit/loss",
-              "Works for all major, minor, and exotic currency pairs"
-            ],
-            example: "- EUR/USD at 1.0800 with 1 Standard Lot\n- Pip Value = $10 per pip\n- 50 pip movement = $500 profit or loss"
-          }
-        },
-        {
-          label: "Margin Calculator",
-          popup: {
-            title: "MARGIN CALCULATOR — KNOW YOUR REQUIRED CAPITAL",
-            description: "The Margin Calculator shows you exactly how much margin is required to open and maintain a leveraged position based on your instrument, lot size, and leverage.",
-            table: {
-              headers: ["Input", "Description"],
-              rows: [
-                ["Instrument", "Choose your trading instrument (currency pair, gold, oil, etc.)"],
-                ["Lot Size", "Micro (0.01), Mini (0.1), or Standard (1.0) lots"],
-                ["Leverage", "Your account leverage (1:50, 1:100, 1:500, etc.)"],
-                ["Current Price", "Live market price of the instrument"]
-              ]
-            },
-            bullets: [
-              "Calculate required margin before opening a trade",
-              "Prevent margin calls by planning your positions",
-              "Compare margin requirements across different instruments",
-              "Understand the impact of leverage on your capital"
-            ],
-            example: "- EUR/USD at 1.0800, 1 Standard Lot, 1:100 leverage\n- Required Margin = $1,080\n- You control $100,000 with just $1,080"
-          }
-        },
-        {
-          label: "Lot Size Calculator",
-          popup: {
-            title: "LOT SIZE CALCULATOR — MANAGE YOUR RISK PERFECTLY",
-            description: "The Lot Size Calculator helps you determine the optimal position size based on your account balance, risk percentage, and stop loss distance. This is crucial for proper risk management.",
-            table: {
-              headers: ["Input", "Description"],
-              rows: [
-                ["Account Balance", "Your total account balance in USD"],
-                ["Risk Percentage", "How much of your account you're willing to risk (1-2% recommended)"],
-                ["Stop Loss (pips)", "Your planned stop loss distance in pips"],
-                ["Currency Pair", "The pair you're trading"]
-              ]
-            },
-            bullets: [
-              "Automatically calculate the correct lot size for your risk level",
-              "Never risk more than your predetermined percentage per trade",
-              "Adjust position sizes based on stop loss distance",
-              "Protect your account from large drawdowns"
-            ],
-            example: "- Account: $10,000, Risk: 2%, Stop Loss: 50 pips\n- Risk Amount: $200\n- Recommended Lot Size: 0.4 lots (4 mini lots)"
-          }
-        },
-        {
-          label: "Profit Calculator",
-          popup: {
-            title: "PROFIT CALCULATOR — PLAN YOUR TRADES",
-            description: "The Profit Calculator estimates your potential profit or loss for a trade based on your entry price, exit price, and position size. Plan your trades before you execute them.",
-            table: {
-              headers: ["Input", "Description"],
-              rows: [
-                ["Instrument", "Select your trading instrument"],
-                ["Lot Size", "Your position size in lots"],
-                ["Open Price", "Your planned entry price"],
-                ["Close Price", "Your planned exit price (take profit)"],
-                ["Trade Direction", "Buy (Long) or Sell (Short)"]
-              ]
-            },
-            bullets: [
-              "Calculate potential profit before entering a trade",
-              "Set realistic take profit targets",
-              "Understand your risk-reward ratio",
-              "Plan multiple scenarios with different exit points"
-            ],
-            example: "- EUR/USD: Buy at 1.0800, Sell at 1.0850\n- Position: 1 Standard Lot\n- Pips Gained: 50 pips\n- Potential Profit: $500"
-          }
-        }
-      ]
-    },
-  },
 ];
 
 // Popup Component for Education Cards
@@ -861,13 +743,7 @@ export function Education() {
   const activeSection = educationSections.find((s) => s.id === activeTab);
   
   const handleCardClick = (sectionId: string, cardIndex: number) => {
-    // If it's the calculators section, open calculator modal instead of popup
-    if (sectionId === "calculators") {
-      const calculatorNames = ["pip", "margin", "lot-size", "profit"];
-      setCalculatorModal(calculatorNames[cardIndex]);
-    } else {
-      setActivePopup({ sectionId, cardIndex });
-    }
+    setActivePopup({ sectionId, cardIndex });
   };
   
   const closePopup = () => {
@@ -931,8 +807,7 @@ export function Education() {
             {/* Forex Basics & How It Works - Feature Cards with Popups */}
             {(activeSection.id === "forex-basics" ||
               activeSection.id === "trading-mechanics" ||
-              activeSection.id === "pips-spreads" ||
-              activeSection.id === "calculators") && (
+              activeSection.id === "pips-spreads") && (
               <div className="feature-cards">
                 {activeSection.content.cards?.map((card, idx) => (
                   <div
@@ -1067,9 +942,7 @@ export function Education() {
               </div>
             )}
 
-            {/* Leverage & Margin - Interactive Calculator */}
-            {activeSection.id === "leverage-margin" && <MarginCalculator />}
-          </div>
+                      </div>
         )}
       </section>
 
@@ -1091,7 +964,7 @@ export function Education() {
               <>Lot: <strong>{modalLotType.charAt(0).toUpperCase() + modalLotType.slice(1)}</strong></>
             )}
           </p>
-          <MarginCalculator initialLotType={modalLotType} initialInstrument={modalInstrument} compact={true} />
+          <CompactMarginCalculator initialInstrument={modalInstrument} initialLotType={modalLotType} />
         </div>
       </Modal>
 
