@@ -216,7 +216,7 @@ const educationSections = [
     icon: "📊",
     content: {
       heading: "WHAT IS FOREX (FX)?",
-      description: "Foreign Exchange — known as Forex or FX — is the world's largest financial market, where currencies are bought and sold 24 hours a day. With over $7.5 trillion traded daily, Forex offers unmatched liquidity, flexibility and opportunity for traders of all levels.",
+      description: "Foreign Exchange (Forex or FX) is the world's largest financial market where currencies are traded 24 hours a day, 5 days a week. With over $7.5 trillion traded daily, Forex offers high liquidity, flexibility and opportunity for traders at all levels.",
       cards: [
         {
           label: "Operates 24 Hours a Day, 5 Days a Week ....",

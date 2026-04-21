@@ -65,8 +65,8 @@ export function Navbar() {
   }, [introPhase]);
 
   useEffect(() => {
-    // Check if animation has already played in this session
-    const hasPlayed = sessionStorage.getItem("navbarLogoAnimationPlayed");
+    // Check if animation has already played
+    const hasPlayed = localStorage.getItem("navbarLogoAnimationPlayed");
     
     if (hasPlayed) {
       // Skip animation if already played
@@ -78,8 +78,8 @@ export function Navbar() {
 
     const t = window.setTimeout(() => {
       setIntroPhase("move");
-      // Mark animation as played in sessionStorage
-      sessionStorage.setItem("navbarLogoAnimationPlayed", "true");
+      // Mark animation as played in localStorage
+      localStorage.setItem("navbarLogoAnimationPlayed", "true");
     }, 1500);
     return () => window.clearTimeout(t);
   }, [introPhase]);

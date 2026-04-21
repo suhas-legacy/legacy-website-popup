@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "./logo.svg";
+import {FaFacebook, FaInstagram, FaLinkedin, FaYoutube} from 'react-icons/fa';
 
 export function Footer() {
   return (
@@ -53,17 +54,17 @@ export function Footer() {
             and Indices. Trade with confidence, backed by cutting-edge technology.
           </p>
           <div className="social-links">
-            <a href="#" className="social-link" aria-label="X">
-              𝕏
+            <a href="https://www.facebook.com/profile.php?id=61581286876956" className="social-link" aria-label="Facebook">
+              <FaFacebook />
             </a>
             <a href="#" className="social-link" aria-label="LinkedIn">
-              in
+              <FaLinkedin />
             </a>
-            <a href="#" className="social-link" aria-label="Instagram">
-              📷
+            <a href="https://www.instagram.com/legacy_global_bank/" className="social-link" aria-label="Instagram">
+              <FaInstagram />
             </a>
             <a href="#" className="social-link" aria-label="YouTube">
-              ▶
+              <FaYoutube />
             </a>
           </div>
         </div>
