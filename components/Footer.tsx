@@ -130,6 +130,16 @@ export function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
+        <div className="ctrader-logo">
+          <Image
+            src="/ctraderlogo.png"
+            alt="cTrader"
+            width={200}
+            height={90}
+            unoptimized
+            style={{ filter: "brightness(100) invert(0)" }}
+          />
+        </div>
         <p>
           © 2026 All rights reserved.
         </p>

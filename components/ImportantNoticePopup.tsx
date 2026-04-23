@@ -75,13 +75,23 @@ export function ImportantNoticePopup() {
         </h3>
         <div className="popup-desc" style={{ textAlign: "left" }}>
           <p>
-            <span style={{ fontWeight: "bold" }}>Risk Warning : </span> Forex trading involves significant risk. Approximately 70% of retail investors lose money. Never invest funds you cannot afford to lose.
+            <span style={{ fontWeight: "bold" }}>Risk Warning : </span> Your captial is at risk. Leveraged products may not be sutiable for everyone.
           </p>
           <p>
-            <span style={{ fontWeight: "bold" }}>No Third-Party Endorsements : </span> Legacy GlobalBank does not authorize, endorse, or partner with any third-party fund managers or external investment schemes. We do not guarantee fixed returns or assured income on any products.
+            <span style={{ fontWeight: "bold" }}>No Guaranteed Returns : </span> No fixed returns or authorized third-party managers.
           </p>
           <p>
-            <span style={{ fontWeight: "bold" }}>Verify Your Communication : </span> Protect your data. All official communications must be verified through our official channels. Report any suspicious or unauthorized investment offers to our security team immediately.
+            <span style={{ fontWeight: "bold" }}>No External Fund Collection : </span> Funds accepted only via our official platform. Others = fraud.
+          </p>
+
+          <p>
+            <span style={{ fontWeight: "bold" }}>Verify Communications : </span> Use official channels only. Report anything suspicious.
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Account Security : </span> You are responsible for your account and data safety.
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Limitation of Liability:  </span> We are not liable for trading losses or third-party actions.
           </p>
         </div>
 
