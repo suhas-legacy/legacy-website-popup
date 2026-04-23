@@ -73,7 +73,7 @@ export function ImportantNoticePopup() {
         <h3 id="important-notice-title" className="popup-title">
     Important Notice
         </h3>
-        <div className="popup-desc" style={{ textAlign: "left" }}>
+        <div className="popup-desc" style={{ textAlign: "justify" }}>
           <p>
             <span style={{ fontWeight: "bold" }}>Risk Warning : </span> Your captial is at risk. Leveraged products may not be sutiable for everyone.
           </p>
