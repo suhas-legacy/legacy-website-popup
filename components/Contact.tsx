@@ -239,36 +239,6 @@ export function Contact() {
             {isSubmitting ? 'Sending...' : 'Send Message →'}
           </button>
         </form>
-        <div className="contact-info reveal">
-          <div className="info-card">
-            <div className="info-icon">📧</div>
-            <div>
-              <div className="info-label">Email Support</div>
-              <div className="info-val">support@legacyglobalbank.com</div>
-            </div>
-          </div>
-          <div className="info-card">
-            <div className="info-icon">💼</div>
-            <div>
-              <div className="info-label">Careers</div>
-              <div className="info-val">careers@legacyglobalbank.com</div>
-            </div>
-          </div>
-          <div className="info-card">
-            <div className="info-icon">🏛️</div>
-            <div>
-              <div className="info-label">Registered Office</div>
-              <div className="info-val">Saint Lucia · Reg. No. 00744</div>
-            </div>
-          </div>
-          <div className="info-card">
-            <div className="info-icon">⚖️</div>
-            <div>
-              <div className="info-label">Legal / Compliance</div>
-              <div className="info-val">Governed by UAE Law · Arbitration in UAE</div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
