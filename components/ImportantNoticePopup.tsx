@@ -75,25 +75,23 @@ export function ImportantNoticePopup() {
         </h3>
         <div className="popup-desc" style={{ textAlign: "justify" }}>
           <p>
-            <span style={{ fontWeight: "bold" }}>Trading Risk : </span>  High risk; most traders lose money. Trade only what you can afford.
+            <span style={{ fontWeight: "bold" }}>Risk Warning : </span> Your captial is at risk. Leveraged products may not be sutiable for everyone.
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>No Guaranteed Returns : </span> No fixed returns or authorized third-party managers.
           </p>
           <p>
-            <span style={{ fontWeight: "bold" }}>Verify Communications : </span> Use official channels only. Report anything suspicious.
-          </p>
-
-          <p>
             <span style={{ fontWeight: "bold" }}>No External Fund Collection : </span> Funds accepted only via our official platform. Others = fraud.
           </p>
 
           <p>
+            <span style={{ fontWeight: "bold" }}>Verify Communications : </span> Use official channels only. Report anything suspicious.
+          </p>
+          <p>
             <span style={{ fontWeight: "bold" }}>Account Security : </span> You are responsible for your account and data safety.
           </p>
-
           <p>
-            <span style={{ fontWeight: "bold" }}>Limitation of Liability : </span> We are not liable for trading losses or third-party actions.
+            <span style={{ fontWeight: "bold" }}>Limitation of Liability:  </span> We are not liable for trading losses or third-party actions.
           </p>
         </div>
 

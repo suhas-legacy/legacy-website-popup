@@ -12,7 +12,6 @@ export function RefundPolicy() {
       {/* Hero Section */}
       <section className="page-hero">
         <div className="hero-content">
-          <span className="section-label">Legal</span>
           <h1 className="section-title">
             Refund <span className="gold-text">Policy</span>
           </h1>

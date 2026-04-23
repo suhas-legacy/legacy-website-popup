@@ -72,7 +72,7 @@ export function Footer() {
           <h4>Company</h4>
           <ul>
             <li>
-              <a href="#why">About Us</a>
+              <Link href="/why-us">About Us</Link>
             </li>
             <li>
               <Link href="/career">Careers</Link>
@@ -103,35 +103,46 @@ export function Footer() {
             <li>
               <Link href="/calculators/lot-size-calculator">Lot Size Calculator</Link>
             </li>
+            <li>
+              <Link href="/forex-news">Forex News</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-col">
           <h4>Support</h4>
           <ul>
-            <li>
+            {/* <li>
               <a href="#">Help Center</a>
             </li>
             <li>
               <a href="#">Live Chat</a>
-            </li>
+            </li> */}
             <li>
-              <a href="#">Trading Education</a>
+              <Link href="/education">Trading Education</Link>
             </li>
-            <li>
+            {/* <li>
               <a href="#">Market Analysis</a>
-            </li>
+            </li> */}
             <li>
-              <a href="#contact">Contact Us</a>
+              <Link href="/contact">Contact Us</Link>
             </li>
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
+        <div className="ctrader-logo">
+          <Image
+            src="/ctraderlogo.png"
+            alt="cTrader"
+            width={200}
+            height={90}
+            unoptimized
+            style={{ filter: "brightness(100) invert(0)" }}
+          />
+        </div>
         <p>
-          © 2026 Legacy Global Bank Capital Limited. All rights reserved. Reg. No.
-          00744 · Saint Lucia
+          © 2026 All rights reserved.
         </p>
-        <p>Designed for Professional Traders · Powered by Advanced Technology</p>
       </div>
     </footer>
   );

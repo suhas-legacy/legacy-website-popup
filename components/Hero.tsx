@@ -37,6 +37,7 @@ export const Hero = React.memo(function Hero() {
           <span className="hero-word hero-word-your">THE</span>{" "}
           <span className="hero-word hero-word-legacy">WORLD.</span>
           <br />
+          
           <span className="gold-line">BEGIN YOUR TRADING JOURNEY.</span>
         </h1>
         <p className="hero-sub">

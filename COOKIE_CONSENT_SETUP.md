@@ -59,7 +59,7 @@ A production-grade GDPR/CCPA-compliant cookie consent and user data capture syst
    npm run dev
    ```
 
-   The backend will run on `http://localhost:3001`
+   The backend will run on `https://legacy-backend-151726525663.europe-west1.run.app`
 
 ### Frontend Setup
 
@@ -71,7 +71,7 @@ A production-grade GDPR/CCPA-compliant cookie consent and user data capture syst
 
 2. **Configure environment variables** in `.env`:
    ```env
-   NEXT_PUBLIC_API_URL=http://localhost:3001
+   NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app
    NEXT_PUBLIC_SITE_URL=https://yourdomain.com
    ```
 

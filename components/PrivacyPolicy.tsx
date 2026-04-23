@@ -13,7 +13,7 @@ export function PrivacyPolicy() {
       {/* Hero Section */}
       <section className="page-hero">
         <div className="hero-content">
-          <span className="section-label">Legal</span>
+          {/* <span className="section-label">Legal</span> */}
           <h1 className="section-title">
             Privacy <span className="gold-text">Policy</span>
           </h1>

@@ -12,7 +12,6 @@ export function TermsAndConditions() {
       {/* Hero Section */}
       <section className="page-hero">
         <div className="hero-content">
-          <span className="section-label">Legal</span>
           <h1 className="section-title">
             Terms & <span className="gold-text">Conditions</span>
           </h1>

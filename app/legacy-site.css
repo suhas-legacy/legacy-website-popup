@@ -323,8 +323,9 @@ nav.intro-running .nav-logo {
   line-height: 0.95;
   letter-spacing: 0.03em;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
+
 .hero-h1 .gold-line {
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--amber), var(--gold));
   background-size: 200%;
@@ -332,9 +333,11 @@ nav.intro-running .nav-logo {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
-  overflow: hidden;
+  overflow: visible;
+  width: auto;
   white-space: nowrap;
-  width: 0;
+  font-size: clamp(5rem, 10vw, 5.8rem);
+
   animation:
     shimmer 3s infinite linear,
     typingLoop 6s ease-in-out infinite;
@@ -1348,7 +1351,16 @@ footer {
 @media(max-width:640px) {
   section { padding: 4rem 1.2rem; }
   .nav-logo img { height: 90px !important; }
-  .hero-h1 { font-size: clamp(2.8rem, 10vw, 4rem); }
+  .hero-h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); letter-spacing: 0.01em; }
+  .hero-h1 .gold-line {
+    white-space: nowrap;
+    overflow: visible;
+    width: auto;
+    font-size: inherit;
+    animation: shimmer 3s infinite linear, typingLoop 6s ease-in-out infinite;
+    animation-delay: 1.2s, 1.2s;
+  }
+  .hero-content { padding: 0 1rem; }
   .hero-stats { gap: 1.5rem; }
   .market-grid { grid-template-columns:1fr; }
   .accounts-grid { grid-template-columns:1fr; }
@@ -1361,6 +1373,16 @@ footer {
   .counter-digit { font-size: clamp(3rem, 15vw, 6rem); height: clamp(3rem, 15vw, 6rem); }
   .counter-slot { width: clamp(2rem, 12vw, 4rem); height: clamp(3rem, 15vw, 6rem); }
   .stat-num { font-size: 1.8rem; }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  .ctrader-logo img {
+    width: 120px !important;
+    height: 54px !important;
+  }
 }
 
 /* TradingView chart modal */

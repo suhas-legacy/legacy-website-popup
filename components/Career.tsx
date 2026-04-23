@@ -197,7 +197,7 @@ export function Career() {
               View Open Positions
             </a>
             <a href="mailto:careers@legacyglobalbank.com" className="btn-outline">
-              Contact HR
+              Contact Us
             </a>
           </div>
         </div>
@@ -225,12 +225,12 @@ export function Career() {
       <section className="career-vision-mission">
         <div className="vm-container">
           <div className="vm-card vision">
-            <div className="vm-icon">🎯</div>
+            {/* <div className="vm-icon">🎯</div> */}
             <h3>Our Vision</h3>
             <p>To become the world's most trusted and innovative trading platform, empowering millions of traders to achieve financial freedom through cutting-edge technology and exceptional service.</p>
           </div>
           <div className="vm-card mission">
-            <div className="vm-icon">🚀</div>
+            {/* <div className="vm-icon">🚀</div> */}
             <h3>Our Mission</h3>
             <p>To democratize access to global financial markets by providing secure, transparent, and user-friendly trading solutions while maintaining the highest standards of integrity and client satisfaction.</p>
           </div>
