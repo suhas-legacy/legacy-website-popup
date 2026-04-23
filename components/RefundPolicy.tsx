@@ -37,6 +37,7 @@ export function RefundPolicy() {
                 <li>Refunds are issued solely at the discretion of the Company and in accordance with this policy.</li>
                 <li>By completing a transaction, you acknowledge and accept these refund terms.</li>
               </ul>
+              <p>The Company shall exercise its discretion reasonably, in good faith, and in accordance with applicable laws.</p>
             </section>
 
             <section className="policy-section">
@@ -49,6 +50,9 @@ export function RefundPolicy() {
                 <li>Failure of the Company to deliver a paid service</li>
               </ul>
               <p>All refund requests are subject to internal review and approval.</p>
+              <p>The Company reserves the right to issue partial refunds based on service usage.” 
+The Company may approve full or partial refunds depending on the nature and extent of service utilization.
+</p>
             </section>
 
             <section className="policy-section">
@@ -62,6 +66,7 @@ export function RefundPolicy() {
                 <li>Violation of Company Terms & Conditions</li>
                 <li>Change of mind after completing a transaction</li>
               </ul>
+              <p>All applicable fees including payment gateway charges, processing fees, taxes, and currency conversion costs are non-refundable.</p>
             </section>
 
             <section className="policy-section">
@@ -79,6 +84,7 @@ export function RefundPolicy() {
                 <li>The Company may request additional documentation for verification purposes.</li>
                 <li>Requests must be submitted within <strong>7 days</strong> of the transaction date.</li>
               </ul>
+              <p>The Company reserves the right to reject refund requests in cases of suspected fraud, abuse, or misuse of services.</p>
             </section>
 
             <section className="policy-section">
@@ -96,7 +102,9 @@ export function RefundPolicy() {
                 <li>Refunds will be issued using the original payment method whenever possible.</li>
                 <li>If the original method is unavailable, an alternative method may be used at the Company's discretion.</li>
                 <li>Currency conversion fees or transaction charges may apply and will be deducted from the refund amount.</li>
+                <li>Submission of a refund request does not guarantee approval.</li>
               </ul>
+              <p>The Company reserves the right to suspend or restrict account access during refund investigations.</p>
             </section>
 
             <section className="policy-section">
@@ -106,6 +114,7 @@ export function RefundPolicy() {
                 <li>Unauthorized chargebacks may result in account suspension or termination.</li>
                 <li>The Company reserves the right to dispute any chargeback claim.</li>
               </ul>
+              <p>Unauthorized transactions will be considered only if reported immediately and subject to strict verification. The Company is not liable for losses arising from compromised user credentials.</p>
             </section>
 
             <section className="policy-section">
@@ -119,6 +128,16 @@ export function RefundPolicy() {
             <section className="policy-section">
               <h2>9. Contact Information</h2>
               <p>For refund-related inquiries, please contact our support team through official communication channels provided on our website.</p>
+            </section>
+
+            <section className="policy-section">
+              <h2>10. Fraud & Misuse</h2>
+              <p>The Company reserves the right to deny refunds and take appropriate action, including account suspension or termination, in cases of suspected fraud, abuse, or misuse of services.</p>
+            </section>
+
+            <section className="policy-section">
+              <h2>11.  Governing Law & Jurisdiction</h2>
+              <p>This Refund Policy shall be governed by the laws of Mauritius/UAE. Any disputes shall be subject to the exclusive jurisdiction of courts located in Saint Lucia.</p>
             </section>
           </div>
         </div>

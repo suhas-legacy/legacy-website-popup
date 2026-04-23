@@ -17,7 +17,7 @@ export function TermsAndConditions() {
             Terms & <span className="gold-text">Conditions</span>
           </h1>
           <p className="section-desc">
-            Read the terms and conditions governing your use of Legacy Global Bank Capital Limited's services.
+            Read the terms and conditions governing your use of Legacy Global Bank Capital Limited services.
           </p>
         </div>
       </section>
@@ -68,6 +68,7 @@ export function TermsAndConditions() {
                 <li>Service interruptions may occur due to maintenance or technical issues.</li>
                 <li>Trading conditions, including leverage and margin, may change without prior notice.</li>
               </ul>
+              <p>The Company does not provide market positions or trading signals at any time, nor does it solicit or manage client funds under any circumstances. Any individual claiming to offer such services or requesting funds on our behalf is acting without authorization. Clients are advised to report such instances immediately. The Company shall not be liable for any losses arising from reliance on such unauthorized communications or transactions.</p>
             </section>
 
             <section className="policy-section">
@@ -174,6 +175,7 @@ export function TermsAndConditions() {
                 <li>Unresolved disputes will be handled through binding arbitration in the UAE.</li>
                 <li>UAE laws will govern all legal matters.</li>
               </ul>
+              <p>All disputes shall be governed by the laws of Saint Lucia.</p>
             </section>
 
             <section className="policy-section">

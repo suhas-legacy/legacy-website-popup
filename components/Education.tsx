@@ -237,16 +237,21 @@ const educationSections = [
               "Trade before or after your regular job",
               "React instantly to breaking economic news",
               "Best volatility occurs when two sessions overlap (London + New York)",
-              "No waiting for markets to 'open' like with stocks"
+              "No waiting for markets to 'open' like with stocks",
+              "Trade around your schedule ",
+              "React to global news ",
+              "Market volatility during session overlaps "
+
             ]
           }
         },
         {
-          label: "Includes All Currencies of the World",
+          label: "GLOBAL CURRENCY MARKET ",
           viewMore: true,
           popup: {
-            title: "EVERY CURRENCY. ONE GLOBAL MARKET.",
+            title: "ALL CURRENCIES. ONE GLOBAL MARKET.",
             description: "The Forex market includes every official currency on the planet — from the US Dollar and Euro to exotic currencies like the Thai Baht or South African Rand. Currencies are always traded in pairs, meaning you simultaneously buy one currency and sell another.",
+            
             table: {
               headers: ["Type", "Examples", "Characteristic"],
               rows: [
@@ -258,16 +263,16 @@ const educationSections = [
             bullets: [
               "Over 180 currencies recognized worldwide",
               "USD is involved in nearly 88% of all Forex trades",
-              "EUR/USD is the most traded pair globally",
+              "EUR/USD is the most GLOBALLY COMMON traded pair",
               "Exotic pairs offer bigger moves but carry higher risk"
             ]
           }
         },
         {
-          label: "Average Daily Trading Volume in the Trillions",
+          label: "Average Daily Trading Volume in the Trillions - MARKET SIZE",
           popup: {
             title: "$7.5 TRILLION TRADED EVERY SINGLE DAY",
-            description: "The Forex market is the largest and most liquid financial market in the entire world — dwarfing the stock market, bond market, and all commodity markets combined. Over $7.5 trillion changes hands every single day.",
+            description: "FOREX Market is the largest and the most financially liquid market in the entire world — dwarfing the stock market, bond market, and all commodity markets combined. Over $7.5 trillion changes hands every single day.",
             table: {
               headers: ["Market", "Daily Volume"],
               rows: [
@@ -283,12 +288,12 @@ const educationSections = [
               "No single bank or institution can manipulate the market",
               "Tight spreads due to massive competition between buyers and sellers",
               "You can enter and exit trades of any size at any time",
-              "Price movements are driven by real global economic forces"
+              "Price movements are driven by real global economic actors"
             ]
           }
         },
         {
-          label: "Also Referred to as FOREX, FX, or Spot FX",
+          label: "FOREX / FX / SPOT FX ",
           popup: {
             title: "FOREX vs FX vs SPOT FX — WHAT'S THE DIFFERENCE?",
             description: "You'll often see the currency market referred to by different names. They all refer to the same global marketplace, but each term highlights a slightly different context or trading method.",
@@ -322,7 +327,7 @@ const educationSections = [
       description: "As your Forex broker, Legacy Global Bank gives you direct access to the global currency market. You decide what to trade, when to trade, and how much to trade — we provide the platform, execution, and tools to make it happen.",
       cards: [
         {
-          label: "Buy & sell currency pairs through our broker platform",
+          label: "Buy & sell currency pairs",
           popup: {
             title: "HOW FOREX PROFITS WORK",
             description: "In Forex trading, you profit from the difference between the price you buy a currency pair and the price you sell it. As your broker, Legacy Global Bank executes both sides of your trade instantly at live market prices.",
@@ -345,10 +350,10 @@ const educationSections = [
           }
         },
         {
-          label: "Live Forex rates updated every millisecond on our platform",
+          label: "Live Forex rates are updated every millisecond on our platform",
           popup: {
-            title: "WHY CURRENCY PRICES MOVE — AND HOW YOU TRADE IT",
-            description: "Currency values change every second of every trading day. These price movements are what create trading opportunities. As a broker, Legacy Global Bank gives you real-time price feeds so you always see the live market rate.",
+            title: "WHY CURRENCY PRICES MOVE — AND HOW DO YOU TRADE IT",
+            description: "Currency values change every second, on every trading day. These price movements create trading opportunities. As your broker, Legacy Global Bank provides real-time price feeds to help you view live market rates.",
             table: {
               headers: ["Cause", "Example"],
               rows: [
@@ -363,10 +368,13 @@ const educationSections = [
             bullets: [
               "More price movement = more trading opportunities",
               "Both rising AND falling markets can be profitable with CFDs",
-              "Legacy Global Bank provides real-time charts and price alerts — you make the call",
+              "Legacy Global Bank provides real-time charts and price alerts — for you to make the call",
               "We do not predict where prices go — we give you the tools to decide for yourself"
-            ]
+            ],
+            riskWarning: " CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. Between 70–85% of retail investor accounts lose money when trading CFDs. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money.",
+            tradingPolicy: " Certain high-frequency or abusive trading strategies that exploit system inefficiencies may be restricted to ensure fair market conditions."
           }
+
         },
         {
           label: "Full trading control — we never advise, we only execute",
@@ -429,7 +437,7 @@ const educationSections = [
                 ]
               }
             ],
-            brokerNote: "Legacy Global Bank executes this trade on your behalf at live market prices. We do not advise whether to buy or sell. Risk management — including stop losses and position sizing — is entirely your responsibility as the trader."
+            brokerNote: "Legacy Global Bank executes this trade on your behalf at real-time live market prices. We do not advise whether to buy or sell. Risk management — including stop losses and position sizing — is entirely your responsibility as the trader."
           }
         }
       ]
@@ -441,7 +449,8 @@ const educationSections = [
     icon: "📈",
     content: {
       heading: "PIPS AND SPREADS EXPLAINED",
-      description: "A pip is the smallest unit of price movement in the Forex market. The spread is the difference between the Buy (Ask) and Sell (Bid) price — and it is how Legacy Global Bank earns as your execution broker. No hidden fees. No surprises. Just transparent trading costs on every single trade.",
+      description: "A pip is the smallest unit of price movement. The spread is the difference between bid and ask price.",
+
       cards: [
         {
           label: "What is a pip in Forex trading?",
@@ -634,6 +643,8 @@ interface EducationPopupProps {
     example?: string;
     note?: string;
     brokerNote?: string;
+    riskWarning?: string;
+    tradingPolicy?: string;
   };
 }
 
@@ -720,6 +731,18 @@ function EducationPopup({ isOpen, onClose, popup }: EducationPopupProps) {
         {popup.brokerNote && (
           <div className="popup-broker-note">
             <p><strong>Broker Note:</strong> {popup.brokerNote}</p>
+          </div>
+        )}
+        
+        {popup.riskWarning && (
+          <div className="popup-risk-warning">
+            <p><strong>⚠️ Risk Warning (UPDATED):</strong> {popup.riskWarning}</p>
+          </div>
+        )}
+        
+        {popup.tradingPolicy && (
+          <div className="popup-trading-policy">
+            <p><strong>Trading Policy (UPDATED):</strong> {popup.tradingPolicy}</p>
           </div>
         )}
       </div>
