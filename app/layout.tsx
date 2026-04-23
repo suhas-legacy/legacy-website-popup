@@ -21,6 +21,9 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Legacy Global Bank — Trade With Confidence",
   description: "Legacy Global Bank landing page migrated to Next.js",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({
