@@ -66,6 +66,8 @@ export function PrivacyPolicy() {
                 <li>Cookies to enhance user experience and platform performance</li>
                 <li>Analytics tools to understand user behavior and improve services</li>
               </ul>
+              <h2>Disclaimer: </h2>
+              <p>We process personal data based on contractual necessity, legal obligations, legitimate interests, and user consent, where applicable.</p>
             </section>
 
             <section className="policy-section">
@@ -78,6 +80,11 @@ export function PrivacyPolicy() {
                 <li>Providing customer support</li>
                 <li>Improving platform performance and user experience</li>
                 <li>Sending important updates, notifications, and promotional content (where permitted)</li>
+              </ul>
+              <h2>Disclaimer: </h2>
+              <ul>
+                <li>We may process data for legitimate business interests including fraud prevention, risk management, service improvement, and security monitoring.</li>
+                <li>We may also process your data for legitimate business interests including fraud detection, risk management, regulatory compliance, and service optimization.</li>
               </ul>
             </section>
 
@@ -100,6 +107,8 @@ export function PrivacyPolicy() {
                 <li>Data is stored securely and access is restricted to authorized personnel only.</li>
                 <li>Despite our efforts, no system can guarantee complete security against all threats.</li>
               </ul>
+              <h2>Disclaimer: </h2>
+              <p>The Company shall not be liable for any indirect, incidental, or consequential damages arising from unauthorized access, data breaches, or cyber incidents beyond its reasonable control. </p>
             </section>
 
             <section className="policy-section">
@@ -108,6 +117,9 @@ export function PrivacyPolicy() {
                 <li>Your personal data is retained only as long as necessary for legal, regulatory, and operational purposes.</li>
                 <li>We may retain certain records even after account closure to comply with legal obligations.</li>
               </ul>
+              <h2>Disclaimer: </h2>
+              <p>The Company shall not be liable for unauthorized access, data breaches, or loss of data arising from circumstances beyond its reasonable control.
+Users are responsible for maintaining the confidentiality of their account credentials and for all activities conducted under their account</p>
             </section>
 
             <section className="policy-section">
@@ -120,7 +132,10 @@ export function PrivacyPolicy() {
                 <li>Withdraw consent for data processing</li>
                 <li>Object to certain data uses</li>
               </ul>
+
               <p>Requests can be made through our official support channels.</p>
+              <h2>Disclaimer: </h2>
+              <p>Users are responsible for maintaining the confidentiality of their account credentials and for all activities conducted under their account.</p>
             </section>
 
             <section className="policy-section">
@@ -132,15 +147,29 @@ export function PrivacyPolicy() {
             </section>
 
             <section className="policy-section">
-              <h2>8. International Data Transfers</h2>
+              <h2>8. Fraud / Compliance Monitoring Disclosure</h2>
+              <ul>
+                <li>We may monitor transactions and user activity for fraud prevention, anti-money laundering (AML), and regulatory compliance purposes.</li>
+                <li>We reserve the right to restrict, suspend, or terminate access to services in case of suspected violations, fraud, or regulatory concerns.</li>
+                <li>We may use automated systems to assess risk, detect fraud, and improve service delivery.</li>
+              </ul>
+            </section>
+
+              
+
+            <section className="policy-section">
+              <h2>9. International Data Transfers</h2>
               <ul>
                 <li>Your data may be processed and stored in jurisdictions outside your country.</li>
                 <li>By using our services, you consent to such transfers, subject to applicable data protection laws.</li>
               </ul>
+              <h2>Disclaimer: </h2>
+              <p>We ensure that such transfers are subject to appropriate safeguards in accordance with applicable data protection laws.</p>
+
             </section>
 
             <section className="policy-section">
-              <h2>9. Third-Party Links</h2>
+              <h2>10. Third-Party Links</h2>
               <ul>
                 <li>Our platform may contain links to third-party websites.</li>
                 <li>We are not responsible for the privacy practices or content of such external sites.</li>
@@ -155,8 +184,24 @@ export function PrivacyPolicy() {
               </ul>
             </section>
 
+
+                        <section className="policy-section">
+              <h2>11. Data Breach</h2>
+             <p>In the event of a data breach, the Company will take appropriate remedial actions and notify affected users where required by applicable law.</p>
+            </section>
+
+                        <section className="policy-section">
+              <h2>12. Children's Privacy</h2>
+              <ul>
+                <li>Our services are not intended for individuals under the age of 18.</li>
+                <li>We do not knowingly collect personal data from minors.</li>
+              </ul>
+            </section>
+
+
+
             <section className="policy-section">
-              <h2>11. Policy Updates</h2>
+              <h2>13. Policy Updates</h2>
               <ul>
                 <li>We reserve the right to update this Privacy Policy at any time.</li>
                 <li>Changes will be effective upon posting on our website.</li>
@@ -165,8 +210,12 @@ export function PrivacyPolicy() {
             </section>
 
             <section className="policy-section">
-              <h2>12. Contact Information</h2>
+              <h2>14. Contact Information</h2>
               <p>For any privacy-related questions or requests, please contact our support team through official communication channels available on our website.</p>
+            </section>
+                       <section className="policy-section">
+              <h2>15. Governing Law</h2>
+              <p>This Privacy Policy shall be governed by the laws of Maritius/UAE and subject to the jurisdiction of courts located in Saint Lucia.</p>
             </section>
           </div>
         </div>
