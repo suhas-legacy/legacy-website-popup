@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CalculatorLinks } from "@/components/CalculatorLinks";
 import { RefreshCw, Calculator, TrendingUp, Info, AlertCircle } from "lucide-react";
 import { useCalculatorMarketData } from "@/lib/useCalculatorMarketData";
 
@@ -163,6 +164,8 @@ export function GoldCalculatorClient() {
               Make informed investment decisions with real-time market data.
             </p>
           </div>
+
+          <CalculatorLinks currentPath="/calculators/gold-calculator" />
 
           {/* Live Price Ticker */}
           <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 border border-zinc-700 rounded-2xl p-6 mb-8">

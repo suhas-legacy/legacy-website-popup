@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CalculatorLinks } from "@/components/CalculatorLinks";
 import { Copy, Share2, Check, Info, Calculator, Shield, RefreshCw } from "lucide-react";
 import { useCalculatorMarketData, CALCULATOR_INSTRUMENTS } from "@/lib/useCalculatorMarketData";
 
@@ -236,6 +237,8 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
               Get accurate margin calculations for forex pairs and commodities with live market prices.
             </p>
           </div>
+
+          <CalculatorLinks currentPath="/calculators/margin-calculator" />
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">

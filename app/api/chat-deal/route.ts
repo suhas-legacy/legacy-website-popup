@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     // Send notification to backend contact API (reuse existing email functionality)
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
       
       await fetch(`${backendUrl}/api/contact`, {
         method: 'POST',

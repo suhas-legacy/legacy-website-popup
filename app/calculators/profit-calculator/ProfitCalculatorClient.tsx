@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CalculatorLinks } from "@/components/CalculatorLinks";
 import { Copy, Share2, Check, Info, Calculator, TrendingUp, TrendingDown, RefreshCw } from "lucide-react";
 import { useCalculatorMarketData, CALCULATOR_INSTRUMENTS } from "@/lib/useCalculatorMarketData";
 
@@ -229,6 +230,8 @@ Return on Margin: ${result.returnOnMargin.toFixed(2)}%`;
               Get accurate profit/loss calculations for forex pairs and commodities with live market prices.
             </p>
           </div>
+
+          <CalculatorLinks currentPath="/calculators/profit-calculator" />
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">

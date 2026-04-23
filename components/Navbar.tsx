@@ -169,8 +169,8 @@ export function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/contact" onClick={closeMenu} className={isActiveLink("/contact") ? "active" : ""}>
-            Contact
+          <Link href="/downloads" onClick={closeMenu} className={isActiveLink("/contact") ? "active" : ""}>
+            Downloads
           </Link>
         </li>
         <li>
@@ -184,8 +184,8 @@ export function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/downloads" onClick={closeMenu}>
-            Downloads
+          <Link href="/contact" onClick={closeMenu}>
+            Contact
           </Link>
         </li>
         <li className="mobile-only-cta">

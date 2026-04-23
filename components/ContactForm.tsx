@@ -70,7 +70,7 @@ export function ContactForm() {
     setErrorMessage("");
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
       const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: {
