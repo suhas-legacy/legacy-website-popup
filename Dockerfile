@@ -22,6 +22,19 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+# Build-time environment variables (for NEXT_PUBLIC_ variables)
+ARG NEXT_PUBLIC_FINNHUB_API_KEY
+ARG NEXT_PUBLIC_API_URL
+ARG GEMINI_API_KEY
+ARG ADMIN_EMAIL
+ARG RESEND_API_KEY
+
+ENV NEXT_PUBLIC_FINNHUB_API_KEY=${NEXT_PUBLIC_FINNHUB_API_KEY}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV GEMINI_API_KEY=${GEMINI_API_KEY}
+ENV ADMIN_EMAIL=${ADMIN_EMAIL}
+ENV RESEND_API_KEY=${RESEND_API_KEY}
+
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -31,6 +44,19 @@ WORKDIR /app
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
+
+# Runtime environment variables
+ARG NEXT_PUBLIC_FINNHUB_API_KEY
+ARG NEXT_PUBLIC_API_URL
+ARG GEMINI_API_KEY
+ARG ADMIN_EMAIL
+ARG RESEND_API_KEY
+
+ENV NEXT_PUBLIC_FINNHUB_API_KEY=${NEXT_PUBLIC_FINNHUB_API_KEY}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV GEMINI_API_KEY=${GEMINI_API_KEY}
+ENV ADMIN_EMAIL=${ADMIN_EMAIL}
+ENV RESEND_API_KEY=${RESEND_API_KEY}
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

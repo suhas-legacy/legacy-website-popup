@@ -10,6 +10,16 @@ steps:
       - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:$COMMIT_SHA'
       - '-t'
       - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:latest'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FINNHUB_API_KEY=$_NEXT_PUBLIC_FINNHUB_API_KEY'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_API_URL=$_NEXT_PUBLIC_API_URL'
+      - '--build-arg'
+      - 'GEMINI_API_KEY=$_GEMINI_API_KEY'
+      - '--build-arg'
+      - 'ADMIN_EMAIL=$_ADMIN_EMAIL'
+      - '--build-arg'
+      - 'RESEND_API_KEY=$_RESEND_API_KEY'
       - '.'
 
   # Push the Docker image to Artifact Registry
@@ -63,6 +73,11 @@ substitutions:
   _REPO_NAME: 'legacy-website-repo'
   _IMAGE_NAME: 'legacy-website'
   _SERVICE_NAME: 'legacy-website-service'
+  _NEXT_PUBLIC_FINNHUB_API_KEY: 'd7gceipr01qqb8rj4om0d7gceipr01qqb8rj4omg'
+  _NEXT_PUBLIC_API_URL: 'https://legacy-backend-151726525663.europe-west1.run.app'
+  _GEMINI_API_KEY: 'AIzaSyDxnv0ueIx2ITyn8lgMl80P4HnYh2NSmk0'
+  _ADMIN_EMAIL: 'chalamcharlasuhas1980@gmail.com'
+  _RESEND_API_KEY: 're_ZaDHjgSD_NUJKpLZWHaUNegJz76GFZTqV'
 
 # Timeout for the build
 timeout: '1800s'

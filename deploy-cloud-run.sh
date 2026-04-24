@@ -63,7 +63,13 @@ gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
 # Build and push Docker image
 IMAGE_URI="$REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$IMAGE_NAME:$(date +%s)"
 echo -e "${GREEN}Building Docker image: $IMAGE_URI${NC}"
-docker build -t $IMAGE_URI .
+docker build -t $IMAGE_URI \
+  --build-arg NEXT_PUBLIC_FINNHUB_API_KEY=d7gceipr01qqb8rj4om0d7gceipr01qqb8rj4omg \
+  --build-arg NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app \
+  --build-arg GEMINI_API_KEY=AIzaSyDxnv0ueIx2ITyn8lgMl80P4HnYh2NSmk0 \
+  --build-arg ADMIN_EMAIL=chalamcharlasuhas1980@gmail.com \
+  --build-arg RESEND_API_KEY=re_ZaDHjgSD_NUJKpLZWHaUNegJz76GFZTqV \
+  .
 
 echo -e "${GREEN}Pushing Docker image...${NC}"
 docker push $IMAGE_URI
