@@ -54,7 +54,7 @@ steps:
       - '--set-secrets'
       - 'GEMINI_API_KEY=GEMINI_API_KEY:latest'
       - '--set-secrets'
-      - 'FINNHUB_API_KEY=FINNHUB_API_KEY:latest'
+      - 'NEXT_PUBLIC_FINNHUB_API_KEY=FINNHUB_API_KEY:latest'
     entrypoint: 'gcloud'
 
 # Image build substitutions

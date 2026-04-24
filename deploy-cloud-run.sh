@@ -84,7 +84,7 @@ gcloud run deploy $SERVICE_NAME \
     --concurrency=80 \
     --set-env-vars=NODE_ENV=production,NEXT_PUBLIC_SITE_URL=https://legacyglobalbank.com \
     --set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest \
-    --set-secrets=FINNHUB_API_KEY=FINNHUB_API_KEY:latest \
+    --set-secrets=NEXT_PUBLIC_FINNHUB_API_KEY=FINNHUB_API_KEY:latest \
     --project=$PROJECT_ID
 
 # Get service URL
