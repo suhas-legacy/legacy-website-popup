@@ -81,7 +81,7 @@ The GitHub Actions workflow automatically:
    In Vercel dashboard, add these environment variables:
    ```
    GEMINI_API_KEY=your_gemini_api_key
-   NEXT_PUBLIC_API_URL=https://your-app.vercel.app
+   API_URL=https://your-app.vercel.app
    FINNHUB_API_KEY=your_finnhub_api_key
    NEXT_PUBLIC_SITE_URL=https://legacyglobalbank.com
    ```
@@ -128,7 +128,7 @@ vercel --prod
 ```bash
 GEMINI_API_KEY=your_gemini_api_key_here
 FINNHUB_API_KEY=your_finnhub_api_key_here
-NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app  # or your production API URL
+API_URL=https://legacy-backend-151726525663.europe-west1.run.app  # or your production API URL
 NEXT_PUBLIC_SITE_URL=https://legacyglobalbank.com
 ```
 

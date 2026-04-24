@@ -429,7 +429,7 @@ export function useDataCollection(consentChoices: ConsentChoices | null) {
 
   const sendData = async (data: CollectedData) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
+      const apiUrl = process.env.API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
       const response = await fetch(`${apiUrl}/api/track`, {
         method: 'POST',
         headers: {

@@ -64,8 +64,8 @@ gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
 IMAGE_URI="$REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$IMAGE_NAME:$(date +%s)"
 echo -e "${GREEN}Building Docker image: $IMAGE_URI${NC}"
 docker build -t $IMAGE_URI \
-  --build-arg NEXT_PUBLIC_FINNHUB_API_KEY=d7gceipr01qqb8rj4om0d7gceipr01qqb8rj4omg \
-  --build-arg NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app \
+  --build-arg FINNHUB_API_KEY=d7gceipr01qqb8rj4om0d7gceipr01qqb8rj4omg \
+  --build-arg API_URL=https://legacy-backend-151726525663.europe-west1.run.app \
   --build-arg GEMINI_API_KEY=AIzaSyDxnv0ueIx2ITyn8lgMl80P4HnYh2NSmk0 \
   --build-arg ADMIN_EMAIL=chalamcharlasuhas1980@gmail.com \
   --build-arg RESEND_API_KEY=re_ZaDHjgSD_NUJKpLZWHaUNegJz76GFZTqV \
@@ -90,7 +90,7 @@ gcloud run deploy $SERVICE_NAME \
     --concurrency=80 \
     --set-env-vars=NODE_ENV=production,NEXT_PUBLIC_SITE_URL=https://legacyglobalbank.com \
     --set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest \
-    --set-secrets=NEXT_PUBLIC_FINNHUB_API_KEY=FINNHUB_API_KEY:latest \
+    --set-secrets=FINNHUB_API_KEY=FINNHUB_API_KEY:latest \
     --project=$PROJECT_ID
 
 # Get service URL

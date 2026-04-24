@@ -1,6 +1,6 @@
 // Mail service for sending emails from chat workflow
 export class MailService {
-  private static readonly BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
+  private static readonly BACKEND_URL = process.env.API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
 
   static async sendContactEmails(userData: any): Promise<void> {
     try {

@@ -143,7 +143,7 @@ export default function FXGuruChat() {
 
   const sendContactEmails = async (userData: any) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
+    const response = await fetch(`${process.env.API_URL}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

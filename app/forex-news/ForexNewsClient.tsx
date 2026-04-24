@@ -144,7 +144,7 @@ export function ForexNewsClient() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const apiKey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
+        const apiKey = process.env.FINNHUB_API_KEY;
         if (!apiKey) {
           throw new Error("Finnhub API key not found in environment variables");
         }
