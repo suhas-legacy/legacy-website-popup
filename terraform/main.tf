@@ -81,8 +81,8 @@ resource "google_secret_manager_secret" "gemini_api_key" {
   depends_on = [google_project_service.apis]
 }
 
-resource "google_secret_manager_secret" "finnhub_api_key" {
-  secret_id = "FINNHUB_API_KEY"
+resource "google_secret_manager_secret" "NEXT_PUBLIC_FINNHUB_API_KEY" {
+  secret_id = "NEXT_PUBLIC_FINNHUB_API_KEY"
 
   replication {
     automatic = true

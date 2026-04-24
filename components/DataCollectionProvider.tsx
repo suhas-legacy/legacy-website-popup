@@ -51,7 +51,7 @@ export default function DataCollectionProvider() {
         };
         
         try {
-          const apiUrl = process.env.API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
           navigator.sendBeacon(`${apiUrl}/api/track`, JSON.stringify(data));
         } catch (error) {
           console.error('Beacon send failed:', error);

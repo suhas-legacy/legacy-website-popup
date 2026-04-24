@@ -30,7 +30,7 @@ gcloud services enable \
 ```bash
 # Create secrets for API keys
 echo "your_gemini_api_key" | gcloud secrets create GEMINI_API_KEY --data-file=-
-echo "your_finnhub_api_key" | gcloud secrets create FINNHUB_API_KEY --data-file=-
+echo "your_NEXT_PUBLIC_FINNHUB_API_KEY" | gcloud secrets create NEXT_PUBLIC_FINNHUB_API_KEY --data-file=-
 
 # Verify secrets
 gcloud secrets list

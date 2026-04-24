@@ -5,14 +5,14 @@ import { BotMessageSquare, X } from "lucide-react";
 
 interface Message {
   id: string;
-  sender: "user" | "fxguru";
+  sender: "user" | "apex";
   content: string;
   timestamp: Date;
 }
 
 type WorkflowStage = "none" | "name" | "phone" | "email" | "city" | "completed" | "deal-name" | "deal-phone" | "deal-email" | "deal-city";
 
-export default function FXGuruChat() {
+export default function ApexChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function FXGuruChat() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const INITIAL_GREETING =
-    "Hello! This is FXGuru from Legacy Global Bank. 👋\nHow may I assist you today? Feel free to chat here with any questions.";
+    "Hello! This is Apex from Legacy Global Bank. 👋\nHow may I assist you today? Feel free to chat here with any questions.";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,7 +34,7 @@ export default function FXGuruChat() {
 
   const playWelcomeSound = () => {
     try {
-      const audio = new Audio('/fxguru2.wav');
+      const audio = new Audio('/apex.wav');
       audio.play().catch(error => {
         console.log('Audio playback failed:', error);
       });
@@ -51,7 +51,7 @@ export default function FXGuruChat() {
       setIsTyping(true);
       setTimeout(() => {
         setIsTyping(false);
-        addFXGuruMessage(INITIAL_GREETING);
+        addApexMessage(INITIAL_GREETING);
       }, 1200);
     }
     if (isOpen) {
@@ -68,10 +68,10 @@ export default function FXGuruChat() {
     return () => clearTimeout(timer);
   }, []);
 
-  const addFXGuruMessage = (content: string) => {
+  const addApexMessage = (content: string) => {
     setMessages((prev) => [...prev, {
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      sender: "fxguru", content, timestamp: new Date(),
+      sender: "apex", content, timestamp: new Date(),
     }]);
   };
 
@@ -84,13 +84,13 @@ export default function FXGuruChat() {
 
   const triggerContactWorkflow = () => {
     setWorkflowStage("name");
-    addFXGuruMessage("I'd be happy to connect you with our team. May I know your full name please?");
+    addApexMessage("I'd be happy to connect you with our team. May I know your full name please?");
   };
 
   const triggerDealWorkflow = (originalMessage: string) => {
     setDealMessage(originalMessage);
     setWorkflowStage("deal-name");
-    addFXGuruMessage("I'd be happy to help you with our exclusive deals! To get started, may I know your full name please?");
+    addApexMessage("I'd be happy to help you with our exclusive deals! To get started, may I know your full name please?");
   };
 
   const processWorkflowInput = (userInput: string) => {
@@ -99,40 +99,40 @@ export default function FXGuruChat() {
       case "name":
         setUserData((prev) => ({ ...prev, name: userInput.trim() }));
         setWorkflowStage("phone");
-        addFXGuruMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
+        addApexMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
         break;
       case "phone":
         setUserData((prev) => ({ ...prev, phone: userInput.trim() }));
         setWorkflowStage("email");
-        addFXGuruMessage("Got it, thank you. May I have your email address? (It's optional — you can simply reply 'skip' if you prefer)");
+        addApexMessage("Got it, thank you. May I have your email address? (It's optional — you can simply reply 'skip' if you prefer)");
         break;
       case "email":
         setUserData((prev) => ({ ...prev, email: trimmedInput === "skip" ? "" : userInput.trim() }));
         setWorkflowStage("city");
-        addFXGuruMessage("Thank you. Lastly, which city are you based in?");
+        addApexMessage("Thank you. Lastly, which city are you based in?");
         break;
       case "city":
         const finalUserData = { ...userData, city: userInput.trim() };
         setUserData(finalUserData);
         setWorkflowStage("completed");
-        addFXGuruMessage(`Thank you so much, ${userData.name}.\nOur dedicated team will get back to you shortly.\n\nYou can reach us directly at:\n📞 +91 91484 26795\n✉️ contact@legacyglobalbank.com\n\nIs there anything else I can help you with today?`);
+        addApexMessage(`Thank you so much, ${userData.name}.\nOur dedicated team will get back to you shortly.\n\nYou can reach us directly at:\n📞 +91 91484 26795\n✉️ contact@legacyglobalbank.com\n\nIs there anything else I can help you with today?`);
         sendContactEmails(finalUserData);
         break;
       // Deal workflow stages
       case "deal-name":
         setUserData((prev) => ({ ...prev, name: userInput.trim() }));
         setWorkflowStage("deal-phone");
-        addFXGuruMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
+        addApexMessage(`Thank you, ${userInput.trim()}. Could you please share your phone number?`);
         break;
       case "deal-phone":
         setUserData((prev) => ({ ...prev, phone: userInput.trim() }));
         setWorkflowStage("deal-email");
-        addFXGuruMessage("Got it, thank you. May I have your email address?");
+        addApexMessage("Got it, thank you. May I have your email address?");
         break;
       case "deal-email":
         setUserData((prev) => ({ ...prev, email: userInput.trim() }));
         setWorkflowStage("deal-city");
-        addFXGuruMessage("Thank you. Lastly, which city are you based in?");
+        addApexMessage("Thank you. Lastly, which city are you based in?");
         break;
       case "deal-city":
         setUserData((prev) => ({ ...prev, city: userInput.trim() }));
@@ -143,7 +143,7 @@ export default function FXGuruChat() {
 
   const sendContactEmails = async (userData: any) => {
   try {
-    const response = await fetch(`${process.env.API_URL}/api/contact`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -178,25 +178,25 @@ const submitDealInquiry = async () => {
           email: userData.email,
           city: userData.city,
           message: dealMessage,
-          subject: "Deal Inquiry from FXGuru Chatbot"
+          subject: "Deal Inquiry from Apex Chatbot"
         }),
       });
 
       const data = await response.json();
       
       if (data.success) {
-        addFXGuruMessage(`Thank you ${userData.name}! \u2709\ufe0f Your deal inquiry has been sent to our team.\nYou will also receive a confirmation email shortly.`);
+        addApexMessage(`Thank you ${userData.name}! \u2709\ufe0f Your deal inquiry has been sent to our team.\nYou will also receive a confirmation email shortly.`);
         
         // Reset workflow and data
         setWorkflowStage("none");
         setUserData({ name: "", phone: "", email: "", city: "" });
         setDealMessage("");
       } else {
-        addFXGuruMessage("I apologize, but there was an issue submitting your deal inquiry. Please try again or contact our support team directly.");
+        addApexMessage("I apologize, but there was an issue submitting your deal inquiry. Please try again or contact our support team directly.");
       }
     } catch (error) {
       console.error("Error submitting deal inquiry:", error);
-      addFXGuruMessage("I apologize, but I'm having trouble connecting right now. Please try again in a moment or contact our support team.");
+      addApexMessage("I apologize, but I'm having trouble connecting right now. Please try again in a moment or contact our support team.");
     } finally {
       setIsLoading(false);
     }
@@ -256,7 +256,7 @@ const submitDealInquiry = async () => {
 
     if (workflowStage !== "none" && workflowStage !== "completed" && userInput.toLowerCase().includes("stop")) {
       setWorkflowStage("none");
-      addFXGuruMessage("No problem at all. Let me know how else I can assist you today.");
+      addApexMessage("No problem at all. Let me know how else I can assist you today.");
       return;
     }
     if (workflowStage !== "none" && workflowStage !== "completed") {
@@ -274,7 +274,7 @@ const submitDealInquiry = async () => {
     setIsTyping(true);
     getAIResponse(userInput).then((response) => {
       setIsTyping(false);
-      addFXGuruMessage(response);
+      addApexMessage(response);
     });
   };
 
@@ -282,7 +282,7 @@ const submitDealInquiry = async () => {
     date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   // Rich message renderer: detects numbered lists, bold (**text**), and emoji prefixes
-  const renderMessageContent = (content: string, sender: "user" | "fxguru") => {
+  const renderMessageContent = (content: string, sender: "user" | "apex") => {
     if (sender === "user") {
       return <p className="bubble-text">{content}</p>;
     }
@@ -812,7 +812,7 @@ const submitDealInquiry = async () => {
 
       <div className="chat-widget">
         {/* Toggle Button */}
-        <button className="chat-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Chat with FXGuru">
+        <button className="chat-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Chat with Apex">
           <div className="chat-toggle-ring" />
           {isOpen ? (
             <X size={20} color="rgba(201,168,76,0.9)" strokeWidth={2.5} />
@@ -839,7 +839,7 @@ const submitDealInquiry = async () => {
                   <div className="online-dot" />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="header-name">FXGuru</div>
+                  <div className="header-name">Apex</div>
                   <div className="header-sub">Legacy Global Bank</div>
                 </div>
                 <div className="header-badge" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '70px' }}>● Online</div>
@@ -856,7 +856,7 @@ const submitDealInquiry = async () => {
 
               {messages.map((msg) => (
                 <div key={msg.id} className={`msg-row ${msg.sender}`}>
-                  {msg.sender === "fxguru" && (
+                  {msg.sender === "apex" && (
                     <div className="msg-avatar">👩‍💼</div>
                   )}
                   <div className={`bubble ${msg.sender}`}>

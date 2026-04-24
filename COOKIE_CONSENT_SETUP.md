@@ -71,11 +71,11 @@ A production-grade GDPR/CCPA-compliant cookie consent and user data capture syst
 
 2. **Configure environment variables** in `.env`:
    ```env
-   API_URL=https://legacy-backend-151726525663.europe-west1.run.app
+   NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app
    NEXT_PUBLIC_SITE_URL=https://yourdomain.com
    ```
 
-   (The `API_URL` should point to your backend server)
+   (The `NEXT_PUBLIC_API_URL` should point to your backend server)
 
 3. **Frontend dependencies are already installed**:
    - `uuid` - Unique ID generation
@@ -209,7 +209,7 @@ backend/
 
 ### Backend connection issues
 - Ensure backend server is running on port 3001
-- Check `API_URL` in frontend `.env` points to backend
+- Check `NEXT_PUBLIC_API_URL` in frontend `.env` points to backend
 - Check CORS configuration in `backend/server.js`
 
 ### Banner not showing
