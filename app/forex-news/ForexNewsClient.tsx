@@ -6,6 +6,7 @@ import { Globe } from "@/components/ui/cobe-globe";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Ticker } from "@/components/Ticker";
+import { clientLogger } from "@/lib/logger";
 
 const FINNHUB_API_URL = "https://finnhub.io/api/v1/calendar/economic";
 
@@ -144,7 +145,7 @@ export function ForexNewsClient() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        console.log("Is NEXT_PUBLIC_FINNHUB_API_KEY defined?", !!process.env.NEXT_PUBLIC_FINNHUB_API_KEY);
+        clientLogger.info("Is NEXT_PUBLIC_FINNHUB_API_KEY defined?", { isDefined: !!process.env.NEXT_PUBLIC_FINNHUB_API_KEY });
         const apiKey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
         if (!apiKey) {
           throw new Error("Finnhub API key not found in environment variables");

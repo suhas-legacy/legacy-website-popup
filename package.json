@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^5.2.0",
+    "@google-cloud/logging-winston": "^6.0.1",
     "@google/genai": "^1.49.0",
     "@lottiefiles/dotlottie-react": "^0.19.0",
     "chart.js": "^4.5.1",
@@ -25,6 +26,7 @@
     "tailwind-merge": "^3.5.0",
     "three": "^0.164.1",
     "uuid": "^13.0.0",
+    "winston": "^3.19.0",
     "yahoo-finance2": "^3.14.0"
   },
   "devDependencies": {
