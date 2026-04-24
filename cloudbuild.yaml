@@ -27,8 +27,9 @@ steps:
     args:
       - 'push'
       - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:$BUILD_ID'
-      - '&&'
-      - 'docker'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
       - 'push'
       - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO_NAME/$_IMAGE_NAME:latest'
 
