@@ -145,11 +145,19 @@ export function ForexNewsClient() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        clientLogger.info("Is NEXT_PUBLIC_FINNHUB_API_KEY defined?", { isDefined: !!process.env.NEXT_PUBLIC_FINNHUB_API_KEY });
-        const apiKey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
-        if (!apiKey) {
-          throw new Error("Finnhub API key not found in environment variables");
+        // Fetch API key from server-side config endpoint
+        const configResponse = await fetch('/api/config');
+        if (!configResponse.ok) {
+          throw new Error("Failed to fetch API configuration");
         }
+        const configData = await configResponse.json();
+        const apiKey = configData.finnhubApiKey;
+
+        if (!apiKey) {
+          throw new Error("Finnhub API key not found");
+        }
+
+        clientLogger.info("Fetching forex events with API key");
 
         const response = await fetch(
           `${FINNHUB_API_URL}?token=${apiKey}`,
