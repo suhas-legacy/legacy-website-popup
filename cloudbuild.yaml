@@ -61,11 +61,7 @@ steps:
       - '--concurrency'
       - '80'
       - '--set-env-vars'
-      - 'NODE_ENV=production'
-      - '--set-secrets'
-      - 'GEMINI_API_KEY=GEMINI_API_KEY:latest'
-      - '--set-secrets'
-      - 'NEXT_PUBLIC_FINNHUB_API_KEY=FINNHUB_API_KEY:latest'
+      - 'NODE_ENV=production,NEXT_PUBLIC_FINNHUB_API_KEY=$_NEXT_PUBLIC_FINNHUB_API_KEY,NEXT_PUBLIC_API_URL=$_NEXT_PUBLIC_API_URL,GEMINI_API_KEY=$_GEMINI_API_KEY,ADMIN_EMAIL=$_ADMIN_EMAIL,RESEND_API_KEY=$_RESEND_API_KEY'
     entrypoint: 'gcloud'
 
 # Image build substitutions
