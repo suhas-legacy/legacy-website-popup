@@ -1,89 +1,33 @@
-import winston from 'winston';
+// Structured JSON logger for GCP Cloud Logging
+// Works in both client and server environments
+// Cloud Run automatically captures console output and sends to Cloud Logging
+// The JSON format ensures proper parsing and searchability
 
-// Check if we're in a browser environment
-const isBrowser = typeof window !== 'undefined';
-
-// Create a logger that outputs structured JSON logs for GCP Cloud Logging
-const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.errors({ stack: true }),
-    winston.format.json()
-  ),
-  defaultMeta: {
-    service: 'legacy-website-popup',
-  },
-  transports: [
-    // Console transport with JSON format for GCP Cloud Logging
-    new winston.transports.Console({
-      format: winston.format.json(),
-    }),
-  ],
+const createLogEntry = (severity: string, message: string, meta?: any) => ({
+  severity,
+  message,
+  ...meta,
+  timestamp: new Date().toISOString(),
+  service: 'legacy-website-popup',
 });
 
-// If we're in development and not in production, also add pretty print
-if (process.env.NODE_ENV !== 'production' && !isBrowser) {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
-    })
-  );
-}
-
-// For client-side usage, we need a simpler logger since winston won't work in browser
-export const clientLogger = {
+export const logger = {
   info: (message: string, meta?: any) => {
-    if (isBrowser) {
-      console.log(JSON.stringify({
-        severity: 'INFO',
-        message,
-        ...meta,
-        timestamp: new Date().toISOString(),
-      }));
-    } else {
-      logger.info(message, meta);
-    }
+    console.log(JSON.stringify(createLogEntry('INFO', message, meta)));
   },
   error: (message: string, meta?: any) => {
-    if (isBrowser) {
-      console.error(JSON.stringify({
-        severity: 'ERROR',
-        message,
-        ...meta,
-        timestamp: new Date().toISOString(),
-      }));
-    } else {
-      logger.error(message, meta);
-    }
+    console.error(JSON.stringify(createLogEntry('ERROR', message, meta)));
   },
   warn: (message: string, meta?: any) => {
-    if (isBrowser) {
-      console.warn(JSON.stringify({
-        severity: 'WARNING',
-        message,
-        ...meta,
-        timestamp: new Date().toISOString(),
-      }));
-    } else {
-      logger.warn(message, meta);
-    }
+    console.warn(JSON.stringify(createLogEntry('WARNING', message, meta)));
   },
   debug: (message: string, meta?: any) => {
-    if (isBrowser) {
-      console.debug(JSON.stringify({
-        severity: 'DEBUG',
-        message,
-        ...meta,
-        timestamp: new Date().toISOString(),
-      }));
-    } else {
-      logger.debug(message, meta);
+    if (process.env.NODE_ENV !== 'production') {
+      console.debug(JSON.stringify(createLogEntry('DEBUG', message, meta)));
     }
   },
 };
+
+export const clientLogger = logger;
 
 export default logger;
