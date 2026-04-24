@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  PROJECT_ID: legacy-website-494205
   REGION: us-central1
   SERVICE_NAME: legacy-website-service
   REPO_NAME: legacy-website-repo
@@ -28,9 +28,7 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          token_format: access_token
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
@@ -42,11 +40,11 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-            --build-arg NEXT_PUBLIC_FINNHUB_API_KEY=${{ secrets.NEXT_PUBLIC_FINNHUB_API_KEY }} \
-            --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
-            --build-arg GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
-            --build-arg ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
-            --build-arg RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
+            --build-arg NEXT_PUBLIC_FINNHUB_API_KEY=d7gceipr01qqb8rj4om0d7gceipr01qqb8rj4omg \
+            --build-arg NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app \
+            --build-arg GEMINI_API_KEY=AIzaSyDxnv0ueIx2ITyn8lgMl80P4HnYh2NSmk0 \
+            --build-arg ADMIN_EMAIL=chalamcharlasuhas1980@gmail.com \
+            --build-arg RESEND_API_KEY=re_ZaDHjgSD_NUJKpLZWHaUNegJz76GFZTqV \
             .
           docker tag ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
 
