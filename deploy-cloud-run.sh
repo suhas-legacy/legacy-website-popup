@@ -6,7 +6,7 @@
 set -e
 
 # Default values
-PROJECT_ID=${1:-$(gcloud config get-value project)}
+PROJECT_ID=${1:-legacy-website-494205}
 REGION=${2:-us-central1}
 SERVICE_NAME=${3:-legacy-website-service}
 REPO_NAME=legacy-website-repo

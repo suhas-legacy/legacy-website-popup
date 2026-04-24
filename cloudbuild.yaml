@@ -64,9 +64,6 @@ substitutions:
   _IMAGE_NAME: 'legacy-website'
   _SERVICE_NAME: 'legacy-website-service'
 
-# Log options
-logsBucket: 'gs://$_PROJECT_ID_cloudbuild'
-
 # Timeout for the build
 timeout: '1800s'
 
