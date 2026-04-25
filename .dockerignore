@@ -3,6 +3,7 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
 # Next.js
 .next/
@@ -19,28 +20,44 @@ build/
 # IDE
 .vscode
 .idea
+*.swp
+*.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 
 # Git
 .git
 .gitignore
+.gitattributes
+.github
 
 # Docker
 Dockerfile
 docker-compose*.yml
 .dockerignore
+*.dockerfile
 
 # Documentation
 README.md
 DEPLOYMENT.md
 *.md
+docs/
 
 # Logs
 logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # Runtime data
 pids
@@ -50,7 +67,44 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage
+.nyc_output
 
 # Temporary folders
 tmp/
 temp/
+*.tmp
+
+# Testing
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+jest.config.js
+jest.setup.js
+
+# Terraform
+terraform/
+*.tf
+*.tfstate
+*.tfvars
+
+# CI/CD
+.cloudbuild.yaml
+.github/
+.gitlab-ci.yml
+.travis.yml
+vercel.json
+
+# Audio and media files (except those in public)
+*.wav
+*.mp3
+*.mp4
+*.avi
+
+# Misc
+.cache
+.parcel-cache
+.vercel
+.netlify
+turbo

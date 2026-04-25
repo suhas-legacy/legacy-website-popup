@@ -42,7 +42,7 @@ docker build -t legacy-website-popup .
 # Run the container
 docker run -p 3000:3000 \
   -e GEMINI_API_KEY=your_key \
-  -e NEXT_PUBLIC_FINNHUB_API_KEY=your_key \
+  -e FINNHUB_API_KEY=your_key \
   legacy-website-popup
 ```
 
@@ -82,7 +82,7 @@ The GitHub Actions workflow automatically:
    ```
    GEMINI_API_KEY=your_gemini_api_key
    NEXT_PUBLIC_API_URL=https://your-app.vercel.app
-   NEXT_PUBLIC_FINNHUB_API_KEY=your_NEXT_PUBLIC_FINNHUB_API_KEY
+   FINNHUB_API_KEY=your_FINNHUB_API_KEY
    NEXT_PUBLIC_SITE_URL=https://legacyglobalbank.com
    ```
 
@@ -127,7 +127,7 @@ vercel --prod
 ### Required Variables
 ```bash
 GEMINI_API_KEY=your_gemini_api_key_here
-NEXT_PUBLIC_FINNHUB_API_KEY=your_NEXT_PUBLIC_FINNHUB_API_KEY_here
+FINNHUB_API_KEY=your_FINNHUB_API_KEY_here
 NEXT_PUBLIC_API_URL=https://legacy-backend-151726525663.europe-west1.run.app  # or your production API URL
 NEXT_PUBLIC_SITE_URL=https://legacyglobalbank.com
 ```

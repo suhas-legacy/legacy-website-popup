@@ -8,7 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Ticker } from "@/components/Ticker";
 import { clientLogger } from "@/lib/logger";
 
-const FINNHUB_API_URL = "https://finnhub.io/api/v1/calendar/economic";
+const FOREX_API_URL = "/api/forex-calendar";
 
 function getImpactColor(impact: ImpactLevel): string {
   const normalizedImpact = impact.toLowerCase();
@@ -145,27 +145,12 @@ export function ForexNewsClient() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        // Fetch API key from server-side config endpoint
-        const configResponse = await fetch('/api/config');
-        if (!configResponse.ok) {
-          throw new Error("Failed to fetch API configuration");
-        }
-        const configData = await configResponse.json();
-        const apiKey = configData.finnhubApiKey;
+        clientLogger.info("Fetching forex events from API");
 
-        if (!apiKey) {
-          throw new Error("Finnhub API key not found");
-        }
-
-        clientLogger.info("Fetching forex events with API key");
-
-        const response = await fetch(
-          `${FINNHUB_API_URL}?token=${apiKey}`,
-          {
-            cache: "no-store",
-            next: { revalidate: 300 },
-          }
-        );
+        const response = await fetch(FOREX_API_URL, {
+          cache: "no-store",
+          next: { revalidate: 300 },
+        });
         if (!response.ok) throw new Error("Failed to fetch data");
         const data = await response.json();
         setEvents(data.economicCalendar || []);
