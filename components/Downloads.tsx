@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import posthog from "posthog-js";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { Ticker } from "./Ticker";
@@ -102,11 +103,15 @@ export function Downloads() {
               <div className="platform-badge">{platform.badge}</div>
               <h3 className="platform-name">{platform.name}</h3>
               <p className="platform-desc">{platform.description}</p>
-              <a 
+              <a
                 href={platform.downloadUrl}
                 className="platform-btn"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => posthog.capture("platform_download_clicked", {
+                  platform: platform.id,
+                  platform_name: platform.name,
+                })}
               >
                 {platform.badge === "Launch" ? "Launch Platform" : `Download for ${platform.name}`}
               </a>

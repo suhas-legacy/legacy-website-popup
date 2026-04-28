@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import posthog from "posthog-js";
 import ContactSvg from "./contact.svg";
 
 interface FormData {
@@ -83,6 +84,11 @@ export function ContactForm() {
       const data = await response.json();
 
       if (data.success) {
+        posthog.capture("contact_form_submitted", {
+          connect_type: formData.connect,
+          priority: formData.priority,
+          city: formData.city,
+        });
         setSubmitStatus("success");
         setFormData({
           name: "",
@@ -94,10 +100,19 @@ export function ContactForm() {
           message: "",
         });
       } else {
+        posthog.capture("contact_form_error", {
+          error_message: data.message || "Failed to send message",
+          connect_type: formData.connect,
+        });
         setSubmitStatus("error");
         setErrorMessage(data.message || "Failed to send message");
       }
     } catch (error) {
+      posthog.capture("contact_form_error", {
+        error_message: "Network error",
+        connect_type: formData.connect,
+      });
+      posthog.captureException(error);
       setSubmitStatus("error");
       setErrorMessage("Network error. Please try again later.");
     } finally {

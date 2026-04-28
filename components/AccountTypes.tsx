@@ -1,4 +1,11 @@
+"use client";
+
+import posthog from "posthog-js";
 import { PANEL_URL_REGISTER } from "@/lib/constants";
+
+function handleOpenAccount(accountType: string) {
+  posthog.capture("open_account_clicked", { account_type: accountType });
+}
 
 export function AccountTypes() {
   return (
@@ -38,7 +45,7 @@ export function AccountTypes() {
               <span>Market</span>
             </li>
           </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta">
+          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("standard")}>
             Open Account
           </a>
         </div>
@@ -68,7 +75,7 @@ export function AccountTypes() {
               <span>Market</span>
             </li>
           </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta">
+          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("classic")}>
             Open Account
           </a>
         </div>
@@ -99,7 +106,7 @@ export function AccountTypes() {
               <span>Market</span>
             </li>
           </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta">
+          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("pro")}>
             Open Account
           </a>
         </div>
@@ -129,7 +136,7 @@ export function AccountTypes() {
               <span>Market</span>
             </li>
           </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta">
+          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("vip")}>
             Open Account
           </a>
         </div>

@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
-import { PANEL_URL_REGISTER } from "@/lib/constants";
+import { DemoCta } from "@/components/DemoCta";
 
 export const metadata: Metadata = {
   title: "Free Demo Account | Practice Forex Trading | Legacy Global Bank",
@@ -84,17 +84,7 @@ export default function DemoPage() {
             </div>
           </div>
 
-          <a
-            href={PANEL_URL_REGISTER}
-            className="btn-gold"
-            style={{
-              fontSize: "0.85rem",
-              padding: "1rem 3rem",
-              display: "inline-block",
-            }}
-          >
-            Try Demo Account Free
-          </a>
+          <DemoCta />
         </section>
       </main>
       <Footer />
