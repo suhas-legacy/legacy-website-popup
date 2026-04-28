@@ -48,6 +48,7 @@ export function PipCalculatorClient() {
   const [shareCopied, setShareCopied] = useState(false);
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
+  const [inputValues, setInputValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setCurrentUrl(typeof window !== 'undefined' ? window.location.href : '');
@@ -272,8 +273,23 @@ Value for Your Lot Size: $${result.valueForYourLotSize.toFixed(2)} ${formData.ac
                   </label>
                   <input
                     type="number"
-                    value={formData.lotSize}
-                    onChange={(e) => handleInputChange("lotSize", parseFloat(e.target.value) || 0)}
+                    value={inputValues["lotSize"] !== undefined ? inputValues["lotSize"] : formData.lotSize}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => ({ ...prev, lotSize: value }));
+                      if (value !== "") {
+                        handleInputChange("lotSize", parseFloat(value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => {
+                        const next = { ...prev };
+                        delete next.lotSize;
+                        return next;
+                      });
+                      handleInputChange("lotSize", value === "" ? 0 : parseFloat(value));
+                    }}
                     step="0.01"
                     min="0.01"
                     className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"

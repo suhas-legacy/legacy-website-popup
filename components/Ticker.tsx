@@ -43,13 +43,7 @@ export function Ticker() {
 
   return (
     <div className="ticker-wrap">
-      <div className="ticker-lion ticker-lion-left" aria-hidden="true">
-        <Image src={rightLion} alt="" priority />
-      </div>
       <div className="ticker-host" id={containerId} />
-      <div className="ticker-lion ticker-lion-right" aria-hidden="true">
-        <Image src={leftLion} alt="" priority />
-      </div>
     </div>
   );
 }

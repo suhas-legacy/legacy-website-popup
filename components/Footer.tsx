@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer>
       <div className="risk-disc">
-        <span className="risk-disc-title font-bold">⚠️ RISK DISCLAIMER:</span> Trading financial products on margin involves a
+        <span className="risk-disc-title font-bold">⚠️RISK DISCLAIMER: </span> Trading financial products on margin involves a
         significant level of risk and may not be suitable for all investors.
         It&apos;s important to note that losses can exceed the initial investment.
         Therefore, it&apos;s crucial to fully comprehend the risks involved and take
@@ -15,7 +15,7 @@ export function Footer() {
         carries the possibility of losing an amount that exceeds the initial
         investment. It&apos;s imperative for investors to understand these risks
         thoroughly before engaging in any trading activities. Anyone wishing to
-        invest in any of the products mentioned in https://legacyglobalbank.com/
+        invest in any of the products mentioned in <a href="https://legacyglobalbank.com/">https://legacyglobalbank.com/</a>
         should seek their own financial or professional advice. Trading of
         securities, forex, metals, commodities may not be suitable for everyone and
         involves the risk of losing part or all of your money. Trading in the
@@ -39,11 +39,11 @@ export function Footer() {
             <Image
               src={logo}
               alt="Legacy Global Bank"
-              width={500}
-              height={500}
+              width={700}
+              height={600}
               unoptimized
               style={{
-                height: 45,
+                height: 100,
                 width: "auto",
                 filter: "drop-shadow(0 0 10px rgba(255,215,0,0.3))",
               }}

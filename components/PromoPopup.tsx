@@ -60,7 +60,7 @@ export const PromoPopup = () => {
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/80 backdrop-blur-md"
           onClick={(e) => {
             if (e.target === e.currentTarget) closePopup();
           }}
@@ -74,24 +74,19 @@ export const PromoPopup = () => {
             style={{ marginTop: "120px" }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            {/* <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                closePopup();
-              }}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white z-[9999] w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors cursor-pointer"
-              aria-label="Close"
-            >
-              ✕
-            </button> */}
-
             <div className="p-6 text-center relative z-10">
-              <motion.div 
+              <button
+                onClick={closePopup}
+                className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl leading-none p-1 transition-colors"
+                aria-label="Close"
+              >
+                ×
+              </button>
+
+              <motion.div
                 animate={{ y: [-4, 4, -4] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="mx-auto mb-2 w-16 h-16 text-5xl flex justify-center items-center drop-shadow-[0_0_15px_rgba(234,179,8,0.3)]"
+                className="mx-auto mb-2 w-12 h-12 sm:w-16 sm:h-16 text-4xl sm:text-5xl flex justify-center items-center drop-shadow-[0_0_15px_rgba(234,179,8,0.3)]"
               >
                 🎁
               </motion.div>
@@ -105,7 +100,7 @@ export const PromoPopup = () => {
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 + index * 0.04 }}
-                    className="text-3xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-300 to-yellow-100 bg-clip-text text-transparent transform scale-y-110"
+                    className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-300 to-yellow-100 bg-clip-text text-transparent transform scale-y-110"
                     style={{ whiteSpace: char === " " ? "pre" : "normal" }}
                   >
                     {char}
@@ -117,7 +112,7 @@ export const PromoPopup = () => {
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-                className="relative text-6xl font-black text-yellow-500 mb-3 drop-shadow-[0_0_20px_rgba(234,179,8,0.5)]"
+                className="relative text-5xl sm:text-6xl font-black text-yellow-500 mb-3 drop-shadow-[0_0_20px_rgba(234,179,8,0.5)]"
               >
                 {/* Subtle light rays/glow behind 100% */}
                 <div className="absolute inset-0 bg-yellow-400/20 blur-xl rounded-full scale-150 -z-10"></div>
@@ -130,7 +125,7 @@ export const PromoPopup = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
-                className="text-base sm:text-lg font-semibold text-white mb-6"
+                className="text-sm sm:text-lg font-semibold text-white mb-4 sm:mb-6"
               >
                 Get <span className="text-yellow-400">100% Bonus</span> credited instantly<br />
                 to your trading account!
@@ -141,10 +136,10 @@ export const PromoPopup = () => {
                 <p className="text-red-400 flex items-center justify-center gap-2 text-xs mb-2 font-semibold tracking-wide">
                   ⚡ HURRY! Offer ends in:
                 </p>
-                <motion.div 
+                <motion.div
                   animate={{ scale: [1, 1.02, 1] }}
                   transition={{ duration: 1, repeat: Infinity }}
-                  className="inline-block bg-[#0f0f0f] border border-yellow-500/50 rounded-xl px-8 py-3 text-3xl font-mono font-bold text-yellow-400 tracking-widest shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]"
+                  className="inline-block bg-[#0f0f0f] border border-yellow-500/50 rounded-xl px-6 sm:px-8 py-2 sm:py-3 text-2xl sm:text-3xl font-mono font-bold text-yellow-400 tracking-widest shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]"
                 >
                   {formattedTime}
                 </motion.div>
@@ -158,7 +153,7 @@ export const PromoPopup = () => {
                 whileTap={{ scale: 0.95 }}
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-lg tracking-wider shadow-xl block text-center"
+                className="w-full py-3 sm:py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-base sm:text-lg tracking-wider shadow-xl block text-center"
               >
                 Claim Now
               </motion.a>

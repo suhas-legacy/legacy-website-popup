@@ -54,6 +54,7 @@ export function ProfitCalculatorClient() {
   const [shareCopied, setShareCopied] = useState(false);
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
+  const [inputValues, setInputValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setCurrentUrl(typeof window !== 'undefined' ? window.location.href : '');
@@ -327,8 +328,23 @@ Return on Margin: ${result.returnOnMargin.toFixed(2)}%`;
                   </label>
                   <input
                     type="number"
-                    value={formData.entryPrice}
-                    onChange={(e) => handleInputChange("entryPrice", parseFloat(e.target.value) || 0)}
+                    value={inputValues["entryPrice"] !== undefined ? inputValues["entryPrice"] : formData.entryPrice}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => ({ ...prev, entryPrice: value }));
+                      if (value !== "") {
+                        handleInputChange("entryPrice", parseFloat(value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => {
+                        const next = { ...prev };
+                        delete next.entryPrice;
+                        return next;
+                      });
+                      handleInputChange("entryPrice", value === "" ? 0 : parseFloat(value));
+                    }}
                     step="0.0001"
                     className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   />
@@ -352,8 +368,23 @@ Return on Margin: ${result.returnOnMargin.toFixed(2)}%`;
                   </label>
                   <input
                     type="number"
-                    value={formData.exitPrice}
-                    onChange={(e) => handleInputChange("exitPrice", parseFloat(e.target.value) || 0)}
+                    value={inputValues["exitPrice"] !== undefined ? inputValues["exitPrice"] : formData.exitPrice}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => ({ ...prev, exitPrice: value }));
+                      if (value !== "") {
+                        handleInputChange("exitPrice", parseFloat(value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => {
+                        const next = { ...prev };
+                        delete next.exitPrice;
+                        return next;
+                      });
+                      handleInputChange("exitPrice", value === "" ? 0 : parseFloat(value));
+                    }}
                     step="0.0001"
                     className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   />
@@ -377,8 +408,23 @@ Return on Margin: ${result.returnOnMargin.toFixed(2)}%`;
                   </label>
                   <input
                     type="number"
-                    value={formData.lotSize}
-                    onChange={(e) => handleInputChange("lotSize", parseFloat(e.target.value) || 0)}
+                    value={inputValues["lotSize"] !== undefined ? inputValues["lotSize"] : formData.lotSize}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => ({ ...prev, lotSize: value }));
+                      if (value !== "") {
+                        handleInputChange("lotSize", parseFloat(value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => {
+                        const next = { ...prev };
+                        delete next.lotSize;
+                        return next;
+                      });
+                      handleInputChange("lotSize", value === "" ? 0 : parseFloat(value));
+                    }}
                     step="0.01"
                     min="0.01"
                     className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"

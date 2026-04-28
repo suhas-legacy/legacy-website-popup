@@ -75,7 +75,7 @@ nav {
 }
 nav.scrolled {
   background: rgba(0,0,0,0.95);
-  border-bottom: 1px solid var(--border-gold);
+  /* border-bottom: 1px solid var(--border-gold); */
   backdrop-filter: blur(20px);
 }
 nav.intro-running .nav-logo {
@@ -1059,7 +1059,7 @@ section { padding: 7rem 4rem; }
 footer {
   background:#000;
   border-top:1px solid var(--border-gold);
-  padding:4rem 4rem 2rem;
+  padding:0.5rem 0.5rem 0.5rem;
 }
 .footer-top {
   display:grid;
@@ -1079,7 +1079,7 @@ footer {
   -webkit-text-fill-color:transparent;
   margin-bottom:1rem;
 }
-.footer-brand p { font-size:0.8rem; color:var(--gray); line-height:1.8; max-width:260px; margin-bottom:1.5rem; }
+.footer-brand p { font-size:0.8rem; color:var(--gray); line-height:1.8; max-width:260px; margin-bottom:1.5rem; text-align: justify; }
 .social-links { display:flex; gap:0.8rem; }
 .social-link {
   width:36px;height:36px;border-radius:6px;
@@ -1122,8 +1122,8 @@ footer {
   padding:1rem 1.5rem;
   margin-bottom:2rem;
   font-family:var(--font-jetbrains-mono),monospace;
-  font-size:0.6rem;
-  color:var(--gray);
+  font-size:0.8rem;
+  color:#fff;
   line-height:1.8;
   text-align:justify;
   letter-spacing:0.05em;
@@ -4499,7 +4499,7 @@ footer {
 
 .hero-content {
   max-width: 1020px;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 .section-label {
