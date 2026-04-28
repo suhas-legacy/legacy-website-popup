@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { PANEL_URL } from "@/lib/constants";
+import { PANEL_URL, PANEL_URL_REGISTER } from "@/lib/constants";
 
 const STORAGE_KEY = "welcomeBonusPopupSeen";
 
@@ -147,7 +147,7 @@ export const PromoPopup = () => {
 
               {/* Claim Button */}
               <motion.a
-                href={PANEL_URL}
+                href={PANEL_URL_REGISTER}
                 onClick={() => window.localStorage.setItem(STORAGE_KEY, "true")}
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px #facc15", filter: "brightness(1.1)" }}
                 whileTap={{ scale: 0.95 }}

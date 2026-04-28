@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import posthog from "posthog-js";
 
 export function PipCalculator() {
   const containerRef = useRef<HTMLDivElement>(null);
   const scriptLoadedRef = useRef(false);
+  const trackedRef = useRef(false);
+
+  const handleClick = () => {
+    if (!trackedRef.current) {
+      trackedRef.current = true;
+      posthog.capture("calculator_used", { calculator_type: "pip" });
+    }
+  };
 
   useEffect(() => {
     if (scriptLoadedRef.current) return;
@@ -54,7 +63,7 @@ export function PipCalculator() {
   }, []);
 
   return (
-    <div className="pip-calculator-widget">
+    <div className="pip-calculator-widget" onClick={handleClick}>
       <div id="pip-value-calculator-271345" ref={containerRef}></div>
     </div>
   );

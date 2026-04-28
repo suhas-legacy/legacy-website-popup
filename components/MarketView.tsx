@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import {
   formatChangePercent,
   formatMarketPrice,
@@ -437,12 +438,15 @@ export function MarketView({ hideHeader = false }: MarketViewProps) {
   const { quotes, feedOk } = useMarketQuotes(QUOTE_POLL_MS);
 
   const onTab = (index: number) => {
+    const tabLabels = ["all", "forex", "commodities", "indexes"] as const;
+    posthog.capture("market_tab_switched", { tab: tabLabels[index] });
     setActiveTab(index);
     setGridFlash(true);
     window.setTimeout(() => setGridFlash(false), 200);
   };
 
   const onOpenChart = useCallback((symbol: string, title: string) => {
+    posthog.capture("market_chart_opened", { symbol, chart_title: title });
     setChartModal({ symbol, title });
   }, []);
 
