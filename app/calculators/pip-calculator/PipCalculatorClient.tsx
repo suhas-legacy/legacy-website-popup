@@ -95,9 +95,9 @@ Instrument: ${selectedInstrument?.label || formData.instrumentId}
 Current Price: ${result.currentPrice}
 Lot Size: ${formData.lotSize}
 Account Currency: ${formData.accountCurrency}
-Pip Value per Pip: $${result.pipValuePerPip.toFixed(2)} ${formData.accountCurrency}
-Value for Standard Lot: $${result.valueForStandardLot.toFixed(2)} ${formData.accountCurrency}
-Value for Your Lot Size: $${result.valueForYourLotSize.toFixed(2)} ${formData.accountCurrency}`;
+Pip Value per Pip: $${result.pipValuePerPip} ${formData.accountCurrency}
+Value for Standard Lot: $${result.valueForStandardLot} ${formData.accountCurrency}
+Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurrency}`;
     
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -363,7 +363,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize.toFixed(2)} ${formData.ac
                   <div className="bg-zinc-800 rounded-xl p-6 border border-zinc-700">
                     <div className="text-sm text-gray-400 mb-2">Pip Value per Pip</div>
                     <div className="text-4xl font-bold text-emerald-400">
-                      ${result.pipValuePerPip.toFixed(2)} {formData.accountCurrency}
+                      ${result.pipValuePerPip} {formData.accountCurrency}
                     </div>
                   </div>
 
@@ -371,7 +371,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize.toFixed(2)} ${formData.ac
                     <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
                       <div className="text-xs text-gray-400 mb-1">Value for Standard Lot</div>
                       <div className="text-xl font-bold text-white">
-                        ${result.valueForStandardLot.toFixed(2)}
+                        ${result.valueForStandardLot}
                       </div>
                     </div>
                     <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
@@ -386,7 +386,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize.toFixed(2)} ${formData.ac
                     <div className="flex items-center gap-2 text-emerald-400 text-sm">
                       <TrendingUp className="w-4 h-4" />
                       <span>
-                        Each pip movement in {selectedInstrument.label} is worth ${result.pipValuePerPip.toFixed(2)} {formData.accountCurrency} at {formData.lotSize} lot size
+                        Each pip movement in {selectedInstrument.label} is worth ${result.pipValuePerPip} {formData.accountCurrency} at {formData.lotSize} lot size
                       </span>
                     </div>
                   </div>
