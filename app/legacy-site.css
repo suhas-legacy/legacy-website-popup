@@ -123,9 +123,9 @@ nav.intro-running .nav-logo {
 .nav-links { display: flex; gap: 2.5em; list-style: none; }
 .nav-links a {
   font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   letter-spacing: 0.15em;
-  color: var(--gray);
+  color: #fff;
   text-decoration: none;
   text-transform: uppercase;
   transition: color 0.3s;
