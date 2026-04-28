@@ -60,6 +60,7 @@ export function MarginCalculatorClient() {
   const [shareCopied, setShareCopied] = useState(false);
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
+  const [inputValues, setInputValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setCurrentUrl(typeof window !== 'undefined' ? window.location.href : '');
@@ -297,8 +298,23 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   </label>
                   <input
                     type="number"
-                    value={formData.lotSize}
-                    onChange={(e) => handleInputChange("lotSize", parseFloat(e.target.value) || 0)}
+                    value={inputValues["lotSize"] !== undefined ? inputValues["lotSize"] : formData.lotSize}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => ({ ...prev, lotSize: value }));
+                      if (value !== "") {
+                        handleInputChange("lotSize", parseFloat(value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => {
+                        const next = { ...prev };
+                        delete next.lotSize;
+                        return next;
+                      });
+                      handleInputChange("lotSize", value === "" ? 0 : parseFloat(value));
+                    }}
                     step="0.01"
                     min="0.01"
                     className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
@@ -353,9 +369,27 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                     </label>
                     <input
                       type="number"
-                      value={formData.customLeverage}
-                      onChange={(e) => handleInputChange("customLeverage", parseFloat(e.target.value) || 1)}
+                      value={inputValues["customLeverage"] !== undefined ? inputValues["customLeverage"] : formData.customLeverage}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => ({ ...prev, customLeverage: value }));
+                        if (value !== "") {
+                          const parsed = parseFloat(value);
+                          handleInputChange("customLeverage", isNaN(parsed) ? 1 : parsed);
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.customLeverage;
+                          return next;
+                        });
+                        const parsed = parseFloat(value);
+                        handleInputChange("customLeverage", value === "" || isNaN(parsed) ? 1 : parsed);
+                      }}
                       min="1"
+                      step="1"
                       className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                     />
                   </div>

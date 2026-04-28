@@ -54,6 +54,7 @@ export function LotSizeCalculatorClient() {
   const [shareCopied, setShareCopied] = useState(false);
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
+  const [inputValues, setInputValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setCurrentUrl(typeof window !== 'undefined' ? window.location.href : '');
@@ -252,8 +253,23 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                     <span className="absolute left-4 top-3 text-gray-400">$</span>
                     <input
                       type="number"
-                      value={formData.accountBalance}
-                      onChange={(e) => handleInputChange("accountBalance", parseFloat(e.target.value) || 0)}
+                      value={inputValues["accountBalance"] !== undefined ? inputValues["accountBalance"] : formData.accountBalance}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => ({ ...prev, accountBalance: value }));
+                        if (value !== "") {
+                          handleInputChange("accountBalance", parseFloat(value));
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.accountBalance;
+                          return next;
+                        });
+                        handleInputChange("accountBalance", value === "" ? 0 : parseFloat(value));
+                      }}
                       step="100"
                       min="100"
                       className="w-full bg-zinc-800 border border-zinc-700 rounded-lg pl-8 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
@@ -280,8 +296,23 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   <div className="relative">
                     <input
                       type="number"
-                      value={formData.riskPercentage}
-                      onChange={(e) => handleInputChange("riskPercentage", parseFloat(e.target.value) || 0)}
+                      value={inputValues["riskPercentage"] !== undefined ? inputValues["riskPercentage"] : formData.riskPercentage}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => ({ ...prev, riskPercentage: value }));
+                        if (value !== "") {
+                          handleInputChange("riskPercentage", parseFloat(value));
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.riskPercentage;
+                          return next;
+                        });
+                        handleInputChange("riskPercentage", value === "" ? 0 : parseFloat(value));
+                      }}
                       step="0.5"
                       min="0.1"
                       max="10"
@@ -325,8 +356,23 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   </label>
                   <input
                     type="number"
-                    value={formData.stopLossPips}
-                    onChange={(e) => handleInputChange("stopLossPips", parseFloat(e.target.value) || 0)}
+                    value={inputValues["stopLossPips"] !== undefined ? inputValues["stopLossPips"] : formData.stopLossPips}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => ({ ...prev, stopLossPips: value }));
+                      if (value !== "") {
+                        handleInputChange("stopLossPips", parseFloat(value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = e.target.value;
+                      setInputValues((prev) => {
+                        const next = { ...prev };
+                        delete next.stopLossPips;
+                        return next;
+                      });
+                      handleInputChange("stopLossPips", value === "" ? 0 : parseFloat(value));
+                    }}
                     step="1"
                     min="1"
                     className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"

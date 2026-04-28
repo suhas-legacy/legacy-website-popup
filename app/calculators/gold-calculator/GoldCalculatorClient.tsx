@@ -54,6 +54,7 @@ export function GoldCalculatorClient() {
 
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [inputValues, setInputValues] = useState<Record<string, string>>({});
 
   // Fetch USDINR rate
   const fetchUsdInr = async () => {
@@ -227,8 +228,23 @@ export function GoldCalculatorClient() {
                       type="number"
                       min="1"
                       max="1000"
-                      value={formData.weight}
-                      onChange={(e) => setFormData({ ...formData, weight: Number(e.target.value) })}
+                      value={inputValues["weight"] !== undefined ? inputValues["weight"] : formData.weight}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => ({ ...prev, weight: value }));
+                        if (value !== "") {
+                          setFormData({ ...formData, weight: Number(value) });
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.weight;
+                          return next;
+                        });
+                        setFormData({ ...formData, weight: value === "" ? 0 : Number(value) });
+                      }}
                       className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
                     />
                     <input
@@ -236,7 +252,15 @@ export function GoldCalculatorClient() {
                       min="1"
                       max="1000"
                       value={formData.weight}
-                      onChange={(e) => setFormData({ ...formData, weight: Number(e.target.value) })}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.weight;
+                          return next;
+                        });
+                        setFormData({ ...formData, weight: Number(value) });
+                      }}
                       className="w-full mt-2 accent-amber-400"
                     />
                   </div>
@@ -263,8 +287,23 @@ export function GoldCalculatorClient() {
                       min="0"
                       max="25"
                       step="0.5"
-                      value={formData.makingCharges}
-                      onChange={(e) => setFormData({ ...formData, makingCharges: Number(e.target.value) })}
+                      value={inputValues["makingCharges"] !== undefined ? inputValues["makingCharges"] : formData.makingCharges}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => ({ ...prev, makingCharges: value }));
+                        if (value !== "") {
+                          setFormData({ ...formData, makingCharges: Number(value) });
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.makingCharges;
+                          return next;
+                        });
+                        setFormData({ ...formData, makingCharges: value === "" ? 0 : Number(value) });
+                      }}
                       className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
                     />
                     <input
@@ -273,7 +312,15 @@ export function GoldCalculatorClient() {
                       max="25"
                       step="0.5"
                       value={formData.makingCharges}
-                      onChange={(e) => setFormData({ ...formData, makingCharges: Number(e.target.value) })}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setInputValues((prev) => {
+                          const next = { ...prev };
+                          delete next.makingCharges;
+                          return next;
+                        });
+                        setFormData({ ...formData, makingCharges: Number(value) });
+                      }}
                       className="w-full mt-2 accent-amber-400"
                     />
                   </div>
