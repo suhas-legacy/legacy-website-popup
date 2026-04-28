@@ -18,7 +18,7 @@ export default function LandingPage() {
       <ScrollRevealInit />
       <Ticker />
       <Navbar />
-      <ImportantNoticePopup />
+      {/* <ImportantNoticePopup /> */}
       <Hero />
       <MarketPreview />
       <WhyUsPreview />

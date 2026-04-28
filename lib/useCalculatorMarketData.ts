@@ -21,6 +21,7 @@ export const CALCULATOR_INSTRUMENTS: CalculatorInstrument[] = [
   { id: "oil", label: "OIL (WTI - USOIL)", symbol: "USOIL", pipSize: 0.01, contractSize: 1000, price: 78.50 },
   { id: "brent", label: "UK-OIL (Brent - UKOIL)", symbol: "UKOIL", pipSize: 0.01, contractSize: 1000, price: 82.30 },
   { id: "usoil", label: "US-OIL (WTI)", symbol: "USOIL", pipSize: 0.01, contractSize: 1000, price: 78.50 },
+  { id: "btcusd", label: "BITCOIN (BTC/USD)", symbol: "BTC/USD", pipSize: 0.01, contractSize: 1, price: 45000.00 },
 ];
 
 export function useCalculatorMarketData() {

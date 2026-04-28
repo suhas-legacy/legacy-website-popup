@@ -13,6 +13,7 @@ export const MARKET_IDS = [
   "us30",
   "spx",
   "btc",
+  "btcusd",
 ] as const;
 
 export type MarketId = (typeof MARKET_IDS)[number];
@@ -33,4 +34,5 @@ export const YAHOO_SYMBOL_BY_ID: Record<MarketId, string> = {
   us30: "^DJI",
   spx: "^GSPC",
   btc: "BTC-USD",
+  btcusd: "BTC-USD",
 };
