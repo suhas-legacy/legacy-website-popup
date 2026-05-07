@@ -33,6 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+          <head>
+            <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+          </head>
       <body
         className={`${syne.variable} ${jetBrainsMono.variable} antialiased`}
       >
