@@ -1,5 +1,3 @@
-"use client";
-
 import { Footer } from "./Footer";
 import { Hero } from "./Hero";
 import { MarketPreview } from "./MarketPreview";
