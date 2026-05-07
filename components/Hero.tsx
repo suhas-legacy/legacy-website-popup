@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { ThreeBackground } from "./ThreeBackground";
+import { HeroStats } from "./HeroStats";
 
 function useCountUp(end: number, durationMs: number, startWhen = true) {
   const [val, setVal] = useState(0);
@@ -45,30 +46,15 @@ export const Hero = React.memo(function Hero() {
         </p>
         <div className="hero-btns">
           <a href="/accounts" className="btn-gold">
-            Open Live Account
+            Create Account
           </a>
           <a href="/demo" className="btn-outline">
             Try Demo — $10,000 Free
           </a>
         </div>
       </div>
-      <div className="hero-stats">
-        <div className="stat-item">
-          <div className="stat-num">{traders.toLocaleString()}</div>
-          <div className="stat-label">Active Traders</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-num">1:500</div>
-          <div className="stat-label">Max Leverage</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-num">500+</div>
-          <div className="stat-label">Trading Assets</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-num">24/7</div>
-          <div className="stat-label">Support</div>
-        </div>
+      <div className="hero-stats-start">
+        <HeroStats traders={traders} />
       </div>
     </section>
   );

@@ -367,7 +367,7 @@ nav.intro-running .nav-logo {
 .hero-btns .btn-outline { padding: 1rem 2.5rem; font-size: 0.8rem; }
 
 .hero-stats {
-  position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); margin-top: 10px;
   display: flex; gap: 4rem;
   z-index: 2;
   opacity: 0;
