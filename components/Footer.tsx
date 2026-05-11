@@ -7,6 +7,8 @@ export function Footer() {
   return (
     <footer>
       <div className="risk-disc">
+        <span>Legacy Global Bank is incorporated in Saint.Lucia with registration number – 00744. Our website includes links and redirection sections to enhance the quality of our services. As a company, we do not endorse or recommend any specific products or services. The information provided on this site is intended for informational purposes only. Therefore, any offer or solicitation should not be construed as an invitation or request to engage in any activity in jurisdictions where such actions are not authorized. Additionally, it should not be construed as a recommendation to buy, sell, or otherwise engage in any specific currency or precious metal transactions where such actions are unlawful.</span>
+        <br /><br />
         <span className="risk-disc-title font-bold">⚠️RISK DISCLAIMER: </span> Trading financial products on margin involves a
         significant level of risk and may not be suitable for all investors.
         It&apos;s important to note that losses can exceed the initial investment.
