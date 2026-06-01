@@ -6,6 +6,7 @@ import { Ticker } from "@/components/Ticker";
 import NithyaChat from "@/components/NithyaChat";
 import DataCollectionProvider from "@/components/DataCollectionProvider";
 
+
 const syne = Syne({
   subsets: ["latin"],
   variable: "--font-syne",
@@ -17,7 +18,7 @@ const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   weight: ["300", "400", "500"],
 });
-
+ 
 export const metadata: Metadata = {
   title: "Legacy Global Bank — Trade With Confidence",
   description: "Legacy Global Bank landing page migrated to Next.js",
