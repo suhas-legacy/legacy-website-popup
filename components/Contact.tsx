@@ -6,50 +6,65 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
-  city: string;
-  priority: string;
-  connect: string;
+  meetingDate: string;
+  meetingTime: string;
+  meetingType: "online" | "offline";
   message: string;
 }
 
+interface ScheduleResponse {
+  success: boolean;
+  message: string;
+  calendarLink?: string;
+  meetingLink?: string;
+}
+
+// Today's date in YYYY-MM-DD (local) — used as the min for the date picker
+const todayISO = new Date().toLocaleDateString("en-CA");
+
 export function Contact() {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    priority: 'medium',
-    connect: 'Sales Support',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    meetingDate: "",
+    meetingTime: "",
+    meetingType: "online",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [scheduleResult, setScheduleResult] = useState<ScheduleResponse | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = (): boolean => {
     if (!formData.name.trim()) {
-      setErrorMessage('Name is required');
-      return false;
-    }
-    if (!formData.email.trim()) {
-      setErrorMessage('Email is required');
+      setErrorMessage("Full name is required.");
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setErrorMessage('Please enter a valid email address');
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      setErrorMessage("A valid email address is required.");
       return false;
     }
-    if (!formData.message.trim()) {
-      setErrorMessage('Message is required');
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+    if (phoneDigits.length < 7) {
+      setErrorMessage("A valid phone number is required.");
+      return false;
+    }
+    if (!formData.meetingDate) {
+      setErrorMessage("Please select a meeting date.");
+      return false;
+    }
+    if (!formData.meetingTime) {
+      setErrorMessage("Please select a meeting time.");
       return false;
     }
     return true;
@@ -57,47 +72,47 @@ export function Contact() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    setErrorMessage("");
+    setSubmitStatus("idle");
+
     if (!validateForm()) {
-      setSubmitStatus('error');
+      setSubmitStatus("error");
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitStatus('idle');
-    setErrorMessage('');
-
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://legacy-backend-151726525663.europe-west1.run.app';
-      const response = await fetch(`${apiUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL ||
+        "https://legacy-backend-151726525663.europe-west1.run.app";
+
+      const response = await fetch(`${apiUrl}/api/schedule`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data: ScheduleResponse = await response.json();
 
       if (data.success) {
-        setSubmitStatus('success');
-        // Reset form on success
+        setScheduleResult(data);
+        setSubmitStatus("success");
         setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          city: '',
-          priority: 'medium',
-          connect: 'Sales Support',
-          message: ''
+          name: "",
+          email: "",
+          phone: "",
+          meetingDate: "",
+          meetingTime: "",
+          meetingType: "online",
+          message: "",
         });
       } else {
-        setSubmitStatus('error');
-        setErrorMessage(data.message || 'Failed to send message');
+        setSubmitStatus("error");
+        setErrorMessage(data.message || "Failed to schedule meeting.");
       }
-    } catch (error) {
-      setSubmitStatus('error');
-      setErrorMessage('Network error. Please try again later.');
+    } catch {
+      setSubmitStatus("error");
+      setErrorMessage("Network error. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -107,37 +122,70 @@ export function Contact() {
     <section id="contact">
       <div className="section-label reveal">Get In Touch</div>
       <h2 className="section-title reveal">
-        Start Your <span className="gold-text">Trading Journey</span>
+        Schedule a <span className="gold-text">Meeting</span>
       </h2>
       <div className="contact-grid">
         <form className="contact-form reveal" onSubmit={onSubmit}>
-          {/* Status Messages */}
-          {submitStatus === 'success' && (
-            <div style={{
-              backgroundColor: '#d4edda',
-              color: '#155724',
-              padding: '12px',
-              borderRadius: '4px',
-              marginBottom: '20px',
-              border: '1px solid #c3e6cb'
-            }}>
-              ✓ Your message has been sent successfully! We'll get back to you soon.
+          {/* ── Success ── */}
+          {submitStatus === "success" && scheduleResult && (
+            <div
+              style={{
+                backgroundColor: "#d4edda",
+                color: "#155724",
+                padding: "14px 16px",
+                borderRadius: "6px",
+                marginBottom: "20px",
+                border: "1px solid #c3e6cb",
+                lineHeight: 1.6,
+              }}
+            >
+              <strong>✓ {scheduleResult.message}</strong>
+              {scheduleResult.meetingLink && (
+                <p style={{ marginTop: 8, marginBottom: 0 }}>
+                  🎥{" "}
+                  <a
+                    href={scheduleResult.meetingLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#155724", fontWeight: 600 }}
+                  >
+                    Join Google Meet
+                  </a>
+                </p>
+              )}
+              {scheduleResult.calendarLink && (
+                <p style={{ marginTop: 4, marginBottom: 0 }}>
+                  📅{" "}
+                  <a
+                    href={scheduleResult.calendarLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#155724" }}
+                  >
+                    View Calendar Event
+                  </a>
+                </p>
+              )}
             </div>
           )}
-          
-          {submitStatus === 'error' && (
-            <div style={{
-              backgroundColor: '#f8d7da',
-              color: '#721c24',
-              padding: '12px',
-              borderRadius: '4px',
-              marginBottom: '20px',
-              border: '1px solid #f5c6cb'
-            }}>
+
+          {/* ── Error ── */}
+          {submitStatus === "error" && (
+            <div
+              style={{
+                backgroundColor: "#f8d7da",
+                color: "#721c24",
+                padding: "12px",
+                borderRadius: "4px",
+                marginBottom: "20px",
+                border: "1px solid #f5c6cb",
+              }}
+            >
               ✗ {errorMessage}
             </div>
           )}
 
+          {/* ── Name + Email ── */}
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="cf-name">Full Name</label>
@@ -164,6 +212,8 @@ export function Contact() {
               />
             </div>
           </div>
+
+          {/* ── Phone + Meeting Type ── */}
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="cf-phone">Phone</label>
@@ -171,72 +221,76 @@ export function Contact() {
                 id="cf-phone"
                 name="phone"
                 type="tel"
-                placeholder="+1 234 567 890"
+                placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="form-field">
-              <label htmlFor="cf-priority">Priority</label>
+              <label htmlFor="cf-meeting-type">Meeting Type</label>
               <select
-                id="cf-priority"
-                name="priority"
-                value={formData.priority}
+                id="cf-meeting-type"
+                name="meetingType"
+                value={formData.meetingType}
                 onChange={handleInputChange}
               >
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
+                <option value="online">🌐 Online (Google Meet)</option>
+                <option value="offline">🏦 Offline (In-Person)</option>
               </select>
             </div>
           </div>
+
+          {/* ── Date + Time ── */}
           <div className="form-row">
             <div className="form-field">
-              <label htmlFor="cf-city">City</label>
+              <label htmlFor="cf-meeting-date">Meeting Date</label>
               <input
-                id="cf-city"
-                name="city"
-                type="text"
-                placeholder="Your city"
-                value={formData.city}
+                id="cf-meeting-date"
+                name="meetingDate"
+                type="date"
+                min={todayISO}
+                value={formData.meetingDate}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="form-field">
-              <label htmlFor="cf-connect">Connect</label>
-              <select
-                id="cf-connect"
-                name="connect"
-                value={formData.connect}
+              <label htmlFor="cf-meeting-time">Meeting Time</label>
+              <input
+                id="cf-meeting-time"
+                name="meetingTime"
+                type="time"
+                value={formData.meetingTime}
                 onChange={handleInputChange}
-              >
-                <option>Sales Support</option>
-                <option>Technical Support</option>
-              </select>
+                required
+              />
             </div>
           </div>
+
+          {/* ── Message ── */}
           <div className="form-field">
-            <label htmlFor="cf-msg">Message</label>
+            <label htmlFor="cf-msg">Message (optional)</label>
             <textarea
               id="cf-msg"
               name="message"
-              placeholder="Tell us about your trading goals..."
+              placeholder="Tell us about your trading goals or what you'd like to discuss..."
               value={formData.message}
               onChange={handleInputChange}
-              required
-              rows={5}
+              rows={4}
             />
           </div>
-          <button 
-            type="submit" 
+
+          <button
+            type="submit"
             className="submit-btn"
             disabled={isSubmitting}
             style={{
               opacity: isSubmitting ? 0.7 : 1,
-              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+              cursor: isSubmitting ? "not-allowed" : "pointer",
             }}
           >
-            {isSubmitting ? 'Sending...' : 'Send Message →'}
+            {isSubmitting ? "Scheduling..." : "Schedule Meeting →"}
           </button>
         </form>
       </div>

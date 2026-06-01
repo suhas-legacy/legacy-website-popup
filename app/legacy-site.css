@@ -998,6 +998,36 @@ section { padding: 7rem 4rem; }
   background: #0A0A0A;
   color: var(--white);
 }
+
+/* ── Date & Time inputs ── */
+.form-field input[type="date"],
+.form-field input[type="time"] {
+  color-scheme: dark;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 0.75rem;
+}
+/* Make the calendar/clock picker icon gold */
+.form-field input[type="date"]::-webkit-calendar-picker-indicator,
+.form-field input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(70%) sepia(60%) saturate(500%) hue-rotate(5deg) brightness(110%);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 3px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.form-field input[type="date"]::-webkit-calendar-picker-indicator:hover,
+.form-field input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+.form-field input[type="date"]:focus,
+.form-field input[type="time"]:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.08);
+}
+
 .form-field input:focus, .form-field textarea:focus {
   border-color:var(--gold);
   box-shadow:0 0 0 3px rgba(255,215,0,0.08);

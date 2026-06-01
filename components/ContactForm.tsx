@@ -2,31 +2,40 @@
 
 import { FormEvent, useState } from "react";
 import posthog from "posthog-js";
-import ContactSvg from "./contact.svg";
 
 interface FormData {
   name: string;
   email: string;
   phone: string;
-  city: string;
-  priority: string;
-  connect: string;
+  meetingDate: string;
+  meetingTime: string;
+  meetingType: "online" | "offline";
   message: string;
 }
+
+interface ScheduleResponse {
+  success: boolean;
+  message: string;
+  calendarLink?: string;
+  meetingLink?: string;
+}
+
+const todayISO = new Date().toLocaleDateString("en-CA");
 
 export function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
-    city: "",
-    priority: "medium",
-    connect: "Sales Support",
+    meetingDate: "",
+    meetingTime: "",
+    meetingType: "online",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [scheduleResult, setScheduleResult] = useState<ScheduleResponse | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -52,6 +61,19 @@ export function ContactForm() {
       setErrorMessage("Please enter a valid email address");
       return false;
     }
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+    if (!formData.phone || phoneDigits.length < 7) {
+      setErrorMessage("A valid phone number is required");
+      return false;
+    }
+    if (!formData.meetingDate) {
+      setErrorMessage("Please select a meeting date");
+      return false;
+    }
+    if (!formData.meetingTime) {
+      setErrorMessage("Please select a meeting time");
+      return false;
+    }
     if (!formData.message.trim()) {
       setErrorMessage("Message is required");
       return false;
@@ -72,8 +94,11 @@ export function ContactForm() {
     setErrorMessage("");
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
-      const response = await fetch(`${apiUrl}/api/contact`, {
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL ||
+        "https://legacy-backend-151726525663.europe-west1.run.app";
+
+      const response = await fetch(`${apiUrl}/api/schedule`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,37 +106,33 @@ export function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data: ScheduleResponse = await response.json();
 
       if (data.success) {
-        posthog.capture("contact_form_submitted", {
-          connect_type: formData.connect,
-          priority: formData.priority,
-          city: formData.city,
+        posthog.capture("meeting_scheduled", {
+          meeting_type: formData.meetingType,
+          meeting_date: formData.meetingDate,
         });
+        setScheduleResult(data);
         setSubmitStatus("success");
         setFormData({
           name: "",
           email: "",
           phone: "",
-          city: "",
-          priority: "medium",
-          connect: "Sales Support",
+          meetingDate: "",
+          meetingTime: "",
+          meetingType: "online",
           message: "",
         });
       } else {
-        posthog.capture("contact_form_error", {
-          error_message: data.message || "Failed to send message",
-          connect_type: formData.connect,
+        posthog.capture("meeting_schedule_error", {
+          error_message: data.message || "Failed to schedule",
         });
         setSubmitStatus("error");
-        setErrorMessage(data.message || "Failed to send message");
+        setErrorMessage(data.message || "Failed to schedule meeting");
       }
     } catch (error) {
-      posthog.capture("contact_form_error", {
-        error_message: "Network error",
-        connect_type: formData.connect,
-      });
+      posthog.capture("meeting_schedule_error", { error_message: "Network error" });
       posthog.captureException(error);
       setSubmitStatus("error");
       setErrorMessage("Network error. Please try again later.");
@@ -123,21 +144,50 @@ export function ContactForm() {
   return (
     <div className="contact-grid">
       <form className="contact-form" onSubmit={onSubmit}>
-        {submitStatus === "success" && (
+        {/* ── Success ── */}
+        {submitStatus === "success" && scheduleResult && (
           <div
             style={{
               backgroundColor: "#d4edda",
               color: "#155724",
-              padding: "12px",
-              borderRadius: "4px",
+              padding: "14px 16px",
+              borderRadius: "6px",
               marginBottom: "20px",
               border: "1px solid #c3e6cb",
+              lineHeight: 1.6,
             }}
           >
-            ✓ Your message has been sent successfully! We'll get back to you soon.
+            <strong>✓ {scheduleResult.message}</strong>
+            {scheduleResult.meetingLink && (
+              <p style={{ marginTop: 8, marginBottom: 0 }}>
+                🎥{" "}
+                <a
+                  href={scheduleResult.meetingLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#155724", fontWeight: 600 }}
+                >
+                  Join Google Meet
+                </a>
+              </p>
+            )}
+            {scheduleResult.calendarLink && (
+              <p style={{ marginTop: 4, marginBottom: 0 }}>
+                📅{" "}
+                <a
+                  href={scheduleResult.calendarLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#155724" }}
+                >
+                  View Calendar Event
+                </a>
+              </p>
+            )}
           </div>
         )}
 
+        {/* ── Error ── */}
         {submitStatus === "error" && (
           <div
             style={{
@@ -153,6 +203,7 @@ export function ContactForm() {
           </div>
         )}
 
+        {/* ── Name + Email ── */}
         <div className="form-row">
           <div className="form-field">
             <label htmlFor="cf-name">Full Name</label>
@@ -179,6 +230,8 @@ export function ContactForm() {
             />
           </div>
         </div>
+
+        {/* ── Phone + Meeting Type ── */}
         <div className="form-row">
           <div className="form-field">
             <label htmlFor="cf-phone">Phone</label>
@@ -186,50 +239,54 @@ export function ContactForm() {
               id="cf-phone"
               name="phone"
               type="tel"
-              placeholder="+1 234 567 890"
+              placeholder="+91 98765 43210"
               value={formData.phone}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="form-field">
-            <label htmlFor="cf-priority">Priority</label>
+            <label htmlFor="cf-meeting-type">Meeting Type</label>
             <select
-              id="cf-priority"
-              name="priority"
-              value={formData.priority}
+              id="cf-meeting-type"
+              name="meetingType"
+              value={formData.meetingType}
               onChange={handleInputChange}
             >
-              <option>High</option>
-              <option>Medium</option>
-              <option>Low</option>
+              <option value="online">🌐 Online (Google Meet)</option>
+              <option value="offline">🏦 Offline (In-Person)</option>
             </select>
           </div>
         </div>
+
+        {/* ── Date + Time ── */}
         <div className="form-row">
           <div className="form-field">
-            <label htmlFor="cf-city">City</label>
+            <label htmlFor="cf-meeting-date">Meeting Date</label>
             <input
-              id="cf-city"
-              name="city"
-              type="text"
-              placeholder="Your city"
-              value={formData.city}
+              id="cf-meeting-date"
+              name="meetingDate"
+              type="date"
+              min={todayISO}
+              value={formData.meetingDate}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="form-field">
-            <label htmlFor="cf-connect">Connect</label>
-            <select
-              id="cf-connect"
-              name="connect"
-              value={formData.connect}
+            <label htmlFor="cf-meeting-time">Meeting Time</label>
+            <input
+              id="cf-meeting-time"
+              name="meetingTime"
+              type="time"
+              value={formData.meetingTime}
               onChange={handleInputChange}
-            >
-              <option>Sales Support</option>
-              <option>Technical Support</option>
-            </select>
+              required
+            />
           </div>
         </div>
+
+        {/* ── Message ── */}
         <div className="form-field">
           <label htmlFor="cf-msg">Message</label>
           <textarea
@@ -242,6 +299,7 @@ export function ContactForm() {
             rows={5}
           />
         </div>
+
         <button
           type="submit"
           className="submit-btn"
@@ -251,7 +309,7 @@ export function ContactForm() {
             cursor: isSubmitting ? "not-allowed" : "pointer",
           }}
         >
-          {isSubmitting ? "Sending..." : "Send Message →"}
+          {isSubmitting ? "Scheduling..." : "Schedule Meeting →"}
         </button>
       </form>
       <div className="contact-info">
