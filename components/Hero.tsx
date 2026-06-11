@@ -49,7 +49,7 @@ export const Hero = React.memo(function Hero() {
         </div>
         <div className="hero-video-side">
           <Image
-            src="/home_svg_1.svg"
+            src="/blockchain_currency.svg"
             alt="Trading illustration"
             width={500}
             height={500}
