@@ -56,7 +56,7 @@ export function CalculatorLinks({ currentPath }: CalculatorLinksProps) {
     <div className="mb-12">
       <div className="flex items-center gap-2 mb-6">
         <Calculator className="w-5 h-5 text-amber-400" />
-        <h2 className="text-xl font-bold text-white">All Calculators</h2>
+        <h2 className="text-xl font-bold text-black">All Calculators</h2>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {calculators.map((calc) => {
@@ -65,19 +65,19 @@ export function CalculatorLinks({ currentPath }: CalculatorLinksProps) {
             <Link
               key={calc.href}
               href={calc.href}
-              className={`group bg-zinc-900 border rounded-xl p-4 transition-all ${
+              className={`group bg-card border rounded-xl p-4 transition-all ${
                 isActive
                   ? "border-amber-400 bg-amber-400/5"
                   : "border-zinc-800 hover:border-amber-400/50"
               }`}
             >
               <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r ${calc.color} mb-3 group-hover:scale-110 transition-transform`}>
-                <div className="text-white">
+                <div className="text-black">
                   {calc.icon}
                 </div>
               </div>
               <h3 className={`font-semibold mb-1 text-sm ${
-                isActive ? "text-amber-400" : "text-white group-hover:text-amber-400"
+                isActive ? "text-amber-400" : "text-black group-hover:text-amber-400"
               } transition-colors`}>
                 {calc.title}
               </h3>

@@ -9,6 +9,7 @@ import { Ticker } from "./Ticker";
 import { TestimonialsPreview } from "./TestimonialsPreview";
 import { WhyUsPreview } from "./WhyUsPreview";
 import NithyaChat from "./NithyaChat";
+import { AboutBank } from "./AboutBank";
 
 export default function LandingPage() {
   return (
@@ -16,9 +17,9 @@ export default function LandingPage() {
       <ScrollRevealInit />
       <Ticker />
       <Navbar />
-      {/* <ImportantNoticePopup /> */}
       <Hero />
       <MarketPreview />
+      <AboutBank />
       <WhyUsPreview />
       <TestimonialsPreview />
       <Footer />

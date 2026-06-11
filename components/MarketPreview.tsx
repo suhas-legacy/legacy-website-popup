@@ -96,17 +96,35 @@ const MARKETS: MarketInstrument[] = [
     period: "30 days",
     icon: "🛢️",
   },
-  {
-    id: "us30",
-    tvSymbol: "SKILLING:US30",
-    chartTitle: "Dow Jones Industrial Average Index",
-    name: "Dow Jones Index",
-    ticker: "US30",
-    change: "-0.27%",
-    changeUp: false,
-    flicker: { initial: 46392.9, vol: 0.001 },
-    mini: { base: 46400, n: 20, vol: 0.008, up: false },
-    icon: "🇺🇸",
+
+    {
+    id: "bitcoin",
+    tvSymbol: "BTCUSDT",
+    chartTitle: "Bitcoin / U.S. Dollar",
+    name: "Bitcoin",
+    ticker: "BTC/USD",
+    large: true,
+    change: "+5.23%",
+    changeUp: true,
+    flicker: { initial: 68000.0, vol: 0.005, decimals: 2 },
+    mini: { base: 68000, n: 30, vol: 0.01, up: true },
+    buyers: "80% are buyers now",
+    period: "30 days",
+    icon: "₿",
+    iconStyle: { background: "rgba(247,147,26,0.2)" },
+  },
+    {
+    id: "silver",
+    tvSymbol: "XAGUSD",
+    chartTitle: "Silver Spot / U.S. Dollar",
+    name: "SILVER (XAG/USD)",
+    ticker: "XAG/USD",
+    change: "+0.5%",
+    changeUp: true,
+    flicker: { initial: 72.943, vol: 0.002, decimals: 3 },
+    mini: { base: 73, n: 20, vol: 0.015, up: true },
+    buyers: "65% are buyers now",
+    icon: "🥈",
   },
 ];
 
@@ -383,7 +401,7 @@ export function MarketPreview() {
       </h2>
       
       <div className="market-grid reveal">
-        {MARKETS.slice(0, 4).map((m) => (
+        {MARKETS.slice(0, 6).map((m) => (
           <MarketCard
             key={m.id}
             instrument={m}

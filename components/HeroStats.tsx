@@ -7,7 +7,7 @@ interface HeroStatsProps {
 export const HeroStats: React.FC<HeroStatsProps> = ({ traders }) => (
   <div className="hero-stats">
     <div className="stat-item">
-      <div className="stat-num">{traders.toLocaleString()}</div>
+      <div className="stat-num">{traders.toLocaleString()}+</div>
       <div className="stat-label">Active Traders</div>
     </div>
     <div className="stat-item">

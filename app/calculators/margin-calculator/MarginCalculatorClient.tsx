@@ -223,7 +223,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
       />
       <Navbar />
-      <div className="min-h-screen bg-zinc-950 text-white pt-32 pb-16">
+      <div className="min-h-screen bg-page text-black pt-32 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-full px-4 py-2 mb-6">
@@ -233,7 +233,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
               Forex Margin Calculator – Free Margin Requirement Calculator
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+            <p className="text-black-400 text-lg max-w-3xl mx-auto leading-relaxed">
               Calculate forex margin requirements instantly with our free margin calculator. 
               Get accurate margin calculations for forex pairs and commodities with live market prices.
             </p>
@@ -242,13 +242,13 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
           <CalculatorLinks currentPath="/calculators/margin-calculator" />
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">
+            <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-amber-400">Calculator Inputs</h2>
                 <button
                   onClick={refetch}
                   disabled={isLoading}
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-amber-400 transition-colors disabled:opacity-50"
+                  className="flex items-center gap-2 text-sm text-black-400 hover:text-amber-400 transition-colors disabled:opacity-50"
                 >
                   <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                   Refresh Prices
@@ -263,7 +263,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   <select
                     value={formData.instrumentId}
                     onChange={(e) => handleInputChange("instrumentId", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {CALCULATOR_INSTRUMENTS.map((inst) => (
                       <option key={inst.id} value={inst.id}>
@@ -274,19 +274,19 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   {selectedInstrument && (
                     <div className="mt-2 flex items-center gap-2 text-sm">
                       <Shield className="w-4 h-4 text-amber-400" />
-                      <span className="text-gray-400">Current Price: </span>
-                      <span className="text-white font-medium">{selectedInstrument.price.toFixed(selectedInstrument.price > 100 ? 2 : 4)}</span>
+                      <span className="text-black-400">Current Price: </span>
+                      <span className="text-black font-medium">{selectedInstrument.price.toFixed(selectedInstrument.price > 100 ? 2 : 4)}</span>
                     </div>
                   )}
                   <button
                     onMouseEnter={() => setShowTooltip("instrument")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "instrument" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
                       Select the trading instrument. Different instruments have different contract sizes affecting margin.
                     </div>
                   )}
@@ -317,17 +317,17 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                     }}
                     step="0.01"
                     min="0.01"
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   />
                   <button
                     onMouseEnter={() => setShowTooltip("lot")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "lot" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
                       Standard lot = 1.0 (full contract size), Mini lot = 0.1, Micro lot = 0.01
                     </div>
                   )}
@@ -340,7 +340,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   <select
                     value={formData.leverage}
                     onChange={(e) => handleInputChange("leverage", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {LEVERAGE_OPTIONS.map((lev) => (
                       <option key={lev.value} value={lev.value}>
@@ -351,12 +351,12 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   <button
                     onMouseEnter={() => setShowTooltip("leverage")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "leverage" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
                       Higher leverage means lower margin requirements but higher risk. 1:100 is common for retail traders.
                     </div>
                   )}
@@ -390,7 +390,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                       }}
                       min="1"
                       step="1"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                      className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                     />
                   </div>
                 )}
@@ -402,7 +402,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   <select
                     value={formData.accountCurrency}
                     onChange={(e) => handleInputChange("accountCurrency", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {ACCOUNT_CURRENCIES.map((currency) => (
                       <option key={currency} value={currency}>
@@ -413,12 +413,12 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   <button
                     onMouseEnter={() => setShowTooltip("account")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "account" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
                       The base currency of your trading account. Margin will be displayed in this currency.
                     </div>
                   )}
@@ -434,7 +434,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   </button>
                   <button
                     onClick={resetForm}
-                    className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white font-semibold rounded-lg px-4 py-3 transition-all"
+                    className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-black font-semibold rounded-lg px-4 py-3 transition-all"
                   >
                     Reset
                   </button>
@@ -442,29 +442,29 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
               </div>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">
+            <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <h2 className="text-2xl font-bold mb-6 text-amber-400">Margin Requirements</h2>
               
               {result && selectedInstrument && (
                 <div className="space-y-6">
-                  <div className="bg-zinc-800 rounded-xl p-6 border border-zinc-700">
-                    <div className="text-sm text-gray-400 mb-2">Margin Required</div>
+                  <div className="bg-card rounded-xl p-6 border border-zinc-700">
+                    <div className="text-sm text-black-400 mb-2">Margin Required</div>
                     <div className="text-4xl font-bold text-emerald-400">
                       ${result.marginRequired.toFixed(2)} {formData.accountCurrency}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
-                      <div className="text-xs text-gray-400 mb-1">Free Margin Impact</div>
+                    <div className="bg-card rounded-xl p-4 border border-zinc-700">
+                      <div className="text-xs text-black-400 mb-1">Free Margin Impact</div>
                       <div className="text-xl font-bold text-amber-400">
                         ${result.freeMarginImpact.toFixed(2)}
                       </div>
                       <div className="text-xs text-gray-500 mt-1">Based on $10k balance</div>
                     </div>
-                    <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
-                      <div className="text-xs text-gray-400 mb-1">Max Lots at Leverage</div>
-                      <div className="text-xl font-bold text-white">
+                    <div className="bg-card rounded-xl p-4 border border-zinc-700">
+                      <div className="text-xs text-black-400 mb-1">Max Lots at Leverage</div>
+                      <div className="text-xl font-bold text-black">
                         {result.maxLotsAtLeverage.toFixed(2)}
                       </div>
                       <div className="text-xs text-gray-500 mt-1">With $10k balance</div>
@@ -480,26 +480,26 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                     </div>
                   </div>
 
-                  <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
-                    <div className="text-xs text-gray-400 mb-2">Position Details</div>
+                  <div className="bg-card rounded-xl p-4 border border-zinc-700">
+                    <div className="text-xs text-black-400 mb-2">Position Details</div>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Contract Size:</span>
-                        <span className="text-white font-medium">{result.contractSize.toLocaleString()} units</span>
+                        <span className="text-black-400">Contract Size:</span>
+                        <span className="text-black font-medium">{result.contractSize.toLocaleString()} units</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Current Price:</span>
+                        <span className="text-black-400">Current Price:</span>
                         <span className="text-amber-400 font-medium">{result.currentPrice.toFixed(result.currentPrice > 100 ? 2 : 4)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Leverage Used:</span>
-                        <span className="text-white font-medium">
+                        <span className="text-black-400">Leverage Used:</span>
+                        <span className="text-black font-medium">
                           {formData.leverage === "custom" ? `1:${formData.customLeverage}` : formData.leverage}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Last Updated:</span>
-                        <span className="text-white font-medium">{lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'}</span>
+                        <span className="text-black-400">Last Updated:</span>
+                        <span className="text-black font-medium">{lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'}</span>
                       </div>
                     </div>
                   </div>
@@ -508,16 +508,16 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
             </div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-16">
+          <div className="bg-card border border-zinc-800 rounded-2xl p-6 mb-16">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <Share2 className="w-5 h-5 text-amber-400" />
-                <span className="text-white font-medium">Share this calculator</span>
+                <span className="text-black font-medium">Share this calculator</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={shareCalculator}
-                  className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg transition-all"
+                  className="flex items-center gap-2 bg-card hover:bg-zinc-700 text-black px-4 py-2 rounded-lg transition-all"
                 >
                   {shareCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   {shareCopied ? "Copied!" : "Copy Link"}
@@ -526,7 +526,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   href={`https://twitter.com/intent/tweet?text=Check out this free Forex Margin Calculator from Legacy Global Bank&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-500 hover:bg-blue-600 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   Twitter
                 </a>
@@ -534,7 +534,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-600 hover:bg-blue-700 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   Facebook
                 </a>
@@ -542,7 +542,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
                   href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-700 hover:bg-blue-800 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   LinkedIn
                 </a>
@@ -553,19 +553,19 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-8 text-amber-400">Example Margin Scenarios</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Standard Lot @ 1:100</div>
-                <div className="text-sm text-gray-400 mb-2">EUR/USD, 1.0 lot, 1:100 leverage</div>
+                <div className="text-sm text-black-400 mb-2">EUR/USD, 1.0 lot, 1:100 leverage</div>
                 <div className="text-2xl font-bold text-emerald-400">$1,085.00</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Mini Lot @ 1:200</div>
-                <div className="text-sm text-gray-400 mb-2">GBP/USD, 0.1 lot, 1:200 leverage</div>
+                <div className="text-sm text-black-400 mb-2">GBP/USD, 0.1 lot, 1:200 leverage</div>
                 <div className="text-2xl font-bold text-emerald-400">$63.25</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Gold @ 1:100</div>
-                <div className="text-sm text-gray-400 mb-2">XAU/USD, 1.0 lot, 1:100 leverage</div>
+                <div className="text-sm text-black-400 mb-2">XAU/USD, 1.0 lot, 1:100 leverage</div>
                 <div className="text-2xl font-bold text-emerald-400">$2,330.50</div>
               </div>
             </div>
@@ -574,22 +574,22 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-amber-400">Understanding Forex Margin Requirements</h2>
             <div className="prose prose-invert prose-lg max-w-none">
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black-300 leading-relaxed mb-6">
                 Margin is a fundamental concept in forex trading that enables traders to control larger positions with smaller amounts of capital. 
                 Our forex margin calculator helps you determine exactly how much margin is required for any trade, based on your chosen instrument, 
                 lot size, and leverage setting. Understanding the forex margin formula is essential for effective risk management.
               </p>
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black-300 leading-relaxed mb-6">
                 The margin requirement formula is: (Lot Size × Contract Size × Current Price) ÷ Leverage. 
                 For example, with 1 standard lot of EUR/USD at a price of 1.0850 and 1:100 leverage, the margin required is approximately $1,085. 
                 This forex leverage calculator shows how higher leverage ratios reduce margin requirements proportionally.
               </p>
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black-300 leading-relaxed mb-6">
                 Different instruments have different contract sizes. Forex pairs typically use 100,000 units per standard lot, 
                 while Gold (XAU/USD) uses 100 troy ounces, Silver uses 5,000 troy ounces, and Oil uses 1,000 barrels per contract. 
                 Our calculator automatically applies the correct contract size for each instrument.
               </p>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-black-300 leading-relaxed">
                 Live market prices are updated every 30 seconds to ensure your margin calculations are based on current market conditions. 
                 This is particularly important for commodities like Gold and Oil, which can be more volatile than currency pairs. 
                 You can manually refresh prices by clicking the refresh button.
@@ -603,15 +603,15 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
               {faqData.map((faq, index) => (
                 <details
                   key={index}
-                  className="bg-zinc-900 border border-zinc-800 rounded-xl group"
+                  className="bg-card border border-zinc-800 rounded-xl group"
                 >
-                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
-                    <span className="font-semibold text-white">{faq.question}</span>
+                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
+                    <span className="font-semibold text-black">{faq.question}</span>
                     <span className="text-amber-400 transform group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                  <div className="px-6 pb-6 text-black-400 leading-relaxed">
                     {faq.answer}
                   </div>
                 </details>
@@ -624,24 +624,24 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <a
                 href="/calculators/pip-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Pip Calculator</div>
-                <div className="text-sm text-gray-400">Calculate pip values for any instrument and lot size</div>
+                <div className="text-sm text-black-400">Calculate pip values for any instrument and lot size</div>
               </a>
               <a
                 href="/calculators/profit-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Profit Calculator</div>
-                <div className="text-sm text-gray-400">Calculate potential profits and losses on trades</div>
+                <div className="text-sm text-black-400">Calculate potential profits and losses on trades</div>
               </a>
               <a
                 href="/calculators/lot-size-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Lot Size Calculator</div>
-                <div className="text-sm text-gray-400">Calculate optimal position size based on risk</div>
+                <div className="text-sm text-black-400">Calculate optimal position size based on risk</div>
               </a>
             </div>
           </div>

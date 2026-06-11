@@ -212,7 +212,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
       />
       <Navbar />
-      <div className="min-h-screen bg-zinc-950 text-white pt-32 pb-16">
+      <div className="min-h-screen bg-page text-black pt-32 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-full px-4 py-2 mb-6">
@@ -222,7 +222,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
               Forex Lot Size Calculator – Free Position Size Calculator
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+            <p className="text-black-400 text-lg max-w-3xl mx-auto leading-relaxed">
               Calculate optimal forex lot size instantly with our professional position size calculator. 
               Get accurate lot size recommendations for forex pairs and commodities with live market prices.
             </p>
@@ -231,13 +231,13 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
           <CalculatorLinks currentPath="/calculators/lot-size-calculator" />
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">
+            <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-amber-400">Risk Parameters</h2>
                 <button
                   onClick={refetch}
                   disabled={isLoading}
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-amber-400 transition-colors disabled:opacity-50"
+                  className="flex items-center gap-2 text-sm text-black-400 hover:text-amber-400 transition-colors disabled:opacity-50"
                 >
                   <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                   Refresh Prices
@@ -246,11 +246,11 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
               
               <div className="space-y-6">
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Account Balance
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-3 text-gray-400">$</span>
+                    <span className="absolute left-4 top-3 text-black-400">$</span>
                     <input
                       type="number"
                       value={inputValues["accountBalance"] !== undefined ? inputValues["accountBalance"] : formData.accountBalance}
@@ -272,25 +272,25 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                       }}
                       step="100"
                       min="100"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg pl-8 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                      className="w-full bg-card border border-zinc-700 rounded-lg pl-8 pr-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                     />
                   </div>
                   <button
                     onMouseEnter={() => setShowTooltip("balance")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "balance" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       Your total account balance including all available funds.
                     </div>
                   )}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Risk Percentage (%)
                   </label>
                   <div className="relative">
@@ -316,19 +316,19 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                       step="0.5"
                       min="0.1"
                       max="10"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                      className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                     />
-                    <span className="absolute right-4 top-3 text-gray-400">%</span>
+                    <span className="absolute right-4 top-3 text-black-400">%</span>
                   </div>
                   <button
                     onMouseEnter={() => setShowTooltip("risk")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "risk" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       The percentage of your account you are willing to risk. Professional traders typically use 1-2%.
                     </div>
                   )}
@@ -341,7 +341,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                         className={`text-xs px-3 py-1 rounded transition-all ${
                           formData.riskPercentage === preset
                             ? "bg-amber-400 text-black"
-                            : "bg-zinc-800 text-gray-400 hover:bg-zinc-700"
+                            : "bg-card text-black-400 hover:bg-card"
                         }`}
                       >
                         {preset}%
@@ -351,7 +351,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Stop Loss (Pips)
                   </label>
                   <input
@@ -375,30 +375,30 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                     }}
                     step="1"
                     min="1"
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   />
                   <button
                     onMouseEnter={() => setShowTooltip("sl")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "sl" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       The distance from your entry to your stop loss in pips. A wider stop loss requires a smaller position size.
                     </div>
                   )}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Instrument
                   </label>
                   <select
                     value={formData.instrumentId}
                     onChange={(e) => handleInputChange("instrumentId", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {CALCULATOR_INSTRUMENTS.map((inst) => (
                       <option key={inst.id} value={inst.id}>
@@ -409,32 +409,32 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   {selectedInstrument && (
                     <div className="mt-2 flex items-center gap-2 text-sm">
                       <Shield className="w-4 h-4 text-amber-400" />
-                      <span className="text-gray-400">Current Price: </span>
-                      <span className="text-white font-medium">{selectedInstrument.price.toFixed(selectedInstrument.price > 100 ? 2 : 4)}</span>
+                      <span className="text-black-400">Current Price: </span>
+                      <span className="text-black font-medium">{selectedInstrument.price.toFixed(selectedInstrument.price > 100 ? 2 : 4)}</span>
                     </div>
                   )}
                   <button
                     onMouseEnter={() => setShowTooltip("instrument")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "instrument" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       The trading instrument. Different instruments have different pip sizes and contract sizes affecting lot size calculation.
                     </div>
                   )}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Account Currency
                   </label>
                   <select
                     value={formData.accountCurrency}
                     onChange={(e) => handleInputChange("accountCurrency", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {ACCOUNT_CURRENCIES.map((currency) => (
                       <option key={currency} value={currency}>
@@ -445,12 +445,12 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   <button
                     onMouseEnter={() => setShowTooltip("account")}
                     onMouseLeave={() => setShowTooltip(null)}
-                    className="absolute right-3 top-9 text-gray-400 hover:text-amber-400 transition-colors"
+                    className="absolute right-3 top-9 text-black-400 hover:text-amber-400 transition-colors"
                   >
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "account" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       The base currency of your trading account. Risk amount will be calculated in this currency.
                     </div>
                   )}
@@ -466,7 +466,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   </button>
                   <button
                     onClick={resetForm}
-                    className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white font-semibold rounded-lg px-4 py-3 transition-all"
+                    className="flex-1 bg-card hover:bg-zinc-600 text-black font-semibold rounded-lg px-4 py-3 transition-all"
                   >
                     Reset
                   </button>
@@ -474,32 +474,32 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
               </div>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">
+            <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <h2 className="text-2xl font-bold mb-6 text-amber-400">Position Size Results</h2>
               
               {result && selectedInstrument && (
                 <div className="space-y-6">
-                  <div className="bg-zinc-800 rounded-xl p-6 border border-zinc-700">
-                    <div className="text-sm text-gray-400 mb-2">Recommended Lot Size</div>
+                  <div className="bg-card rounded-xl p-6 border border-zinc-700">
+                    <div className="text-sm text-black-400 mb-2">Recommended Lot Size</div>
                     <div className="text-4xl font-bold text-emerald-400">
                       {result.recommendedLotSize.toFixed(2)} lots
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
-                      <div className="text-xs text-gray-400 mb-1">Risk Amount</div>
+                    <div className="bg-card rounded-xl p-4 border border-zinc-700">
+                      <div className="text-xs text-black-400 mb-1">Risk Amount</div>
                       <div className="text-xl font-bold text-amber-400">
                         ${result.riskAmount.toFixed(2)}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">{formData.riskPercentage}% of balance</div>
+                      <div className="text-xs text-black mt-1">{formData.riskPercentage}% of balance</div>
                     </div>
-                    <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
-                      <div className="text-xs text-gray-400 mb-1">Max Loss if SL Hit</div>
+                    <div className="bg-card rounded-xl p-4 border border-zinc-700">
+                      <div className="text-xs text-black-400 mb-1">Max Loss if SL Hit</div>
                       <div className="text-xl font-bold text-rose-400">
                         ${result.maxLossIfSLHit.toFixed(2)}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">{formData.stopLossPips} pips</div>
+                      <div className="text-xs text-black mt-1">{formData.stopLossPips} pips</div>
                     </div>
                   </div>
 
@@ -512,20 +512,20 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                     </div>
                   </div>
 
-                  <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
-                    <div className="text-xs text-gray-400 mb-3">Lot Breakdown</div>
+                  <div className="bg-card rounded-xl p-4 border border-zinc-700">
+                    <div className="text-xs text-black-400 mb-3">Lot Breakdown</div>
                     <div className="grid grid-cols-3 gap-3 text-center">
                       <div>
-                        <div className="text-lg font-bold text-white">{result.lotsInStandard}</div>
-                        <div className="text-xs text-gray-400">Standard</div>
+                        <div className="text-lg font-bold text-black">{result.lotsInStandard}</div>
+                        <div className="text-xs text-black-400">Standard</div>
                       </div>
                       <div>
-                        <div className="text-lg font-bold text-white">{result.lotsInMini}</div>
-                        <div className="text-xs text-gray-400">Mini</div>
+                        <div className="text-lg font-bold text-black">{result.lotsInMini}</div>
+                        <div className="text-xs text-black-400">Mini</div>
                       </div>
                       <div>
-                        <div className="text-lg font-bold text-white">{result.lotsInMicro}</div>
-                        <div className="text-xs text-gray-400">Micro</div>
+                        <div className="text-lg font-bold text-black">{result.lotsInMicro}</div>
+                        <div className="text-xs text-black-400">Micro</div>
                       </div>
                     </div>
                   </div>
@@ -534,16 +534,16 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
             </div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-16">
+          <div className="bg-card border border-zinc-800 rounded-2xl p-6 mb-16">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <Share2 className="w-5 h-5 text-amber-400" />
-                <span className="text-white font-medium">Share this calculator</span>
+                <span className="text-black font-medium">Share this calculator</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={shareCalculator}
-                  className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg transition-all"
+                  className="flex items-center gap-2 bg-card hover:bg-card text-black px-4 py-2 rounded-lg transition-all"
                 >
                   {shareCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   {shareCopied ? "Copied!" : "Copy Link"}
@@ -552,7 +552,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   href={`https://twitter.com/intent/tweet?text=Check out this free Forex Lot Size Calculator from Legacy Global Bank&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-500 hover:bg-blue-600 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   Twitter
                 </a>
@@ -560,7 +560,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-600 hover:bg-blue-700 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   Facebook
                 </a>
@@ -568,7 +568,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
                   href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-700 hover:bg-blue-800 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   LinkedIn
                 </a>
@@ -579,19 +579,19 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-8 text-amber-400">Example Position Size Scenarios</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Conservative Trader</div>
-                <div className="text-sm text-gray-400 mb-2">$10k balance, 1% risk, 50 pip SL</div>
+                <div className="text-sm text-black-400 mb-2">$10k balance, 1% risk, 50 pip SL</div>
                 <div className="text-2xl font-bold text-emerald-400">0.20 lots</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Moderate Risk</div>
-                <div className="text-sm text-gray-400 mb-2">$10k balance, 2% risk, 30 pip SL</div>
+                <div className="text-sm text-black-400 mb-2">$10k balance, 2% risk, 30 pip SL</div>
                 <div className="text-2xl font-bold text-emerald-400">0.67 lots</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Gold Position</div>
-                <div className="text-sm text-gray-400 mb-2">$10k balance, 2% risk, 30 pip SL</div>
+                <div className="text-sm text-black-400 mb-2">$10k balance, 2% risk, 30 pip SL</div>
                 <div className="text-2xl font-bold text-emerald-400">0.67 lots</div>
               </div>
             </div>
@@ -600,22 +600,22 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-amber-400">Understanding Forex Position Sizing</h2>
             <div className="prose prose-invert prose-lg max-w-none">
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black leading-relaxed mb-6">
                 Position sizing is the most critical aspect of forex risk management. Our forex lot size calculator helps you 
                 determine the optimal position size based on your account balance, risk tolerance, and trade setup. 
                 By using a percentage-based approach to position sizing, you ensure that your risk remains consistent across all trades.
               </p>
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black leading-relaxed mb-6">
                 The lot size formula is: Risk Amount divided by (Stop Loss Pips times Pip Value). 
                 First, calculate your risk amount by multiplying your account balance by your chosen risk percentage. 
                 Then, determine the pip value for your instrument based on its contract size and pip size.
               </p>
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black leading-relaxed mb-6">
                 Different instruments have different contract sizes and pip sizes. Forex pairs typically use 100,000 units per standard lot, 
                 while Gold (XAU/USD) uses 100 troy ounces, Silver uses 5,000 troy ounces, and Oil uses 1,000 barrels per contract. 
                 Our calculator automatically applies the correct parameters for each instrument.
               </p>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-black leading-relaxed">
                 Live market prices are updated every 30 seconds to ensure your position size calculations are based on current market conditions. 
                 The 2% rule is a widely followed risk management principle - never risk more than 2% of your account on a single trade.
                 Always calculate your position size before entering a trade to maintain consistent risk management.
@@ -629,15 +629,15 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
               {faqData.map((faq, index) => (
                 <details
                   key={index}
-                  className="bg-zinc-900 border border-zinc-800 rounded-xl group"
+                  className="bg-card border border-zinc-800 rounded-xl group"
                 >
-                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
-                    <span className="font-semibold text-white">{faq.question}</span>
+                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
+                    <span className="font-semibold text-black">{faq.question}</span>
                     <span className="text-amber-400 transform group-open:rotate-180 transition-transform">
                       ▼
                     </span>
                   </summary>
-                  <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                  <div className="px-6 pb-6 text-black-400 leading-relaxed">
                     {faq.answer}
                   </div>
                 </details>
@@ -650,24 +650,24 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <a
                 href="/calculators/pip-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Pip Calculator</div>
-                <div className="text-sm text-gray-400">Calculate pip values for any instrument and lot size</div>
+                <div className="text-sm text-black-400">Calculate pip values for any instrument and lot size</div>
               </a>
               <a
                 href="/calculators/profit-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Profit Calculator</div>
-                <div className="text-sm text-gray-400">Calculate potential profits and losses on trades</div>
+                <div className="text-sm text-black-400">Calculate potential profits and losses on trades</div>
               </a>
               <a
                 href="/calculators/margin-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Margin Calculator</div>
-                <div className="text-sm text-gray-400">Determine required margin for your trades</div>
+                <div className="text-sm text-black-400">Determine required margin for your trades</div>
               </a>
             </div>
           </div>

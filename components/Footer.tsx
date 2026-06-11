@@ -56,16 +56,16 @@ export function Footer() {
             and Indices. Trade with confidence, backed by cutting-edge technology.
           </p>
           <div className="social-links">
-            <a href="https://www.facebook.com/profile.php?id=61581286876956" className="social-link" aria-label="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61581286876956" className="social-link facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <FaFacebook />
             </a>
-            <a href="#" className="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/legacy-global-bank/" className="social-link linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <FaLinkedin />
             </a>
-            <a href="https://www.instagram.com/legacy_global_bank/" className="social-link" aria-label="Instagram">
+            <a href="https://www.instagram.com/legacy_global_bank/" className="social-link instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <FaInstagram />
             </a>
-            <a href="#" className="social-link" aria-label="YouTube">
+            <a href="#" className="social-link youtube" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
               <FaYoutube />
             </a>
           </div>
@@ -134,12 +134,12 @@ export function Footer() {
       <div className="footer-bottom">
         <div className="ctrader-logo">
           <Image
-            src="/ctraderlogo.png"
+            src="/ctraderlogo1.png"
             alt="cTrader"
             width={200}
-            height={90}
-            unoptimized
-            style={{ filter: "brightness(100) invert(0)" }}
+            height={50}
+            // unoptimized
+            style={{ filter: "brightness(3)" }}
           />
         </div>
         <p>

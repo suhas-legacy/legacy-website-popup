@@ -251,12 +251,19 @@ export function ContactForm() {
             cursor: isSubmitting ? "not-allowed" : "pointer",
           }}
         >
-          {isSubmitting ? "Sending..." : "Send Message →"}
+          {isSubmitting ? "Sending..." : "Send Message →"} 
         </button>
       </form>
       <div className="contact-info">
         <img src="/contact.svg" alt="Contact" />
       </div>
+      <div className="info-card">
+          <div className="info-icon">📧</div>
+          <div>
+            <div className="info-label">Email Support</div>
+            <div className="info-val"><a href="mailto:contact@legacyglobalbank.com">contact@legacyglobalbank.com</a></div>
+          </div>
+          </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ThreeBackground } from "./ThreeBackground";
+import Image from "next/image";
 import { HeroStats } from "./HeroStats";
 
 function useCountUp(end: number, durationMs: number, startWhen = true) {
@@ -29,33 +29,36 @@ export const Hero = React.memo(function Hero() {
 
   return (
     <section id="hero">
-      <ThreeBackground />
-      <div className="hero-overlay" />
-      <div className="hero-content">
-        <h1 className="hero-h1">
-        {/* TRADE THE WORLD */}
-          <span className="hero-word hero-word-build">TRADE</span>{" "}
-          <span className="hero-word hero-word-your">THE</span>{" "}
-          <span className="hero-word hero-word-legacy">WORLD.</span>
-          <br />
-          
-          <span className="gold-line">BEGIN YOUR TRADING JOURNEY.</span>
-        </h1>
-        <p className="hero-sub">
-         500+ instruments. 150+ countries. Up to 1:500 leverage. Trade Forex, Stocks, Crypto, Commodities & Indices on one globally trusted platform on a globally accessible trading platform
-        </p>
-        <div className="hero-btns">
-          <a href="/accounts" className="btn-gold">
-            Create Account
-          </a>
-          <a href="/demo" className="btn-outline">
-            Try Demo — $10,000 Free
-          </a>
+      <div className="hero-container">
+        <div className="hero-content">
+          <h1 className="hero-h1 ">
+            <span className="hero-word hero-word-build">TRADE</span>{" "}
+            <span className="hero-word hero-word-your">THE</span>{" "}
+            <span className="hero-word hero-word-legacy">WORLD.</span>
+            <span className="hero-subtitle">BEGIN YOUR TRADING JOURNEY.</span>
+          </h1>
+          <div className="hero-btns">
+            <a href="/accounts" className="btn-gold">
+              Create Account
+            </a>
+            <a href="/demo" className="btn-outline">
+              Try Demo — $10,000 Free
+            </a>
+          </div>
+          <HeroStats traders={traders} />
         </div>
-      </div>
-      <div className="hero-stats-start">
-        <HeroStats traders={traders} />
+        <div className="hero-video-side">
+          <Image
+            src="/home_svg_1.svg"
+            alt="Trading illustration"
+            width={500}
+            height={500}
+            priority
+            className="hero-svg-element"
+          />
+        </div>
       </div>
     </section>
   );
 });
+
