@@ -431,12 +431,12 @@ nav.intro-running .nav-logo {
 /* HERO */
 #hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-page);
-  padding: 120px 2rem 80px;
+  padding: 120px 2rem 0px;
 }
 
 .hero-container {
@@ -1883,6 +1883,34 @@ footer {
   transition-delay: 0.4s;
 }
 
+@media(max-width:1377px) {
+  nav {
+    padding: 0.8rem 1.5rem;
+  }
+
+  .nav-logo img {
+    height: 70px !important;
+  }
+
+  .nav-links {
+    gap: 1.2rem;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+
+  .nav-ctas {
+    gap: 0.5rem;
+  }
+
+  .nav-ctas .btn-outline,
+  .nav-ctas .btn-gold {
+    padding: 0.45rem 1rem;
+    font-size: 0.65rem;
+  }
+}
+
 @media(max-width:1024px) {
   section {
     padding: 5rem 2rem;
@@ -1890,6 +1918,11 @@ footer {
 
   nav {
     padding: 1rem 2rem;
+    justify-content: space-between;
+  }
+
+  .nav-logo img {
+    height: 80px !important;
   }
 
   #mobile-menu-btn {
@@ -5800,7 +5833,7 @@ footer {
 .market-preview-section,
 .why-preview-section,
 .testimonials-preview-section {
-  padding: 4rem 2.5rem;
+  padding: 0rem 2.5rem;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -5884,7 +5917,7 @@ footer {
   background: var(--bg-page);
   position: relative;
   overflow: hidden;
-  padding: 8rem 4rem;
+  padding: 4rem 4rem;
   border-top: 1px solid var(--border-silver);
 }
 
