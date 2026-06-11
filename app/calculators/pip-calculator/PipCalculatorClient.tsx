@@ -198,7 +198,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
       />
       <Navbar />
-      <div className="min-h-screen bg-zinc-950 text-white pt-32 pb-16">
+      <div className="min-h-screen bg-page text-black pt-32 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-full px-4 py-2 mb-6">
@@ -217,7 +217,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
           <CalculatorLinks currentPath="/calculators/pip-calculator" />
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">
+            <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-amber-400">Trade Parameters</h2>
                 <button
@@ -232,13 +232,13 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
               
               <div className="space-y-6">
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Instrument
                   </label>
                   <select
                     value={formData.instrumentId}
                     onChange={(e) => handleInputChange("instrumentId", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {CALCULATOR_INSTRUMENTS.map((inst) => (
                       <option key={inst.id} value={inst.id}>
@@ -250,7 +250,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                     <div className="mt-2 flex items-center gap-2 text-sm">
                       <TrendingUp className="w-4 h-4 text-emerald-400" />
                       <span className="text-gray-400">Current Price: </span>
-                      <span className="text-white font-medium">{selectedInstrument.price.toFixed(selectedInstrument.price > 100 ? 2 : 4)}</span>
+                      <span className="text-black font-medium">{selectedInstrument.price.toFixed(selectedInstrument.price > 100 ? 2 : 4)}</span>
                     </div>
                   )}
                   <button
@@ -261,14 +261,14 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "instrument" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       Select the trading instrument. Prices are updated live from market data.
                     </div>
                   )}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Lot Size
                   </label>
                   <input
@@ -292,7 +292,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                     }}
                     step="0.01"
                     min="0.01"
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   />
                   <button
                     onMouseEnter={() => setShowTooltip("lot")}
@@ -302,20 +302,20 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "lot" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       Standard lot = 1.0 (full contract size), Mini lot = 0.1, Micro lot = 0.01
                     </div>
                   )}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Account Currency
                   </label>
                   <select
                     value={formData.accountCurrency}
                     onChange={(e) => handleInputChange("accountCurrency", e.target.value)}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                    className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   >
                     {ACCOUNT_CURRENCIES.map((currency) => (
                       <option key={currency} value={currency}>
@@ -331,7 +331,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                     <Info className="w-4 h-4" />
                   </button>
                   {showTooltip === "account" && (
-                    <div className="absolute right-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-xs text-gray-300 z-10">
+                    <div className="absolute right-0 mt-2 w-64 bg-card border border-zinc-700 rounded-lg p-3 text-xs text-black z-10">
                       The base currency of your trading account. Pip values will be converted to this currency.
                     </div>
                   )}
@@ -347,7 +347,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                   </button>
                   <button
                     onClick={resetForm}
-                    className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white font-semibold rounded-lg px-4 py-3 transition-all"
+                    className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-black font-semibold rounded-lg px-4 py-3 transition-all"
                   >
                     Reset
                   </button>
@@ -355,12 +355,12 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
               </div>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 lg:p-8">
+            <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <h2 className="text-2xl font-bold mb-6 text-amber-400">Pip Value Results</h2>
               
               {result && selectedInstrument && (
                 <div className="space-y-6">
-                  <div className="bg-zinc-800 rounded-xl p-6 border border-zinc-700">
+                  <div className="bg-card rounded-xl p-6 border border-zinc-700">
                     <div className="text-sm text-gray-400 mb-2">Pip Value per Pip</div>
                     <div className="text-4xl font-bold text-emerald-400">
                       ${result.pipValuePerPip} {formData.accountCurrency}
@@ -368,13 +368,13 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
+                    <div className="bg-card rounded-xl p-4 border border-zinc-700">
                       <div className="text-xs text-gray-400 mb-1">Value for Standard Lot</div>
-                      <div className="text-xl font-bold text-white">
+                      <div className="text-xl font-bold text-black">
                         ${result.valueForStandardLot}
                       </div>
                     </div>
-                    <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
+                    <div className="bg-card rounded-xl p-4 border border-zinc-700">
                       <div className="text-xs text-gray-400 mb-1">Current Price</div>
                       <div className="text-xl font-bold text-amber-400">
                         {result.currentPrice.toFixed(result.currentPrice > 100 ? 2 : 4)}
@@ -391,24 +391,24 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                     </div>
                   </div>
 
-                  <div className="bg-zinc-800 rounded-xl p-4 border border-zinc-700">
+                  <div className="bg-card rounded-xl p-4 border border-zinc-700">
                     <div className="text-xs text-gray-400 mb-2">Instrument Details</div>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-400">Instrument:</span>
-                        <span className="text-white font-medium">{selectedInstrument.label}</span>
+                        <span className="text-black font-medium">{selectedInstrument.label}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-400">Pip Size:</span>
-                        <span className="text-white font-medium">{result.pipSize}</span>
+                        <span className="text-black font-medium">{result.pipSize}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-400">Contract Size:</span>
-                        <span className="text-white font-medium">{selectedInstrument.contractSize.toLocaleString()} units</span>
+                        <span className="text-black font-medium">{selectedInstrument.contractSize.toLocaleString()} units</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-400">Last Updated:</span>
-                        <span className="text-white font-medium">{lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'}</span>
+                        <span className="text-black font-medium">{lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'}</span>
                       </div>
                     </div>
                   </div>
@@ -417,16 +417,16 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
             </div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-16">
+          <div className="bg-card border border-zinc-800 rounded-2xl p-6 mb-16">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <Share2 className="w-5 h-5 text-amber-400" />
-                <span className="text-white font-medium">Share this calculator</span>
+                <span className="text-black font-medium">Share this calculator</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={shareCalculator}
-                  className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg transition-all"
+                  className="flex items-center gap-2 bg-card hover:bg-zinc-700 text-black px-4 py-2 rounded-lg transition-all"
                 >
                   {shareCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   {shareCopied ? "Copied!" : "Copy Link"}
@@ -435,7 +435,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                   href={`https://twitter.com/intent/tweet?text=Check out this free Forex Pip Calculator from Legacy Global Bank&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-500 hover:bg-blue-600 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   Twitter
                 </a>
@@ -443,7 +443,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-600 hover:bg-blue-700 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   Facebook
                 </a>
@@ -451,7 +451,7 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
                   href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium"
+                  className="bg-blue-700 hover:bg-blue-800 text-black px-4 py-2 rounded-lg transition-all text-sm font-medium"
                 >
                   LinkedIn
                 </a>
@@ -462,17 +462,17 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-8 text-amber-400">Example Pip Value Scenarios</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">EUR/USD Standard Lot</div>
                 <div className="text-sm text-gray-400 mb-2">1.0 lot, 0.0001 pip size</div>
                 <div className="text-2xl font-bold text-emerald-400">$10.00</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">Gold (XAU/USD)</div>
                 <div className="text-sm text-gray-400 mb-2">1.0 lot, 0.01 pip size</div>
                 <div className="text-2xl font-bold text-emerald-400">$1.00</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-xl p-6">
                 <div className="text-amber-400 font-semibold mb-3">USD/JPY Mini Lot</div>
                 <div className="text-sm text-gray-400 mb-2">0.1 lot, 0.01 pip size</div>
                 <div className="text-2xl font-bold text-emerald-400">$0.67</div>
@@ -483,23 +483,23 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-amber-400">Understanding Forex Pip Values</h2>
             <div className="prose prose-invert prose-lg max-w-none">
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black leading-relaxed mb-6">
                 Calculating forex pip values accurately is essential for proper risk management. Our forex pip calculator 
                 provides instant calculations for forex pairs and commodities with live market prices. 
                 Understanding how to calculate forex pip value involves considering the pip size, lot size, and contract size of each instrument.
               </p>
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black leading-relaxed mb-6">
                 The pip value formula is: Pip Size × Lot Size × Contract Size. For forex pairs like EUR/USD and GBP/USD, 
                 the pip size is 0.0001 with a contract size of 100,000 units. For USD/JPY, the pip size is 0.01. 
                 Commodities like Gold (XAU/USD) use different pip sizes and contract sizes - Gold typically uses 0.01 pip size 
                 with 100 troy ounces per contract.
               </p>
-              <p className="text-gray-300 leading-relaxed mb-6">
+              <p className="text-black leading-relaxed mb-6">
                 Our calculator supports major forex pairs (EUR/USD, GBP/USD, USD/JPY) as well as commodities including 
                 Gold (XAU/USD), Silver (XAG/USD), and Oil instruments (WTI and Brent). Each instrument has its specific 
                 pip size and contract size, which the calculator automatically applies to give you accurate pip values.
               </p>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-black leading-relaxed">
                 Live market prices are updated every 30 seconds to ensure your calculations are based on current market conditions. 
                 You can manually refresh prices by clicking the refresh button. This is particularly useful for commodities 
                 like Oil and Gold, which can be more volatile than currency pairs.
@@ -513,10 +513,10 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
               {faqData.map((faq, index) => (
                 <details
                   key={index}
-                  className="bg-zinc-900 border border-zinc-800 rounded-xl group"
+                  className="bg-card border border-zinc-800 rounded-xl group"
                 >
-                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
-                    <span className="font-semibold text-white">{faq.question}</span>
+                  <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
+                    <span className="font-semibold text-black">{faq.question}</span>
                     <span className="text-amber-400 transform group-open:rotate-180 transition-transform">
                       ▼
                     </span>
@@ -534,21 +534,21 @@ Value for Your Lot Size: $${result.valueForYourLotSize} ${formData.accountCurren
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <a
                 href="/calculators/profit-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Profit Calculator</div>
                 <div className="text-sm text-gray-400">Calculate potential profits and losses on trades</div>
               </a>
               <a
                 href="/calculators/margin-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Margin Calculator</div>
                 <div className="text-sm text-gray-400">Determine required margin for your trades</div>
               </a>
               <a
                 href="/calculators/lot-size-calculator"
-                className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
+                className="bg-card border border-zinc-800 rounded-xl p-6 hover:border-amber-400/50 transition-all group"
               >
                 <div className="text-amber-400 font-semibold mb-2 group-hover:text-amber-300">Lot Size Calculator</div>
                 <div className="text-sm text-gray-400">Calculate optimal position size based on risk</div>

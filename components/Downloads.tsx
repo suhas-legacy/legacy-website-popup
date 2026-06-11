@@ -6,7 +6,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { Ticker } from "./Ticker";
 import androidIcon from "@/public/android.png";
-import appleIcon from "@/public/apple2.png";
+import appleIcon from "@/public/appleblack.png";
 import windowsIcon from "@/public/windows1.png";
 import MacIcon from "@/public/mac.png";
 

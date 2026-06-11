@@ -49,7 +49,7 @@ export default function CalculatorsPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-zinc-950 text-white pt-32 pb-16">
+      <div className="min-h-screen bg-page text-white pt-32 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-full px-4 py-2 mt-6">
@@ -70,7 +70,7 @@ export default function CalculatorsPage() {
               <a
                 key={index}
                 href={calc.href}
-                className="group bg-zinc-900 border border-zinc-800 rounded-2xl p-8 hover:border-amber-400/50 transition-all duration-300"
+                className="group bg-card border border-zinc-800 rounded-2xl p-8 hover:border-amber-400/50 transition-all duration-300"
               >
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r ${calc.color} mb-6 group-hover:scale-110 transition-transform`}>
                   <div className="text-white">
@@ -93,7 +93,7 @@ export default function CalculatorsPage() {
             ))}
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 mb-16">
+          <div className="bg-card border border-zinc-800 rounded-2xl p-8 mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">Why Use Our Calculators?</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div>
@@ -168,27 +168,27 @@ export default function CalculatorsPage() {
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">Frequently Asked Questions</h2>
             <div className="space-y-4">
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
-                  <span className="font-semibold">Are these calculators free to use?</span>
+              <details className="bg-page border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
+                  <span className="font-semibold text-black">Are these calculators free to use?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
                 <div className="px-6 pb-6 text-gray-400 leading-relaxed">
                   Yes, all our forex calculators are completely free to use with no sign-up or registration required.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
-                  <span className="font-semibold">How often are market prices updated?</span>
+              <details className="bg-page border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
+                  <span className="font-semibold text-black">How often are market prices updated?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
                 <div className="px-6 pb-6 text-gray-400 leading-relaxed">
                   Market prices are updated every 30 seconds from live market data sources. You can also manually refresh prices using the refresh button in each calculator.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
-                  <span className="font-semibold">Which instruments are supported?</span>
+              <details className="bg-page border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
+                  <span className="font-semibold text-black">Which instruments are supported?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
                 <div className="px-6 pb-6 text-gray-400 leading-relaxed">

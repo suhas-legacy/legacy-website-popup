@@ -148,7 +148,7 @@ export function GoldCalculatorClient() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-zinc-950 text-white pt-32 pb-16">
+      <div className="min-h-screen bg-page text-black pt-32 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Section */}
           <div className="text-center mb-12">
@@ -159,7 +159,7 @@ export function GoldCalculatorClient() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
               Gold Price Calculator India: Physical Gold vs XAUUSD Live Comparison
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed mb-8">
+            <p className="text-black text-lg max-w-3xl mx-auto leading-relaxed mb-8">
               Compare live XAUUSD gold spot price with Indian physical gold costs including making charges and 3% GST. 
               Calculate exactly how much more you pay for physical gold jewellery and bars compared to paper gold trading. 
               Make informed investment decisions with real-time market data.
@@ -169,18 +169,18 @@ export function GoldCalculatorClient() {
           <CalculatorLinks currentPath="/calculators/gold-calculator" />
 
           {/* Live Price Ticker */}
-          <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 border border-zinc-700 rounded-2xl p-6 mb-8">
+          <div className="bg-gradient-to-r from-bg-card to-bg-card border border-zinc-700 rounded-2xl p-6 mb-8">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-6">
                 <div>
-                  <div className="text-gray-400 text-sm mb-1">XAUUSD Spot Price</div>
+                  <div className="text-black text-sm mb-1">XAUUSD Spot Price</div>
                   <div className="text-2xl font-bold text-amber-400">
                     ${formatNumber(goldInstrument?.price || 2350)}
                   </div>
                 </div>
-                <div className="hidden sm:block w-px h-12 bg-zinc-700"></div>
+                <div className="hidden sm:block w-px h-12 bg-card"></div>
                 <div>
-                  <div className="text-gray-400 text-sm mb-1">USD to INR</div>
+                  <div className="text-black text-sm mb-1">USD to INR</div>
                   <div className="text-2xl font-bold text-emerald-400">
                     ₹{formatNumber(usdinr)}
                   </div>
@@ -188,7 +188,7 @@ export function GoldCalculatorClient() {
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <div className="text-gray-400 text-sm">Last Updated</div>
+                  <div className="text-black text-sm">Last Updated</div>
                   <div className="text-sm font-medium">
                     {lastUpdated?.toLocaleTimeString() || "Loading..."}
                   </div>
@@ -214,7 +214,7 @@ export function GoldCalculatorClient() {
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
             {/* Input Panel */}
             <div className="lg:col-span-1">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+              <div className="bg-card border border-zinc-800 rounded-2xl p-6">
                 <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
                   <Calculator className="w-5 h-5 text-amber-400" />
                   Calculator Inputs
@@ -245,7 +245,7 @@ export function GoldCalculatorClient() {
                         });
                         setFormData({ ...formData, weight: value === "" ? 0 : Number(value) });
                       }}
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
+                      className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
                     />
                     <input
                       type="range"
@@ -271,7 +271,7 @@ export function GoldCalculatorClient() {
                     <select
                       value={formData.purity}
                       onChange={(e) => setFormData({ ...formData, purity: e.target.value as any })}
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
+                      className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
                     >
                       <option value="24K">24K (99.9% Pure)</option>
                       <option value="22K">22K (91.67% Pure)</option>
@@ -304,7 +304,7 @@ export function GoldCalculatorClient() {
                         });
                         setFormData({ ...formData, makingCharges: value === "" ? 0 : Number(value) });
                       }}
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
+                      className="w-full bg-card border border-zinc-700 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-400 transition-colors"
                     />
                     <input
                       type="range"
@@ -335,28 +335,28 @@ export function GoldCalculatorClient() {
                 <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-900/10 border border-emerald-700/50 rounded-2xl p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <TrendingUp className="w-4 h-4 text-emerald-400" />
+                      <TrendingUp className="w-4 h-4 text-emerald-800" />
                     </div>
                     <h3 className="font-bold text-emerald-400">XAUUSD Pure Spot (Paper Gold)</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Cost in INR</span>
+                      <span className="text-black">Cost in INR</span>
                       <span className="font-bold">{result && formatCurrency(result.xauusdPureInr, "INR")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Cost in USD</span>
+                      <span className="text-black">Cost in USD</span>
                       <span className="font-bold">{result && formatCurrency(result.xauusdPureUsd, "USD")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Per Gram (INR)</span>
+                      <span className="text-black">Per Gram (INR)</span>
                       <span className="font-bold">
                         {result && formatCurrency(result.xauusdPureInr / formData.weight, "INR")}
                       </span>
                     </div>
                   </div>
                   <div className="mt-4 pt-4 border-t border-emerald-700/30">
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-black">
                       Pure gold spot price without any additional charges or taxes
                     </p>
                   </div>
@@ -366,28 +366,28 @@ export function GoldCalculatorClient() {
                 <div className="bg-gradient-to-br from-amber-900/30 to-amber-900/10 border border-amber-700/50 rounded-2xl p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
-                      <Calculator className="w-4 h-4 text-amber-400" />
+                      <Calculator className="w-4 h-4 text-red" />
                     </div>
-                    <h3 className="font-bold text-amber-400">Physical Gold (India)</h3>
+                    <h3 className="font-bold text-black">Physical Gold (India)</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Total Cost in INR</span>
+                      <span className="text-black">Total Cost in INR</span>
                       <span className="font-bold">{result && formatCurrency(result.physicalGoldInr, "INR")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Total Cost in USD</span>
+                      <span className="text-black">Total Cost in USD</span>
                       <span className="font-bold">{result && formatCurrency(result.physicalGoldUsd, "USD")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Per Gram (INR)</span>
+                      <span className="text-black">Per Gram (INR)</span>
                       <span className="font-bold">
                         {result && formatCurrency(result.physicalGoldInr / formData.weight, "INR")}
                       </span>
                     </div>
                   </div>
                   <div className="mt-4 pt-4 border-t border-amber-700/30">
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-black">
                       Includes making charges ({formData.makingCharges}%) + 3% GST
                     </p>
                   </div>
@@ -426,14 +426,14 @@ export function GoldCalculatorClient() {
           </div>
 
           {/* How It Works Section */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 mb-12">
+          <div className="bg-card border border-zinc-800 rounded-2xl p-8 mb-12">
             <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
               How the Calculator Works
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-bold text-lg mb-3 text-emerald-400">XAUUSD Pure Spot Calculation</h3>
-                <ul className="space-y-2 text-gray-300">
+                <ul className="space-y-2 text-black">
                   <li>• Pure 24K price per gram (INR) = (XAUUSD × USDINR) ÷ 31.1034768</li>
                   <li>• Base Cost INR = pure_per_gram × weight × purity_factor</li>
                   <li>• Total in USD = Base Cost INR ÷ USDINR</li>
@@ -442,7 +442,7 @@ export function GoldCalculatorClient() {
               </div>
               <div>
                 <h3 className="font-bold text-lg mb-3 text-amber-400">Physical Gold Calculation</h3>
-                <ul className="space-y-2 text-gray-300">
+                <ul className="space-y-2 text-black">
                   <li>• Base Gold Value = same as XAUUSD calculation</li>
                   <li>• Making Charges = Base × (making % ÷ 100)</li>
                   <li>• Subtotal = Base + Making Charges</li>
@@ -454,7 +454,7 @@ export function GoldCalculatorClient() {
           </div>
 
           {/* Benefits Section */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 mb-12">
+          <div className="bg-card border border-zinc-800 rounded-2xl p-8 mb-12">
             <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
               Why Compare Physical Gold vs XAUUSD?
             </h2>
@@ -466,7 +466,7 @@ export function GoldCalculatorClient() {
                   </div>
                   <h3 className="font-semibold">Cost Transparency</h3>
                 </div>
-                <p className="text-gray-400 text-sm">
+                <p className="text-black text-sm">
                   Understand exactly how much extra you pay for physical gold in the form of making charges and GST.
                 </p>
               </div>
@@ -477,7 +477,7 @@ export function GoldCalculatorClient() {
                   </div>
                   <h3 className="font-semibold">Investment Decision</h3>
                 </div>
-                <p className="text-gray-400 text-sm">
+                <p className="text-black text-sm">
                   Make informed decisions between buying physical gold for jewellery or investing in paper gold like ETFs.
                 </p>
               </div>
@@ -488,7 +488,7 @@ export function GoldCalculatorClient() {
                   </div>
                   <h3 className="font-semibold">Real-Time Data</h3>
                 </div>
-                <p className="text-gray-400 text-sm">
+                <p className="text-black text-sm">
                   Live market prices updated every 60 seconds ensure accurate calculations for current market conditions.
                 </p>
               </div>
@@ -501,75 +501,75 @@ export function GoldCalculatorClient() {
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">What is the difference between XAUUSD and physical gold in India?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   XAUUSD represents the international spot price of gold in USD per troy ounce, traded on global markets. Physical gold in India includes additional costs like making charges (typically 8-15% for jewellery) and 3% GST, making it significantly more expensive than the spot price.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">How are making charges and GST calculated on physical gold?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   Making charges are calculated as a percentage of the base gold value (typically 8-25% depending on the jewellery design). GST of 3% is then applied to the sum of base gold value plus making charges. Our calculator shows you the exact breakdown of these costs.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">Is XAUUSD cheaper than buying gold in India?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   Yes, XAUUSD (paper gold) is typically 10-20% cheaper than physical gold in India due to the absence of making charges and lower taxes. However, physical gold offers the advantage of possession and can be used for jewellery or as a store of value that you physically hold.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">What is the purity difference between 22K and 24K gold?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   24K gold is 99.9% pure and is typically used for coins and bars. 22K gold is 91.67% pure, with the remaining 8.33% being other metals to increase durability for jewellery. 22K is the most common purity for Indian jewellery.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">How often are the gold prices updated in this calculator?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   Our calculator fetches live market prices every 60 seconds automatically. You can also manually refresh the prices using the refresh button in the price ticker section. This ensures you always have the most current gold rates.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">Should I invest in physical gold or paper gold?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   Paper gold (XAUUSD, ETFs, Sovereign Gold Bonds) is more cost-effective with lower premiums and better liquidity. Physical gold is ideal for jewellery or if you prefer holding the asset. Consider your investment goals, time horizon, and need for liquidity before deciding.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">What is the formula for converting XAUUSD to Indian gold price?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   The formula is: (XAUUSD price × USDINR rate) ÷ 31.1034768 = 24K gold price per gram in INR. Then multiply by purity factor (0.916667 for 22K, 0.75 for 18K) to get the price for your chosen purity.
                 </div>
               </details>
-              <details className="bg-zinc-900 border border-zinc-800 rounded-xl group">
-                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-zinc-800 transition-colors">
+              <details className="bg-card border border-zinc-800 rounded-xl group">
+                <summary className="flex items-center justify-between p-6 cursor-pointer hover:bg-card transition-colors">
                   <span className="font-semibold">Are the prices in this calculator accurate for actual purchases?</span>
                   <span className="text-amber-400 transform group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 pb-6 text-gray-400 leading-relaxed">
+                <div className="px-6 pb-6 text-black leading-relaxed">
                   Our calculator provides a close estimate based on international spot prices. Actual retail prices may vary by jeweller, location, and current market conditions. Always check with your local jeweller for final pricing before making a purchase.
                 </div>
               </details>
@@ -582,7 +582,7 @@ export function GoldCalculatorClient() {
               <AlertCircle className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-bold text-amber-400 mb-2">Disclaimer</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
+                <p className="text-black text-sm leading-relaxed">
                   This calculator is for informational purposes only and should not be considered as financial advice. 
                   Gold prices are subject to market fluctuations and may vary from actual retail prices. 
                   Making charges and GST rates may differ by jeweller and location. 
