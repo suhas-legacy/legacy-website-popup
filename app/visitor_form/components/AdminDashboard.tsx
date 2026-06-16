@@ -28,6 +28,15 @@ export function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [typeFilter, setTypeFilter] = useState("ALL");
 
+  // Server-driven pagination
+  const PAGE_SIZE = 20;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+
+  // Stats (always from unfiltered counts so stat cards don't change with search)
+  const [allRequests, setAllRequests] = useState<any[]>([]);
+
   // Selected request for details drawer
   const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
   // Ref so the polling interval always reads the latest value without a stale closure
@@ -50,15 +59,28 @@ export function AdminDashboard() {
   const [selectedEmail, setSelectedEmail] = useState<any | null>(null);
   const [mailboxCollapsed, setMailboxCollapsed] = useState(true);
 
-  // Fetch Requests from backend
-  const fetchRequests = () => {
-    fetch(`${apiUrl}/api/visitor/requests`)
+  // Build the API URL with current filter + page params
+  const buildUrl = (page: number) => {
+    const params = new URLSearchParams();
+    if (searchTerm.trim()) params.set('search', searchTerm.trim());
+    if (statusFilter !== 'ALL')  params.set('status', statusFilter);
+    if (typeFilter   !== 'ALL')  params.set('type',   typeFilter);
+    params.set('page',     String(page));
+    params.set('pageSize', String(PAGE_SIZE));
+    return `${apiUrl}/api/visitor/requests?${params.toString()}`;
+  };
+
+  // Fetch the current page (filtered)
+  const fetchRequests = (page = currentPage) => {
+    fetch(buildUrl(page))
       .then(res => res.json())
       .then(data => {
         if (data.success) {
           setRequests(data.requests);
+          setTotalRecords(data.total ?? data.requests.length);
+          setTotalPages(data.totalPages ?? 1);
           syncEmails(data.requests);
-          // Use the ref — always reflects the current value, even inside a stale interval closure
+          // Refresh selected drawer request if open
           const current = selectedRequestRef.current;
           if (current) {
             const fresh = data.requests.find((r: any) => r.id === current.id);
@@ -69,13 +91,40 @@ export function AdminDashboard() {
       .catch(err => console.error("Error fetching requests:", err));
   };
 
+  // Fetch all records (no filters) for stat card totals
+  const fetchAllForStats = () => {
+    fetch(`${apiUrl}/api/visitor/requests?pageSize=1000`)
+      .then(res => res.json())
+      .then(data => { if (data.success) setAllRequests(data.requests); })
+      .catch(() => {});
+  };
+
+  // Restart fetch whenever filters or page change (no polling — SSE handles live updates)
   useEffect(() => {
-    fetchRequests();
-    // Poll the backend API to reflect changes made in other pages/tabs.
-    // NOTE: selectedRequest is intentionally NOT in the dep array — the interval
-    // must NOT restart each time the drawer opens/closes (that caused the re-open race).
-    const interval = setInterval(fetchRequests, 1500);
-    return () => clearInterval(interval);
+    fetchRequests(currentPage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, statusFilter, typeFilter, currentPage]);
+
+  // SSE: subscribe once; re-fetch only when the server signals a data change
+  useEffect(() => {
+    const es = new EventSource(`${apiUrl}/api/visitor/events`);
+
+    es.onmessage = () => {
+      // Server pushed a change — refresh both the table and stat cards
+      fetchRequests(currentPage);
+      fetchAllForStats();
+    };
+
+    es.onerror = () => {
+      // SSE connection dropped (network blip / server restart).
+      // Close and let the component remount naturally or the user refresh.
+      es.close();
+    };
+
+    // Initial stat card load
+    fetchAllForStats();
+
+    return () => es.close();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -245,23 +294,13 @@ export function AdminDashboard() {
     .catch(err => console.error("Complete error:", err));
   };
 
-  // Stats calculation
-  const totalCount = requests.length;
-  const pendingCount = requests.filter(r => r.status === "PENDING_APPROVAL").length;
-  const confirmedCount = requests.filter(r => r.status === "CONFIRMED" || r.status === "APPROVED").length;
-  const rescheduleCount = requests.filter(r => r.status === "WAITING_RESCHEDULE").length;
+  // Stats calculation — always based on full unfiltered dataset
+  const totalCount      = allRequests.length;
+  const pendingCount    = allRequests.filter(r => r.status === "PENDING_APPROVAL").length;
+  const confirmedCount  = allRequests.filter(r => r.status === "CONFIRMED" || r.status === "APPROVED").length;
+  const rescheduleCount = allRequests.filter(r => r.status === "WAITING_RESCHEDULE").length;
 
-  // Filter requests list
-  const filteredRequests = requests.filter(r => {
-    const matchesSearch = r.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          r.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          r.id.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = statusFilter === "ALL" || r.status === statusFilter;
-    const matchesType = typeFilter === "ALL" || r.meetingType === typeFilter;
-
-    return matchesSearch && matchesStatus && matchesType;
-  });
+  // `requests` already contains the server-filtered + paginated page — no client slicing needed
 
   return (
     <div className="admin-container">
@@ -365,14 +404,14 @@ export function AdminDashboard() {
             type="text"
             placeholder="Search by Request ID, visitor name, email..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
           />
         </div>
 
         <div className="filters-group">
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
             className="filter-select"
           >
             <option value="ALL">All Statuses</option>
@@ -387,7 +426,7 @@ export function AdminDashboard() {
 
           <select
             value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
+            onChange={(e) => { setTypeFilter(e.target.value); setCurrentPage(1); }}
             className="filter-select"
           >
             <option value="ALL">All Meeting Types</option>
@@ -396,6 +435,8 @@ export function AdminDashboard() {
           </select>
         </div>
       </div>
+
+      {/* Pagination helpers - removed (server-driven) */}
 
       {/* Data Table */}
       <div className="table-container">
@@ -412,14 +453,14 @@ export function AdminDashboard() {
             </tr>
           </thead>
           <tbody>
-            {filteredRequests.length === 0 ? (
+            {requests.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center py-8 text-muted font-mono" style={{ fontSize: "0.85rem" }}>
                   No requests found matching current criteria.
                 </td>
               </tr>
             ) : (
-              filteredRequests.map((req) => (
+              requests.map((req: any) => (
                 <tr key={req.id}>
                   <td>
                     <button onClick={() => setSelectedRequest(req)} className="req-id-link font-mono" style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
@@ -471,7 +512,7 @@ export function AdminDashboard() {
                       >
                         <Eye size={14} />
                       </button>
-                      
+
                       {req.status === "PENDING_APPROVAL" && (
                         <>
                           <button
@@ -498,6 +539,117 @@ export function AdminDashboard() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Bar — driven by server response metadata */}
+      {(() => {
+        const safePage = Math.min(currentPage, totalPages);
+        const startRow = totalRecords === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1;
+        const endRow   = Math.min(safePage * PAGE_SIZE, totalRecords);
+
+        // Build page number list with ellipsis
+        const buildPages = (): (number | "...")[] => {
+          if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+          const pages: (number | "...")[] = [1];
+          if (safePage > 3) pages.push("...");
+          for (let p = Math.max(2, safePage - 1); p <= Math.min(totalPages - 1, safePage + 1); p++) pages.push(p);
+          if (safePage < totalPages - 2) pages.push("...");
+          pages.push(totalPages);
+          return pages;
+        };
+
+        return (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.85rem 1rem",
+            borderTop: "1px solid var(--border)",
+            background: "var(--bg-card)",
+            borderRadius: "0 0 10px 10px",
+            marginTop: "-1px",
+          }}>
+            {/* Results summary */}
+            <span className="font-mono" style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>
+              {totalRecords === 0
+                ? "No results"
+                : `Showing ${startRow}–${endRow} of ${totalRecords} result${totalRecords !== 1 ? "s" : ""}`}
+            </span>
+
+            {/* Page controls */}
+            {totalPages > 1 && (
+              <div className="flex-center gap-2" style={{ gap: "0.3rem" }}>
+                {/* Prev */}
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={safePage === 1}
+                  style={{
+                    padding: "0.3rem 0.7rem",
+                    fontSize: "0.72rem",
+                    fontFamily: "var(--font-mono, monospace)",
+                    background: "transparent",
+                    border: "1px solid var(--border)",
+                    borderRadius: "5px",
+                    cursor: safePage === 1 ? "not-allowed" : "pointer",
+                    opacity: safePage === 1 ? 0.4 : 1,
+                    color: "var(--text-secondary)",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  ← Prev
+                </button>
+
+                {/* Page numbers */}
+                {buildPages().map((p, i) =>
+                  p === "..." ? (
+                    <span key={`ellipsis-${i}`} style={{ fontSize: "0.72rem", color: "var(--text-muted)", padding: "0 0.2rem" }}>…</span>
+                  ) : (
+                    <button
+                      key={p}
+                      onClick={() => setCurrentPage(p as number)}
+                      style={{
+                        minWidth: "32px",
+                        padding: "0.3rem 0.5rem",
+                        fontSize: "0.72rem",
+                        fontFamily: "var(--font-mono, monospace)",
+                        background: safePage === p ? "var(--gold)" : "transparent",
+                        border: "1px solid",
+                        borderColor: safePage === p ? "var(--gold)" : "var(--border)",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        color: safePage === p ? "#000" : "var(--text-secondary)",
+                        fontWeight: safePage === p ? 700 : 400,
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      {p}
+                    </button>
+                  )
+                )}
+
+                {/* Next */}
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={safePage === totalPages}
+                  style={{
+                    padding: "0.3rem 0.7rem",
+                    fontSize: "0.72rem",
+                    fontFamily: "var(--font-mono, monospace)",
+                    background: "transparent",
+                    border: "1px solid var(--border)",
+                    borderRadius: "5px",
+                    cursor: safePage === totalPages ? "not-allowed" : "pointer",
+                    opacity: safePage === totalPages ? 0.4 : 1,
+                    color: "var(--text-secondary)",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+          </div>
+        );
+      })()}
 
       {/* Details Side Drawer */}
       <div className={`drawer-overlay ${selectedRequest ? "active" : ""}`} onClick={() => setSelectedRequest(null)}>
