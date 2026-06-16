@@ -320,6 +320,16 @@ export function Navbar() {
 
         <li>
 
+          <Link href="/awards" onClick={closeMenu} className={isActiveLink("/awards") ? "active" : ""}>
+
+            Awards
+
+          </Link>
+
+        </li>
+
+        <li>
+
           <Link href="/accounts" onClick={closeMenu} className={isActiveLink("/accounts") ? "active" : ""}>
 
             Accounts

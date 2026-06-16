@@ -1599,6 +1599,7 @@ footer {
   color: #1877f2;
   border-color: rgba(24, 119, 242, 0.3);
 }
+
 .social-link.facebook:hover {
   background: rgba(24, 119, 242, 0.1);
   border-color: #1877f2;
@@ -1609,6 +1610,7 @@ footer {
   color: #0a66c2;
   border-color: rgba(10, 102, 194, 0.3);
 }
+
 .social-link.linkedin:hover {
   background: rgba(10, 102, 194, 0.1);
   border-color: #0a66c2;
@@ -1619,6 +1621,7 @@ footer {
   color: #e4405f;
   border-color: rgba(228, 64, 95, 0.3);
 }
+
 .social-link.instagram:hover {
   background: rgba(228, 64, 95, 0.1);
   border-color: #e4405f;
@@ -1629,6 +1632,7 @@ footer {
   color: #ff0000;
   border-color: rgba(255, 0, 0, 0.3);
 }
+
 .social-link.youtube:hover {
   background: rgba(255, 0, 0, 0.1);
   border-color: #ff0000;
@@ -5557,7 +5561,7 @@ footer {
 
 .hero-content {
   max-width: 1020px;
-  margin:  auto;
+  margin: auto;
   margin-top: 10px;
 }
 
@@ -5771,7 +5775,7 @@ footer {
   margin: 0 auto;
   padding: 2rem 2.5rem 4rem;
   margin-top: 30px;
-  
+
 }
 
 /* Breadcrumb */
@@ -6059,12 +6063,12 @@ footer {
   .about-bank-section {
     padding: 6rem 2rem;
   }
-  
+
   .about-bank-container {
     flex-direction: column;
     gap: 4rem;
   }
-  
+
   .about-bank-content {
     max-width: 100%;
   }
@@ -6079,5 +6083,305 @@ footer {
 @media (max-width: 768px) {
   .about-bank-section {
     padding: 4rem 1.5rem;
+  }
+}
+
+/* ================================================
+   AWARDS PAGE
+   ================================================ */
+
+.awards-page-main {
+  background: var(--bg-page);
+  min-height: 100vh;
+  padding-top: 120px;
+}
+
+/* --- HERO BANNER --- */
+.awards-hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 3rem;
+}
+
+.awards-hero-inner {
+  margin-bottom: 3rem;
+}
+
+.awards-page-h1 {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.awards-page-subtitle {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+/* --- HERO STATS --- */
+.awards-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  gap: 0 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border-silver);
+  border-bottom: 1px solid var(--border-silver);
+}
+
+.awards-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.awards-stat-num {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.awards-stat-label {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* --- AWARDS MAIN SECTION --- */
+.awards-section {
+  padding: 3rem 0 5rem;
+  background: var(--bg-page);
+}
+
+.awards-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.awards-year-group {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.awards-year-label {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 0.04em;
+  color: var(--border-silver);
+  line-height: 1;
+  padding-top: 0.5rem;
+  position: sticky;
+  top: 140px;
+  transition: color 0.3s;
+}
+
+.awards-year-label--active {
+  color: var(--text-primary);
+}
+
+.awards-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+/* --- AWARD CARD --- */
+.award-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-silver);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  animation: awardsCardReveal 0.6s ease both;
+}
+
+@keyframes awardsCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.award-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: var(--glow-strong);
+}
+
+.award-card-header {
+  padding: 1.4rem 1.5rem 1rem;
+  flex: 1;
+}
+
+.award-card-title {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.award-card-issuer {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.award-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border-silver);
+}
+
+.award-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(100%);
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.award-card:hover .award-card-image {
+  transform: scale(1.04);
+  filter: grayscale(0%);
+}
+
+/* --- CTA SECTION --- */
+.awards-cta {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-silver);
+  border-radius: 20px;
+  padding: 4rem 3rem;
+  text-align: center;
+  box-shadow: var(--glow);
+}
+
+.awards-cta h2 {
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.awards-cta-desc {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+/* Override page-cta-buttons for layout styling */
+.awards-cta .page-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Override page-container for awards page */
+.awards-page-main .page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .awards-year-group {
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+  }
+
+  .awards-year-label {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .awards-page-main {
+    padding-top: 100px;
+  }
+
+  .awards-hero {
+    padding: 2rem 1.5rem 2rem;
+  }
+
+  .awards-inner {
+    padding: 0 1.5rem;
+    gap: 3rem;
+  }
+
+  .awards-year-group {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .awards-year-label {
+    font-size: 2rem;
+    position: static;
+    border-bottom: 1px solid var(--border-silver);
+    padding-bottom: 0.75rem;
+  }
+
+  .awards-cards-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .awards-hero-stats {
+    gap: 1.5rem;
+  }
+
+  .awards-stat-divider {
+    height: 36px;
+  }
+
+  .awards-cta {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .awards-cards-row {
+    grid-template-columns: 1fr;
   }
 }
