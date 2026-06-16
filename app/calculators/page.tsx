@@ -77,10 +77,10 @@ export default function CalculatorsPage() {
                     {calc.icon}
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold mb-3 group-hover:text-amber-400 transition-colors">
+                <h2 className="text-2xl font-bold mb-3 group-hover:text-amber-400 transition-colors" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>
                   {calc.title}
                 </h2>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-gray-400 leading-relaxed" >
                   {calc.description}
                 </p>
                 <div className="mt-6 flex items-center text-amber-400 text-sm font-medium">
@@ -101,7 +101,7 @@ export default function CalculatorsPage() {
                   <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
                     <TrendingUp className="w-4 h-4 text-emerald-400" />
                   </div>
-                  <h3 className="font-semibold">Live Market Data</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Live Market Data</h3>
                 </div>
                 <p className="text-gray-400 text-sm">
                   All calculators use real-time market prices updated every 30 seconds for accurate calculations.
@@ -112,9 +112,9 @@ export default function CalculatorsPage() {
                   <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
                     <Calculator className="w-4 h-4 text-blue-400" />
                   </div>
-                  <h3 className="font-semibold">Free to Use</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Free to Use</h3>
                 </div>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-sm" >
                   All calculators are completely free with no sign-up required. Use them as often as you need.
                 </p>
               </div>
@@ -123,7 +123,7 @@ export default function CalculatorsPage() {
                   <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
                     <Shield className="w-4 h-4 text-amber-400" />
                   </div>
-                  <h3 className="font-semibold">Multi-Instrument</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Multi-Instrument</h3>
                 </div>
                 <p className="text-gray-400 text-sm">
                   Support for forex pairs (EUR/USD, GBP/USD, USD/JPY) and commodities (Gold, Silver, Oil).
@@ -134,7 +134,7 @@ export default function CalculatorsPage() {
                   <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
                     <Target className="w-4 h-4 text-purple-400" />
                   </div>
-                  <h3 className="font-semibold">Risk Management</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Risk Management</h3>
                 </div>
                 <p className="text-gray-400 text-sm">
                   Built-in risk management features like the 2% rule to help protect your trading capital.
@@ -145,7 +145,7 @@ export default function CalculatorsPage() {
                   <div className="w-8 h-8 rounded-full bg-rose-500/20 flex items-center justify-center">
                     <Calculator className="w-4 h-4 text-rose-400" />
                   </div>
-                  <h3 className="font-semibold">Instant Results</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Instant Results</h3>
                 </div>
                 <p className="text-gray-400 text-sm">
                   Get instant calculations as you type. No waiting, no delays - just immediate results.
@@ -156,7 +156,7 @@ export default function CalculatorsPage() {
                   <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
                     <TrendingUp className="w-4 h-4 text-cyan-400" />
                   </div>
-                  <h3 className="font-semibold">Share & Export</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Share & Export</h3>
                 </div>
                 <p className="text-gray-400 text-sm">
                   Easily share calculator results or copy them to your clipboard for documentation.

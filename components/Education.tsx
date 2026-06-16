@@ -659,7 +659,7 @@ function EducationPopup({ isOpen, onClose, popup }: EducationPopupProps) {
         <p className="popup-description">{popup.description}</p>
         
         {popup.table && (
-          <div className="popup-table">
+          <div className="popup-table" >
             <table>
               <thead>
                 <tr>
@@ -686,7 +686,7 @@ function EducationPopup({ isOpen, onClose, popup }: EducationPopupProps) {
             <h4 className="table-title">{table.title}</h4>
             <table>
               <thead>
-                <tr>
+                <tr >
                   {table.headers.map((header, idx) => (
                     <th key={idx}>{header}</th>
                   ))}

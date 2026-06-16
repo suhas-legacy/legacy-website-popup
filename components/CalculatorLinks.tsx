@@ -56,9 +56,9 @@ export function CalculatorLinks({ currentPath }: CalculatorLinksProps) {
     <div className="mb-12">
       <div className="flex items-center gap-2 mb-6">
         <Calculator className="w-5 h-5 text-amber-400" />
-        <h2 className="text-xl font-bold text-black">All Calculators</h2>
+        <h2 className="text-xl font-bold text-black" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>All Calculators</h2>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4" >
         {calculators.map((calc) => {
           const isActive = currentPath === calc.href;
           return (
@@ -78,7 +78,7 @@ export function CalculatorLinks({ currentPath }: CalculatorLinksProps) {
               </div>
               <h3 className={`font-semibold mb-1 text-sm ${
                 isActive ? "text-amber-400" : "text-black group-hover:text-amber-400"
-              } transition-colors`}>
+              } transition-colors`} style={{fontFamily: 'var(--font-poppins), sans-serif'}}>
                 {calc.title}
               </h3>
               <p className="text-xs text-gray-400 leading-relaxed">

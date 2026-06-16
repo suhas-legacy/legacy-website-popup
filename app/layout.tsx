@@ -38,6 +38,7 @@ export default function RootLayout({
           </head>
       <body
         className={`${syne.variable} ${jetBrainsMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <Ticker />
         {children}

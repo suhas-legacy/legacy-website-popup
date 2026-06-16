@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import posthog from "posthog-js";
 import ContactSvg from "./contact.svg";
+import { Video } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -257,6 +258,14 @@ export function ContactForm() {
       <div className="contact-info">
         <img src="/contact.svg" alt="Contact" />
       </div>
+      <div className="info-card">
+          <div className="info-icon"><Video /></div>
+          <div><a href="/visitor_form">
+            <div className="info-label">Schedule Meeting</div>
+            <div className="info-val">Visitor Pass </div>
+            </a>
+          </div>
+          </div>
       <div className="info-card">
           <div className="info-icon">📧</div>
           <div>

@@ -30,7 +30,6 @@ export interface CollectedData {
   timezone: string;
   language: string;
   languages: string[];
-  cookies: Record<string, string>;
   localStorage_keys: string[];
   sessionStorage_keys: string[];
   connection_type?: string;
@@ -207,18 +206,7 @@ export function useDataCollection(consentChoices: ConsentChoices | null) {
     return 'desktop';
   };
 
-  const getCookies = (): Record<string, string> => {
-    if (typeof document === 'undefined') return {};
-    
-    const cookies: Record<string, string> = {};
-    document.cookie.split(';').forEach(cookie => {
-      const [name, value] = cookie.trim().split('=');
-      if (name && value) {
-        cookies[name] = decodeURIComponent(value);
-      }
-    });
-    return cookies;
-  };
+
 
   const getLocalStorageKeys = (): string[] => {
     if (typeof window === 'undefined') return [];
@@ -402,7 +390,6 @@ export function useDataCollection(consentChoices: ConsentChoices | null) {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       language: navigator.language,
       languages: Array.from(navigator.languages),
-      cookies: getCookies(),
       localStorage_keys: getLocalStorageKeys(),
       sessionStorage_keys: getSessionStorageKeys(),
       connection_type: connection,
