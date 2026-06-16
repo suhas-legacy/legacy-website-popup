@@ -12,32 +12,32 @@ interface Award {
 }
 
 const awards: Award[] = [
-  {
-    year: 2025,
-    title: "Best Multi-Asset Trading Platform",
-    issuer: "FxDailyInfo, 2025",
-    image: "/award1.png",
-    imageAlt: "FxDailyInfo Award",
-  },
+  // {
+  //   year: 2025,
+  //   title: "Best Multi-Asset Trading Platform",
+  //   issuer: "FxDailyInfo, 2025",
+  //   image: "/award1.jpeg",
+  //   imageAlt: "FxDailyInfo Award",
+  // },
   {
     year: 2025,
     title: "Excellence in Customer Support",
     issuer: "International Business Magazine, 2025",
-    image: "/award2.png",
+    image: "/customersupport.jpeg",
     imageAlt: "International Business Magazine Award",
   },
   {
     year: 2024,
     title: "Most Transparent Broker",
     issuer: "World Finance Magazine, 2024",
-    image: "/award3.png",
+    image: "/transpraent.jpeg",
     imageAlt: "World Finance Award",
   },
   {
     year: 2024,
-    title: "Most Trusted Financial Broker",
+    title: "Most Trusted Forex Broker",
     issuer: "World Business Outlook, 2024",
-    image: "/award4.png",
+    image: "/trusted4.jpeg",
     imageAlt: "World Business Outlook Award",
   },
 ];
@@ -70,9 +70,8 @@ export function AwardsSection() {
 
     const handleScroll = () => {
       let currentActive: number | null = null;
-      // Define a trigger offset: when the top of the year section is 
-      // within 200px of the top viewport edge.
-      const triggerOffset = 200;
+      // Define a responsive trigger offset: a fraction of the viewport height.
+      const triggerOffset = Math.round(window.innerHeight * 0.40); // 35% of viewport height
 
       elements.forEach((el) => {
         const rect = el.getBoundingClientRect();
