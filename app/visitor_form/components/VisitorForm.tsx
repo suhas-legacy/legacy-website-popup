@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { 
-  User, 
-  Phone, 
-  Mail, 
-  Video, 
-  MapPin, 
-  Calendar as CalendarIcon, 
-  Clock, 
-  ArrowRight, 
+import {
+  User,
+  Phone,
+  Mail,
+  Video,
+  MapPin,
+  Calendar as CalendarIcon,
+  Clock,
+  ArrowRight,
   CheckCircle,
   ChevronLeft,
   ChevronRight,
@@ -69,7 +69,7 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
   useEffect(() => {
     if (meetingType !== "online") return;
     setSlotsLoading(true);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
     fetch(`${apiUrl}/api/visitor/slots`)
       .then(res => res.json())
       .then(data => {
@@ -152,7 +152,7 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
   const validateForm = () => {
     if (!name.trim()) return "Full name is required.";
     if (!phone.trim()) return "Phone number is required.";
-    
+
     const phoneRegex = /^[+]?[0-9\s-]{8,15}$/;
     if (!phoneRegex.test(phone)) return "Please enter a valid phone number (e.g. +91 99999 99999).";
 
@@ -180,7 +180,7 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
     setError("");
     setIsSubmitting(true);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
     fetch(`${apiUrl}/api/visitor/request`, {
       method: "POST",
       headers: {
@@ -194,30 +194,30 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
         date: meetingType === "online" && selectedDate ? toDateStr(selectedDate) : "",
         formattedDate: meetingType === "online" && selectedDate
           ? selectedDate.toLocaleDateString("en-US", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-              year: "numeric"
-            })
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          })
           : "N/A",
         time: meetingType === "online" ? selectedTime : "N/A"
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        onSuccessSubmit(data.requestId);
-      } else {
-        setError(data.message || "Failed to submit request. Please try again.");
-      }
-    })
-    .catch(err => {
-      console.error("Submit error:", err);
-      setError("Network error connecting to backend. Please check if the backend server is running.");
-    })
-    .finally(() => {
-      setIsSubmitting(false);
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          onSuccessSubmit(data.requestId);
+        } else {
+          setError(data.message || "Failed to submit request. Please try again.");
+        }
+      })
+      .catch(err => {
+        console.error("Submit error:", err);
+        setError("Network error connecting to backend. Please check if the backend server is running.");
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   // Calendar render helpers
@@ -369,7 +369,7 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
                 </span>
               )}
             </label>
-            
+
             <div className="custom-calendar-container">
               <div className="calendar-header">
                 <button type="button" onClick={handlePrevMonth} className="calendar-nav-btn">
@@ -382,7 +382,7 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
                   <ChevronRight size={16} />
                 </button>
               </div>
-              
+
               <div className="calendar-grid">
                 {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(d => (
                   <div key={d} className="calendar-day-header">{d}</div>
@@ -405,7 +405,7 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
               <span>Select Time <span className="gold-text">(10 AM - 5 PM)</span></span>
               {selectedTime && !isSlotFull(selectedTime) && <span className="selected-preview font-mono">{selectedTime}</span>}
             </label>
-            
+
             {slotsLoading ? (
               <div className="slots-loading">
                 <Loader size={16} className="spinner-icon" />
@@ -477,7 +477,7 @@ export function VisitorSuccess({ requestId, onGoBack }: VisitorSuccessProps) {
   const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
     fetch(`${apiUrl}/api/visitor/request/${requestId}`)
       .then(res => {
         if (!res.ok) throw new Error("Request details not found on backend");
@@ -566,7 +566,7 @@ export function VisitorSuccess({ requestId, onGoBack }: VisitorSuccessProps) {
       {/* Visual Workflow Timeline */}
       <div className="workflow-timeline">
         <h4 className="timeline-title font-mono">NEXT STEPS IN WORKFLOW</h4>
-        
+
         <div className="timeline-items">
           <div className="timeline-step done">
             <div className="step-marker">1</div>
