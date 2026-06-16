@@ -244,7 +244,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-amber-400">Calculator Inputs</h2>
+                <h2 className="text-2xl font-bold text-amber-400" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Calculator Inputs</h2>
                 <button
                   onClick={refetch}
                   disabled={isLoading}
@@ -443,7 +443,7 @@ Max Lots at Current Leverage: ${result.maxLotsAtLeverage.toFixed(2)}`;
             </div>
 
             <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
-              <h2 className="text-2xl font-bold mb-6 text-amber-400">Margin Requirements</h2>
+              <h2 className="text-2xl font-bold mb-6 text-amber-400"style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Margin Requirements</h2>
               
               {result && selectedInstrument && (
                 <div className="space-y-6">

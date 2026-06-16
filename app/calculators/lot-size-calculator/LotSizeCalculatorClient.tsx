@@ -233,7 +233,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-amber-400">Risk Parameters</h2>
+                <h2 className="text-2xl font-bold text-amber-400"style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Risk Parameters</h2>
                 <button
                   onClick={refetch}
                   disabled={isLoading}
@@ -475,7 +475,7 @@ Max Loss if SL Hit: $${result.maxLossIfSLHit.toFixed(2)} ${formData.accountCurre
             </div>
 
             <div className="bg-card border border-zinc-800 rounded-2xl p-6 lg:p-8">
-              <h2 className="text-2xl font-bold mb-6 text-amber-400">Position Size Results</h2>
+              <h2 className="text-2xl font-bold mb-6 text-amber-400"style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Position Size Results</h2>
               
               {result && selectedInstrument && (
                 <div className="space-y-6">

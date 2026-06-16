@@ -25,7 +25,7 @@ function useCountUp(end: number, durationMs: number, startWhen = true) {
 }
 
 export const Hero = React.memo(function Hero() {
-  const traders = useCountUp(10000, 2200);
+  const traders = useCountUp(100000, 2200);
 
   return (
     <section id="hero">

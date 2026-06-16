@@ -674,7 +674,7 @@ section {
 
 .section-label {
   font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.65rem;
+  font-size: 3rem;
   letter-spacing: 0.35em;
   color: var(--gold);
   text-transform: uppercase;
@@ -689,6 +689,7 @@ section {
   width: 30px;
   height: 1px;
   background: var(--gold);
+  font-size: 1rem;
 }
 
 .section-title {
@@ -1688,7 +1689,7 @@ footer {
   padding: 1rem 1.5rem;
   margin-bottom: 2rem;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--text-color);
   line-height: 1.8;
   text-align: justify;
@@ -2331,6 +2332,19 @@ footer {
   padding: 10rem 4rem 5rem;
   text-align: center;
   background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.03) 0%, transparent 60%);
+}
+
+.education-hero .hero-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.education-hero .section-label {
+  justify-content: center;
 }
 
 .education-tabs-container {
@@ -3233,7 +3247,7 @@ footer {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  font-family: var(--font-bebas);
+  font-family: var(--font-poppins);
   font-size: 0.9rem;
 }
 
@@ -4113,6 +4127,13 @@ footer {
   margin: 0 auto;
 }
 
+.downloads-hero .hero-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .downloads-hero .section-label {
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.75rem;
@@ -4120,7 +4141,8 @@ footer {
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 1rem;
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .downloads-hero .section-title {
@@ -4165,6 +4187,7 @@ footer {
   display: flex;
   flex-direction: column;
   height: 100%;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .platform-card:hover {
@@ -4218,7 +4241,7 @@ footer {
 }
 
 .platform-name {
-  font-family: var(--font-bebas), sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 1.8rem;
   letter-spacing: 0.05em;
   color: var(--white);
@@ -5541,7 +5564,7 @@ footer {
 .section-label {
   display: inline-block;
   font-family: var(--font-bebas);
-  font-size: 1.15rem;
+  font-size: 2rem;
   letter-spacing: 5px;
   color: var(--gold);
   text-transform: uppercase;
@@ -5748,12 +5771,14 @@ footer {
   margin: 0 auto;
   padding: 2rem 2.5rem 4rem;
   margin-top: 30px;
+  
 }
 
 /* Breadcrumb */
 .breadcrumb {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.75rem;
@@ -5790,6 +5815,7 @@ footer {
   margin-bottom: 1rem;
   line-height: 1.2;
   margin-top: inherit;
+  text-align: center;
 }
 
 .page-subtitle {
@@ -5798,6 +5824,9 @@ footer {
   max-width: 800px;
   line-height: 1.6;
   margin-bottom: 0rem;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Active Nav Link */

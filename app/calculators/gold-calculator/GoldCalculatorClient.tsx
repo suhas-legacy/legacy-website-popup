@@ -215,7 +215,7 @@ export function GoldCalculatorClient() {
             {/* Input Panel */}
             <div className="lg:col-span-1">
               <div className="bg-card border border-zinc-800 rounded-2xl p-6">
-                <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>
                   <Calculator className="w-5 h-5 text-amber-400" />
                   Calculator Inputs
                 </h2>
@@ -337,7 +337,7 @@ export function GoldCalculatorClient() {
                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
                       <TrendingUp className="w-4 h-4 text-emerald-800" />
                     </div>
-                    <h3 className="font-bold text-emerald-400">XAUUSD Pure Spot (Paper Gold)</h3>
+                    <h3 className="font-bold text-emerald-400" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>XAUUSD Pure Spot (Paper Gold)</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
@@ -368,7 +368,7 @@ export function GoldCalculatorClient() {
                     <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
                       <Calculator className="w-4 h-4 text-red" />
                     </div>
-                    <h3 className="font-bold text-black">Physical Gold (India)</h3>
+                    <h3 className="font-bold text-black" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Physical Gold (India)</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
@@ -432,7 +432,7 @@ export function GoldCalculatorClient() {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="font-bold text-lg mb-3 text-emerald-400">XAUUSD Pure Spot Calculation</h3>
+                <h3 className="font-bold text-lg mb-3 text-emerald-400" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>XAUUSD Pure Spot Calculation</h3>
                 <ul className="space-y-2 text-black">
                   <li>• Pure 24K price per gram (INR) = (XAUUSD × USDINR) ÷ 31.1034768</li>
                   <li>• Base Cost INR = pure_per_gram × weight × purity_factor</li>
@@ -441,7 +441,7 @@ export function GoldCalculatorClient() {
                 </ul>
               </div>
               <div>
-                <h3 className="font-bold text-lg mb-3 text-amber-400">Physical Gold Calculation</h3>
+                <h3 className="font-bold text-lg mb-3 text-amber-400" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Physical Gold Calculation</h3>
                 <ul className="space-y-2 text-black">
                   <li>• Base Gold Value = same as XAUUSD calculation</li>
                   <li>• Making Charges = Base × (making % ÷ 100)</li>
@@ -464,7 +464,7 @@ export function GoldCalculatorClient() {
                   <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
                     <TrendingUp className="w-4 h-4 text-emerald-400" />
                   </div>
-                  <h3 className="font-semibold">Cost Transparency</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Cost Transparency</h3>
                 </div>
                 <p className="text-black text-sm">
                   Understand exactly how much extra you pay for physical gold in the form of making charges and GST.
@@ -475,7 +475,7 @@ export function GoldCalculatorClient() {
                   <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
                     <Info className="w-4 h-4 text-blue-400" />
                   </div>
-                  <h3 className="font-semibold">Investment Decision</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Investment Decision</h3>
                 </div>
                 <p className="text-black text-sm">
                   Make informed decisions between buying physical gold for jewellery or investing in paper gold like ETFs.
@@ -486,7 +486,7 @@ export function GoldCalculatorClient() {
                   <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
                     <Calculator className="w-4 h-4 text-amber-400" />
                   </div>
-                  <h3 className="font-semibold">Real-Time Data</h3>
+                  <h3 className="font-semibold" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Real-Time Data</h3>
                 </div>
                 <p className="text-black text-sm">
                   Live market prices updated every 60 seconds ensure accurate calculations for current market conditions.
@@ -581,7 +581,7 @@ export function GoldCalculatorClient() {
             <div className="flex items-start gap-3">
               <AlertCircle className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-bold text-amber-400 mb-2">Disclaimer</h3>
+                <h3 className="font-bold text-red-400 mb-2" style={{fontFamily: 'var(--font-poppins), sans-serif'}}>Disclaimer</h3>
                 <p className="text-black text-sm leading-relaxed">
                   This calculator is for informational purposes only and should not be considered as financial advice. 
                   Gold prices are subject to market fluctuations and may vary from actual retail prices. 
