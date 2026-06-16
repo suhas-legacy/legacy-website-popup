@@ -88,6 +88,9 @@ export function Footer() {
             <li>
               <Link href="/refund-policy">Refund Policy</Link>
             </li>
+            <li>
+              <Link href="/awards">Awards</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-col">

@@ -31,7 +31,7 @@ const awardsSchema = {
     "Best Multi-Asset Trading Platform – FxDailyInfo 2025",
     "Excellence in Customer Support – International Business Magazine 2025",
     "Most Transparent Broker – World Finance Magazine 2024",
-    "Most Trusted Financial Broker – World Business Outlook 2024",
+    "Most Trusted Forex Broker – World Business Outlook 2024",
   ],
 };
 
@@ -51,7 +51,7 @@ export default function AwardsPage() {
               Trusted by traders worldwide. Recognized by the industry&apos;s most prestigious institutions for excellence, transparency, and innovation.
             </p>
           </div>
-          <div className="awards-hero-stats">
+          {/* <div className="awards-hero-stats">
             <div className="awards-stat">
               <span className="awards-stat-num">4+</span>
               <span className="awards-stat-label">Industry Awards</span>
@@ -66,7 +66,7 @@ export default function AwardsPage() {
               <span className="awards-stat-num">Global</span>
               <span className="awards-stat-label">Recognition</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <AwardsSection />
