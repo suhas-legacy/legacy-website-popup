@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  Search, 
-  Video, 
-  MapPin, 
-  Check, 
-  X, 
-  Clock, 
-  Calendar as CalendarIcon, 
-  AlertCircle, 
+import {
+  Search,
+  Video,
+  MapPin,
+  Check,
+  X,
+  Clock,
+  Calendar as CalendarIcon,
+  AlertCircle,
   RotateCcw,
   Eye,
   Settings,
@@ -18,7 +18,7 @@ import {
   Inbox
 } from "lucide-react";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
 
 // Backend tokens will be consumed directly from request objects.
 
@@ -63,9 +63,9 @@ export function AdminDashboard() {
   const buildUrl = (page: number) => {
     const params = new URLSearchParams();
     if (searchTerm.trim()) params.set('search', searchTerm.trim());
-    if (statusFilter !== 'ALL')  params.set('status', statusFilter);
-    if (typeFilter   !== 'ALL')  params.set('type',   typeFilter);
-    params.set('page',     String(page));
+    if (statusFilter !== 'ALL') params.set('status', statusFilter);
+    if (typeFilter !== 'ALL') params.set('type', typeFilter);
+    params.set('page', String(page));
     params.set('pageSize', String(PAGE_SIZE));
     return `${apiUrl}/api/visitor/requests?${params.toString()}`;
   };
@@ -96,13 +96,13 @@ export function AdminDashboard() {
     fetch(`${apiUrl}/api/visitor/requests?pageSize=1000`)
       .then(res => res.json())
       .then(data => { if (data.success) setAllRequests(data.requests); })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   // Restart fetch whenever filters or page change (no polling — SSE handles live updates)
   useEffect(() => {
     fetchRequests(currentPage);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, statusFilter, typeFilter, currentPage]);
 
   // SSE: subscribe once; re-fetch only when the server signals a data change
@@ -125,13 +125,13 @@ export function AdminDashboard() {
     fetchAllForStats();
 
     return () => es.close();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync Emails: Creates Admin Notification emails for any PENDING requests
   const syncEmails = (currentRequests: any[]) => {
     let emailList: any[] = [];
-    
+
     // Check if we already have emails saved in local storage (mock mailbox UI)
     const storedEmails = localStorage.getItem("legacy_visitor_emails");
     if (storedEmails) {
@@ -145,7 +145,7 @@ export function AdminDashboard() {
         if (!emailExists) {
           const approveToken = req.approveToken;
           const rejectToken = req.rejectToken;
-          
+
           const newEmail = {
             id: `EML-${Math.floor(Math.random() * 10000)}`,
             requestId: req.id,
@@ -243,17 +243,17 @@ export function AdminDashboard() {
         formattedDate
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        setShowConsole(true);
-        setConsoleLogs([]);
-        logToConsole(`[DATABASE] Request ${selectedRequest.id} manually rescheduled to ${formattedDate} at ${rescheduleTime}.`, "success");
-        logToConsole(`[EMAIL] Rescheduling notification dispatched to visitor.`, "info");
-        fetchRequests();
-      }
-    })
-    .catch(err => console.error("Reschedule error:", err));
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setShowConsole(true);
+          setConsoleLogs([]);
+          logToConsole(`[DATABASE] Request ${selectedRequest.id} manually rescheduled to ${formattedDate} at ${rescheduleTime}.`, "success");
+          logToConsole(`[EMAIL] Rescheduling notification dispatched to visitor.`, "info");
+          fetchRequests();
+        }
+      })
+      .catch(err => console.error("Reschedule error:", err));
 
     setShowRescheduleModal(false);
   };
@@ -266,14 +266,14 @@ export function AdminDashboard() {
       },
       body: JSON.stringify({ id: req.id })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        logToConsole(`[DATABASE] Request ${req.id} updated to CANCELLED. Calendar event removed.`, "error");
-        fetchRequests();
-      }
-    })
-    .catch(err => console.error("Cancel error:", err));
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          logToConsole(`[DATABASE] Request ${req.id} updated to CANCELLED. Calendar event removed.`, "error");
+          fetchRequests();
+        }
+      })
+      .catch(err => console.error("Cancel error:", err));
   };
 
   const handleCompleteMeeting = (req: any) => {
@@ -284,20 +284,20 @@ export function AdminDashboard() {
       },
       body: JSON.stringify({ id: req.id })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        logToConsole(`[DATABASE] Meeting ${req.id} marked as COMPLETED. Record archived.`, "success");
-        fetchRequests();
-      }
-    })
-    .catch(err => console.error("Complete error:", err));
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          logToConsole(`[DATABASE] Meeting ${req.id} marked as COMPLETED. Record archived.`, "success");
+          fetchRequests();
+        }
+      })
+      .catch(err => console.error("Complete error:", err));
   };
 
   // Stats calculation — always based on full unfiltered dataset
-  const totalCount      = allRequests.length;
-  const pendingCount    = allRequests.filter(r => r.status === "PENDING_APPROVAL").length;
-  const confirmedCount  = allRequests.filter(r => r.status === "CONFIRMED" || r.status === "APPROVED").length;
+  const totalCount = allRequests.length;
+  const pendingCount = allRequests.filter(r => r.status === "PENDING_APPROVAL").length;
+  const confirmedCount = allRequests.filter(r => r.status === "CONFIRMED" || r.status === "APPROVED").length;
   const rescheduleCount = allRequests.filter(r => r.status === "WAITING_RESCHEDULE").length;
 
   // `requests` already contains the server-filtered + paginated page — no client slicing needed
@@ -314,25 +314,25 @@ export function AdminDashboard() {
           <a href="/visitor_form" className="btn-outline font-mono" style={{ padding: "0.5rem 1rem", fontSize: "0.75rem" }}>
             Open Booking Form
           </a>
-          <button 
+          <button
             onClick={() => {
               sessionStorage.removeItem("legacy_admin_token");
               sessionStorage.removeItem("legacy_admin_email");
               window.location.reload();
-            }} 
+            }}
             className="btn-outline font-mono"
             style={{ padding: "0.5rem 1rem", fontSize: "0.75rem", borderColor: "rgba(198, 40, 40, 0.4)", color: "#C62828" }}
           >
             Logout
           </button>
-          <button 
+          <button
             onClick={() => {
               localStorage.removeItem("legacy_visitor_emails");
               // Clear emails list locally
               setEmails([]);
               fetchRequests();
-            }} 
-            className="action-btn text-red-500" 
+            }}
+            className="action-btn text-red-500"
             title="Clear Mock Inbox"
           >
             <RotateCcw size={16} />
@@ -544,7 +544,7 @@ export function AdminDashboard() {
       {(() => {
         const safePage = Math.min(currentPage, totalPages);
         const startRow = totalRecords === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1;
-        const endRow   = Math.min(safePage * PAGE_SIZE, totalRecords);
+        const endRow = Math.min(safePage * PAGE_SIZE, totalRecords);
 
         // Build page number list with ellipsis
         const buildPages = (): (number | "...")[] => {
@@ -826,7 +826,7 @@ export function AdminDashboard() {
             <h3 className="gold-text font-mono" style={{ fontSize: "1.1rem", marginBottom: "1rem" }}>
               Manually Reschedule {selectedRequest.id}
             </h3>
-            
+
             <div className="visitor-form-fields">
               <div className="form-field">
                 <label>Select Date (Fridays Only)</label>
@@ -882,7 +882,7 @@ export function AdminDashboard() {
           </div>
           {mailboxCollapsed ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </div>
-        
+
         <div className="mailbox-content">
           {!selectedEmail ? (
             <div className="mailbox-list">
@@ -936,15 +936,15 @@ export function AdminDashboard() {
                 {/* Secure Action Buttons with JWT link for Admin alerts */}
                 {selectedEmail.type === "admin_alert" && (
                   <div className="email-button-container">
-                    <a 
-                      href={selectedEmail.approveUrl} 
+                    <a
+                      href={selectedEmail.approveUrl}
                       className="email-act-btn approve"
                       title="Approves this request via secure signed token link"
                     >
                       Secure Approve
                     </a>
-                    <a 
-                      href={selectedEmail.rejectUrl} 
+                    <a
+                      href={selectedEmail.rejectUrl}
                       className="email-act-btn reject"
                       title="Rejects this request via secure signed token link"
                     >

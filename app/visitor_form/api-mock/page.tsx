@@ -5,12 +5,12 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
-import { 
-  ShieldCheck, 
-  ShieldAlert, 
-  Loader2, 
-  Key, 
-  Database, 
+import {
+  ShieldCheck,
+  ShieldAlert,
+  Loader2,
+  Key,
+  Database,
   ArrowRight
 } from "lucide-react";
 import "../visitor-styles.css";
@@ -95,7 +95,7 @@ function ApiMockContent() {
         else if (errorParam === "not_found") msg = "Record not found: Visitor request does not exist in database.";
         else if (errorParam === "processed") msg = "Conflict: Request has already been processed and is no longer pending.";
         else if (errorParam === "server_error") msg = "An internal server error occurred during verification.";
-        
+
         setErrorDetails(msg);
         setSuccess(false);
         setLoading(false);
@@ -104,7 +104,7 @@ function ApiMockContent() {
 
       if (statusParam === "success") {
         addLog(`[DATABASE] Fetching updated record from bank registry...`);
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
         try {
           const res = await fetch(`${apiUrl}/api/visitor/request/${requestId}`);
           if (!res.ok) throw new Error("Request details not found on backend");
@@ -130,7 +130,7 @@ function ApiMockContent() {
       // We should redirect to the backend to perform the actual cryptographic verification!
       const action = payload ? payload.action : "approve";
       addLog(`[SYSTEM] Direct link entry detected. Routing transaction to backend gateway...`);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
       setTimeout(() => {
         window.location.href = `${apiUrl}/api/visitor/${action}?id=${requestId}&token=${token}`;
       }, 1000);
@@ -142,7 +142,7 @@ function ApiMockContent() {
   return (
     <div className="api-mock-container">
       <div className="api-card">
-        
+
         {/* Header */}
         <div className="api-header text-center">
           <h1>LEGACY SECURITY GATEWAY</h1>
@@ -164,7 +164,7 @@ function ApiMockContent() {
               <ShieldCheck size={56} className="text-red-500" style={{ color: "#EF9A9A" }} />
               <h2 style={{ color: "#EF9A9A", fontSize: "1.5rem" }}>Security Verification Failed</h2>
             </div>
-            
+
             <div className="jwt-panel" style={{ borderColor: "#C62828", background: "rgba(198, 40, 40, 0.05)", marginTop: "1.5rem" }}>
               <span className="font-semibold text-red-200">Error Description:</span>
               <p className="text-red-300 font-mono mt-2" style={{ fontSize: "0.8rem", lineHeight: "1.4" }}>
@@ -189,7 +189,7 @@ function ApiMockContent() {
                   {actionPerformed === "approve" ? "APPROVED" : "REJECTED"}
                 </span>
               </div>
-              
+
               {requestDetails && (
                 <div className="font-mono text-xs mt-3" style={{ display: "flex", flexDirection: "column", gap: "0.4rem", color: "#ECEFF1" }}>
                   <div className="flex-between">
@@ -239,7 +239,7 @@ function ApiMockContent() {
           <div className="reveal visible" style={{ marginTop: "1.5rem" }}>
             <span className="drawer-section-title" style={{ color: "rgba(255,255,255,0.4)" }}>Cryptographic Token Payload</span>
             <div className="jwt-panel" style={{ background: "#121214", border: "1px solid #263238" }}>
-              
+
               <span className="jwt-label font-mono"><Key size={12} className="inline mr-1" /> JOSE Header:</span>
               <pre className="jwt-json">
                 {jwtHeader ? JSON.stringify(jwtHeader, null, 2) : "{\n  \"alg\": \"HS256\",\n  \"typ\": \"JWT\"\n}"}
@@ -269,8 +269,8 @@ function ApiMockContent() {
         {/* Footer Controls */}
         {!loading && (
           <div className="flex-center mt-6">
-            <button 
-              onClick={() => router.push("/visitor_form/admin")} 
+            <button
+              onClick={() => router.push("/visitor_form/admin")}
               className="btn-gold font-mono flex-center gap-2"
               style={{ padding: "0.8rem 2rem", width: "100%" }}
             >

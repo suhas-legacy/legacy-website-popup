@@ -23,7 +23,7 @@ export function LoginForm({ onLoginSuccess }: LoginFormProps) {
     setError("");
     setIsSubmitting(true);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
     try {
       const res = await fetch(`${apiUrl}/api/admin/login`, {
         method: "POST",
