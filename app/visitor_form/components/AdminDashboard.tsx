@@ -15,7 +15,8 @@ import {
   Settings,
   ChevronDown,
   ChevronUp,
-  Inbox
+  Inbox,
+  ShieldCheck
 } from "lucide-react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
@@ -44,6 +45,10 @@ export function AdminDashboard() {
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
   const [rescheduleDate, setRescheduleDate] = useState("");
   const [rescheduleTime, setRescheduleTime] = useState("");
+
+  const [showApproveModal, setShowApproveModal] = useState(false);
+  const [approveDate, setApproveDate] = useState("");
+  const [approveTime, setApproveTime] = useState("");
 
   // Keep the ref in sync with the state on every render
   useEffect(() => {
@@ -153,7 +158,7 @@ export function AdminDashboard() {
             sender: "System Notification",
             time: req.createdAt,
             subject: `New Visitor Meeting Request [${req.id}]`,
-            body: `Name:\n${req.name}\n\nPhone:\n${req.phone}\n\nEmail:\n${req.email}\n\nMeeting Type:\n${req.meetingType === 'online' ? 'Online' : 'Offline'}\n\nRequested Date:\n${req.formattedDate}\n\nRequested Time:\n${req.time}\n\nRequest ID:\n${req.id}`,
+            body: `Name:\n${req.name}\n\nPhone:\n${req.phone}\n\nEmail:\n${req.email}\n\nMeeting Type:\n${req.meetingType === 'online' ? 'Online' : 'Offline'}\n\nRequested Date:\n${req.formattedDate}\n\nRequested Time:\n${req.time}\n\nRequest ID:\n${req.id}\n\nPurpose of Visit:\n${req.purposeOfVisit}\n\nReference Employee:\n${req.referenceEmployee || 'N/A'}\n\nPreferred Branch:\n${req.preferredBranch}\n\nPerson to Meet:\n${req.personToMeet || 'N/A'}\n\nExisting Client:\n${req.existingClient}\n\nTrading Account ID:\n${req.tradingAccountId || 'N/A'}\n\nAdditional Notes:\n${req.additionalNotes || 'N/A'}`,
             approveUrl: `${apiUrl}/api/visitor/approve?id=${req.id}&token=${approveToken}`,
             rejectUrl: `${apiUrl}/api/visitor/reject?id=${req.id}&token=${rejectToken}`,
             unread: true
@@ -170,11 +175,19 @@ export function AdminDashboard() {
   // Helper: Append logs to simulated console
   const logToConsole = (text: string, type: "info" | "success" | "warning" | "error" | "system" = "info") => {
     setConsoleLogs(prev => [...prev, { text, type, time: new Date().toLocaleTimeString() }]);
-  };  // Direct Action: Approve
+  };
+
   const handleApprove = (req: any) => {
     setShowConsole(true);
     setConsoleLogs([]); // Clear
-    logToConsole(`[SYSTEM] Starting approval workflow for request ${req.id}`, "system");
+    
+    if (req.meetingType === "offline") {
+      setSelectedRequest(req);
+      setApproveDate("");
+      setApproveTime("");
+      setShowApproveModal(true);
+      return;
+    }
 
     const token = req.approveToken;
     logToConsole(`[SYSTEM] Secure JWT token signed: ${token.substring(0, 20)}...`, "info");
@@ -192,6 +205,46 @@ export function AdminDashboard() {
       .catch(err => {
         console.error(err);
         logToConsole(`[SYSTEM] Backend verifier gateway error: ${err.message}`, "error");
+      });
+  };
+
+  const handleSaveOfflineApprove = () => {
+    if (!selectedRequest) return;
+    const token = selectedRequest.approveToken;
+
+    const parsedDate = new Date(approveDate);
+    const formattedDate = parsedDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+    logToConsole(`[SYSTEM] Secure JWT token signed: ${token.substring(0, 20)}...`, "info");
+    logToConsole(`[SYSTEM] Approving offline pass for ${selectedRequest.id} at ${approveDate} ${approveTime}...`, "info");
+
+    const queryParams = new URLSearchParams({
+      id: selectedRequest.id,
+      token,
+      ajax: "true",
+      date: approveDate,
+      time: approveTime,
+      formattedDate
+    });
+
+    fetch(`${apiUrl}/api/visitor/approve?${queryParams.toString()}`)
+      .then(async res => {
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `HTTP ${res.status}`);
+        }
+        logToConsole(`[SYSTEM] Offline pass approved. Google Calendar event scheduled.`, "success");
+        setShowApproveModal(false);
+        fetchRequests();
+      })
+      .catch(err => {
+        console.error(err);
+        logToConsole(`[SYSTEM] Offline approval error: ${err.message}`, "error");
       });
   };
 
@@ -292,6 +345,24 @@ export function AdminDashboard() {
         }
       })
       .catch(err => console.error("Complete error:", err));
+  };
+
+  const handleDirectCheckin = (req: any) => {
+    fetch(`${apiUrl}/api/visitor/checkin-direct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: req.id })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          logToConsole(`[DATABASE] Visitor ${req.id} checked in directly by Administrator.`, "success");
+          fetchRequests();
+        }
+      })
+      .catch(err => console.error("Checkin error:", err));
   };
 
   // Stats calculation — always based on full unfiltered dataset
@@ -695,6 +766,49 @@ export function AdminDashboard() {
                 </div>
               </div>
 
+              {/* Visit Details Section */}
+              <div className="drawer-section">
+                <span className="drawer-section-title font-mono">Visit Details</span>
+                <div className="details-grid">
+                  <div className="detail-item">
+                    <span>Purpose of Visit</span>
+                    <span>{selectedRequest.purposeOfVisit || "N/A"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span>Preferred Branch</span>
+                    <span>{selectedRequest.preferredBranch || "N/A"}</span>
+                  </div>
+                  {selectedRequest.referenceEmployee && (
+                    <div className="detail-item">
+                      <span>Reference Employee</span>
+                      <span>{selectedRequest.referenceEmployee}</span>
+                    </div>
+                  )}
+                  {selectedRequest.personToMeet && (
+                    <div className="detail-item">
+                      <span>Person to Meet</span>
+                      <span>{selectedRequest.personToMeet}</span>
+                    </div>
+                  )}
+                  <div className="detail-item">
+                    <span>Existing Client?</span>
+                    <span>{selectedRequest.existingClient || "No"}</span>
+                  </div>
+                  {selectedRequest.existingClient === "Yes" && selectedRequest.tradingAccountId && (
+                    <div className="detail-item">
+                      <span>Trading Account ID</span>
+                      <span>{selectedRequest.tradingAccountId}</span>
+                    </div>
+                  )}
+                  {selectedRequest.additionalNotes && (
+                    <div className="detail-item" style={{ gridColumn: "span 2" }}>
+                      <span>Additional Notes</span>
+                      <span style={{ whiteSpace: "pre-wrap", fontSize: "0.85rem", color: "var(--text-primary)" }}>{selectedRequest.additionalNotes}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Slot Details */}
               <div className="drawer-section">
                 <span className="drawer-section-title font-mono">Meeting Schedule</span>
@@ -741,6 +855,16 @@ export function AdminDashboard() {
                       </div>
                     </>
                   )}
+                  {selectedRequest.meetingType === "offline" && (
+                    <div className="detail-item" style={{ gridColumn: "span 2", display: "flex", flexDirection: "column", alignItems: "center", marginTop: "1rem", borderTop: "1px dashed var(--border-silver)", paddingTop: "1rem" }}>
+                      <span className="font-mono text-xs font-bold mb-2" style={{ color: "var(--gold)" }}>SECURE ENTRY PASS QR CODE</span>
+                      <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(window.location.origin + "/visitor_form/checkin?id=" + selectedRequest.id + "&token=" + selectedRequest.checkinToken)}`} 
+                        alt="Secure Checkin QR Code" 
+                        style={{ width: "130px", height: "130px", borderRadius: "6px", border: "2px solid white" }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -784,6 +908,16 @@ export function AdminDashboard() {
                         <Check size={14} /> Mark Completed
                       </button>
                     </div>
+                  )}
+
+                  {selectedRequest.meetingType === "offline" && selectedRequest.status !== "CHECKED_IN" && selectedRequest.status !== "COMPLETED" && selectedRequest.status !== "REJECTED" && selectedRequest.status !== "CANCELLED" && (
+                    <button
+                      onClick={() => handleDirectCheckin(selectedRequest)}
+                      className="btn-gold font-mono flex-center gap-2"
+                      style={{ width: "100%", padding: "0.6rem", background: "#2E7D32", color: "white", border: "none" }}
+                    >
+                      <ShieldCheck size={14} /> Check In Visitor
+                    </button>
                   )}
 
                   {selectedRequest.status !== "CANCELLED" && selectedRequest.status !== "REJECTED" && (
@@ -867,6 +1001,72 @@ export function AdminDashboard() {
 
               <button onClick={handleSaveReschedule} className="btn-gold font-mono w-full" style={{ padding: "0.8rem", marginTop: "1rem" }}>
                 Confirm Reschedule Slot
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Offline Approval Modal */}
+      {showApproveModal && selectedRequest && (
+        <div className="popup-overlay active" style={{ zIndex: 1100 }}>
+          <div className="popup-modal text-left" style={{ maxWidth: "450px" }}>
+            <button onClick={() => setShowApproveModal(false)} className="popup-close"><X size={20} /></button>
+            <h3 className="gold-text font-mono" style={{ fontSize: "1.1rem", marginBottom: "1rem" }}>
+              Approve Offline Pass: {selectedRequest.id}
+            </h3>
+
+            <p className="text-xs text-muted mb-4" style={{ color: "var(--text-secondary)", lineHeight: "1.4" }}>
+              Specify the office visiting date and time for the client. A calendar invitation will be scheduled for Shiva & Yogesh, and a pass confirmation email will be sent to the client.
+            </p>
+
+            <div className="visitor-form-fields">
+              <div className="form-field">
+                <label>Select Visiting Date *</label>
+                <input
+                  type="date"
+                  value={approveDate}
+                  onChange={(e) => setApproveDate(e.target.value)}
+                  className="filter-select"
+                  style={{ width: "100%", height: "45px" }}
+                  required
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Select Time Slot *</label>
+                <select
+                  value={approveTime}
+                  onChange={(e) => setApproveTime(e.target.value)}
+                  className="filter-select"
+                  style={{ width: "100%", height: "45px" }}
+                  required
+                >
+                  <option value="">Choose slot...</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="10:30 AM">10:30 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="11:30 AM">11:30 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="12:30 PM">12:30 PM</option>
+                  <option value="1:00 PM">1:00 PM</option>
+                  <option value="1:30 PM">1:30 PM</option>
+                  <option value="2:00 PM">2:00 PM</option>
+                  <option value="2:30 PM">2:30 PM</option>
+                  <option value="3:00 PM">3:00 PM</option>
+                  <option value="3:30 PM">3:30 PM</option>
+                  <option value="4:00 PM">4:00 PM</option>
+                  <option value="4:30 PM">4:30 PM</option>
+                </select>
+              </div>
+
+              <button 
+                onClick={handleSaveOfflineApprove} 
+                className="btn-gold font-mono w-full" 
+                style={{ padding: "0.8rem", marginTop: "1rem" }}
+                disabled={!approveDate || !approveTime}
+              >
+                Approve & Sync Calendar
               </button>
             </div>
           </div>

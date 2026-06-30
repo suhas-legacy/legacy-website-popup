@@ -2,6 +2,10 @@
 
 import posthog from "posthog-js";
 import { PANEL_URL_REGISTER } from "@/lib/constants";
+import accountTypesData from "@/lib/data/account-types.json";
+import { AccountTypeData } from "@/lib/accountTypes";
+
+const accountTypes = accountTypesData as AccountTypeData[];
 
 function handleOpenAccount(accountType: string) {
   posthog.capture("open_account_clicked", { account_type: accountType });
@@ -20,127 +24,35 @@ export function AccountTypes() {
       </p>
 
       <div className="accounts-grid">
-        <div className="acc-card reveal reveal-delay-1">
-          <div className="acc-type">Standard</div>
-          <div className="acc-deposit">Min. Deposit: Flexible</div>
-          <ul className="acc-rows">
-            <li>
-              <span>Spread From</span>
-              <span>1.8 pip</span>
-            </li>
-            <li>
-              <span>Commission</span>
-              <span>$0</span>
-            </li>
-            <li>
-              <span>Max Leverage</span>
-              <span>1:500</span>
-            </li>
-            <li>
-              <span>Min. Lot</span>
-              <span>0.01</span>
-            </li>
-            <li>
-              <span>Execution</span>
-              <span>Market</span>
-            </li>
-          </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("standard")}>
-            Open Account
-          </a>
-        </div>
-
-        <div className="acc-card reveal reveal-delay-2">
-          <div className="acc-type">Classic</div>
-          <div className="acc-deposit">Min. Deposit: Flexible</div>
-          <ul className="acc-rows">
-            <li>
-              <span>Spread From</span>
-              <span>1.5 pip</span>
-            </li>
-            <li>
-              <span>Commission</span>
-              <span>$0</span>
-            </li>
-            <li>
-              <span>Max Leverage</span>
-              <span>1:500</span>
-            </li>
-            <li>
-              <span>Min. Lot</span>
-              <span>0.01</span>
-            </li>
-            <li>
-              <span>Execution</span>
-              <span>Market</span>
-            </li>
-          </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("classic")}>
-            Open Account
-          </a>
-        </div>
-
-        <div className="acc-card featured reveal reveal-delay-3">
-          <div className="acc-badge">Popular</div>
-          <div className="acc-type gold-text">Pro</div>
-          <div className="acc-deposit">Min. Deposit: $500</div>
-          <ul className="acc-rows">
-            <li>
-              <span>Spread From</span>
-              <span>0 pip</span>
-            </li>
-            <li>
-              <span>Commission</span>
-              <span>2-Side / Lot</span>
-            </li>
-            <li>
-              <span>Max Leverage</span>
-              <span>1:500</span>
-            </li>
-            <li>
-              <span>Min. Lot</span>
-              <span>0.01</span>
-            </li>
-            <li>
-              <span>Execution</span>
-              <span>Market</span>
-            </li>
-          </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("pro")}>
-            Open Account
-          </a>
-        </div>
-
-        <div className="acc-card reveal reveal-delay-4">
-          <div className="acc-type">VIP</div>
-          <div className="acc-deposit">Min. Deposit: $1,000</div>
-          <ul className="acc-rows">
-            <li>
-              <span>Spread From</span>
-              <span>0 pip</span>
-            </li>
-            <li>
-              <span>Commission</span>
-              <span>1-Side / Lot</span>
-            </li>
-            <li>
-              <span>Max Leverage</span>
-              <span>1:500</span>
-            </li>
-            <li>
-              <span>Min. Lot</span>
-              <span>0.01</span>
-            </li>
-            <li>
-              <span>Execution</span>
-              <span>Market</span>
-            </li>
-          </ul>
-          <a href={PANEL_URL_REGISTER} className="acc-cta" onClick={() => handleOpenAccount("vip")}>
-            Open Account
-          </a>
-        </div>
+        {accountTypes.map((account, index) => (
+          <div
+            key={account.id}
+            className={`acc-card ${account.isFeatured ? "featured" : ""} reveal reveal-delay-${index + 1}`}
+          >
+            {account.badge && <div className="acc-badge">{account.badge}</div>}
+            <div className={`acc-type ${account.isGoldText ? "gold-text" : ""}`}>
+              {account.name}
+            </div>
+            <div className="acc-deposit">{account.deposit}</div>
+            <ul className="acc-rows">
+              {account.features.map((feature, fIndex) => (
+                <li key={fIndex}>
+                  <span>{feature.label}</span>
+                  <span>{feature.value}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={PANEL_URL_REGISTER}
+              className="acc-cta"
+              onClick={() => handleOpenAccount(account.id)}
+            >
+              Open Account
+            </a>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
+

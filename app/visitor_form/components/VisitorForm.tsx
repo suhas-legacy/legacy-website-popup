@@ -13,7 +13,12 @@ import {
   CheckCircle,
   ChevronLeft,
   ChevronRight,
-  Loader
+  Loader,
+  Briefcase,
+  Users,
+  UserCheck,
+  Hash,
+  FileText
 } from "lucide-react";
 
 interface SlotStatus {
@@ -45,6 +50,15 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
   const [meetingType, setMeetingType] = useState<"online" | "offline">("online");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>("");
+
+  // New visitor questions states
+  const [purposeOfVisit, setPurposeOfVisit] = useState("");
+  const [referenceEmployee, setReferenceEmployee] = useState("");
+  const [preferredBranch, setPreferredBranch] = useState("Bengaluru");
+  const [personToMeet, setPersonToMeet] = useState("");
+  const [existingClient, setExistingClient] = useState("");
+  const [tradingAccountId, setTradingAccountId] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState("");
 
   // UI state
   const [error, setError] = useState("");
@@ -160,6 +174,11 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) return "Please enter a valid email address.";
 
+    if (!purposeOfVisit) return "Purpose of visit is required.";
+    if (!preferredBranch) return "Preferred branch is required.";
+    if (!existingClient) return "Please select if you are an existing client.";
+    if (existingClient === "Yes" && !tradingAccountId.trim()) return "Trading Account ID is required.";
+
     if (meetingType === "online") {
       if (!selectedDate) return "Please select a meeting date.";
       if (!selectedTime) return "Please select a meeting time slot.";
@@ -200,7 +219,14 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
             year: "numeric"
           })
           : "N/A",
-        time: meetingType === "online" ? selectedTime : "N/A"
+        time: meetingType === "online" ? selectedTime : "N/A",
+        purposeOfVisit,
+        referenceEmployee,
+        preferredBranch,
+        personToMeet,
+        existingClient,
+        tradingAccountId: existingClient === "Yes" ? tradingAccountId : "",
+        additionalNotes
       })
     })
       .then(res => res.json())
@@ -358,6 +384,164 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
           </div>
         </div>
 
+        {/* Purpose of Visit & Reference Employee Row */}
+        <div className="form-row">
+          <div className="form-field">
+            <label htmlFor="vis-purpose">Purpose of Visit *</label>
+            <div className="input-icon-wrapper">
+              <Briefcase size={16} className="input-icon" />
+              <select
+                id="vis-purpose"
+                value={purposeOfVisit}
+                onChange={(e) => {
+                  setPurposeOfVisit(e.target.value);
+                  setError("");
+                }}
+                required
+                style={{ width: "100%" }}
+              >
+                <option value="">Select Purpose...</option>
+                <option value="Open Trading Account">Open Trading Account</option>
+                <option value="Existing Client Support">Existing Client Support</option>
+                <option value="Deposit / Withdrawal">Deposit / Withdrawal</option>
+                <option value="KYC Verification">KYC Verification</option>
+                <option value="Partner / IB Meeting">Partner / IB Meeting</option>
+                <option value="Platform Demo">Platform Demo</option>
+                <option value="Account Discussion">Account Discussion</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-field">
+            <label htmlFor="vis-reference">Reference Employee Name (Optional)</label>
+            <div className="input-icon-wrapper">
+              <Users size={16} className="input-icon" />
+              <input
+                id="vis-reference"
+                type="text"
+                placeholder="e.g. Shiva Prasad"
+                value={referenceEmployee}
+                onChange={(e) => setReferenceEmployee(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Preferred Branch & Person to Meet Row */}
+        <div className="form-row">
+          <div className="form-field">
+            <label htmlFor="vis-branch">Preferred Branch *</label>
+            <div className="input-icon-wrapper">
+              <MapPin size={16} className="input-icon" />
+              <select
+                id="vis-branch"
+                value={preferredBranch}
+                onChange={(e) => {
+                  setPreferredBranch(e.target.value);
+                  setError("");
+                }}
+                required
+                style={{ width: "100%" }}
+              >
+                <option value="Bengaluru">Bengaluru</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-field">
+            <label htmlFor="vis-meet-person">Person You Wish to Meet (Optional)</label>
+            <div className="input-icon-wrapper">
+              <UserCheck size={16} className="input-icon" />
+              <input
+                id="vis-meet-person"
+                type="text"
+                placeholder="e.g. Yogesh A"
+                value={personToMeet}
+                onChange={(e) => setPersonToMeet(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Existing Client & Trading Account Row */}
+        <div className="form-row">
+          <div className="form-field">
+            <label style={{ marginBottom: "0.5rem" }}>Are You an Existing Client? *</label>
+            <div style={{ display: "flex", gap: "1.5rem", marginTop: "0.5rem", height: "42px", alignItems: "center" }}>
+              <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", color: "var(--text-primary)", fontSize: "0.9rem" }}>
+                <input
+                  type="radio"
+                  name="existingClient"
+                  value="Yes"
+                  checked={existingClient === "Yes"}
+                  onChange={() => {
+                    setExistingClient("Yes");
+                    setError("");
+                  }}
+                  required
+                />
+                Yes
+              </label>
+              <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", color: "var(--text-primary)", fontSize: "0.9rem" }}>
+                <input
+                  type="radio"
+                  name="existingClient"
+                  value="No"
+                  checked={existingClient === "No"}
+                  onChange={() => {
+                    setExistingClient("No");
+                    setTradingAccountId("");
+                    setError("");
+                  }}
+                  required
+                />
+                No
+              </label>
+            </div>
+          </div>
+          
+          <div className="form-field" style={{ visibility: existingClient === "Yes" ? "visible" : "hidden" }}>
+            <label htmlFor="vis-account-id">Trading Account ID *</label>
+            <div className="input-icon-wrapper">
+              <Hash size={16} className="input-icon" />
+              <input
+                id="vis-account-id"
+                type="text"
+                placeholder="e.g. TR-98765"
+                value={tradingAccountId}
+                onChange={(e) => setTradingAccountId(e.target.value)}
+                required={existingClient === "Yes"}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Notes */}
+        <div className="form-field">
+          <label htmlFor="vis-notes">Additional Notes</label>
+          <div className="input-icon-wrapper" style={{ alignItems: "flex-start" }}>
+            <FileText size={16} className="input-icon" style={{ top: "1rem" }} />
+            <textarea
+              id="vis-notes"
+              placeholder="e.g. Any specific queries or requirements..."
+              value={additionalNotes}
+              onChange={(e) => setAdditionalNotes(e.target.value)}
+              rows={3}
+              style={{
+                width: "100%",
+                padding: "0.75rem 1rem 0.75rem 2.75rem",
+                borderRadius: "6px",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-silver)",
+                color: "var(--text-primary)",
+                fontSize: "0.9rem",
+                outline: "none",
+                fontFamily: "inherit",
+                resize: "vertical"
+              }}
+            />
+          </div>
+        </div>
+
         {/* Custom Calendar */}
         {meetingType === "online" && (
           <div className="form-field">
@@ -475,8 +659,12 @@ export function VisitorSuccess({ requestId, onGoBack }: VisitorSuccessProps) {
   const [req, setReq] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
+  const [origin, setOrigin] = React.useState("");
 
   React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin);
+    }
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
     fetch(`${apiUrl}/api/visitor/request/${requestId}`)
       .then(res => {
@@ -549,19 +737,74 @@ export function VisitorSuccess({ requestId, onGoBack }: VisitorSuccessProps) {
             <span className="capitalize">{req.meetingType}</span>
           </div>
           <div className="detail-item">
-            <span>Requested Date</span>
-            <span>{req.formattedDate}</span>
+            <span>Purpose of Visit</span>
+            <span>{req.purposeOfVisit}</span>
           </div>
           <div className="detail-item">
-            <span>Requested Time</span>
-            <span>{req.time}</span>
+            <span>Preferred Branch</span>
+            <span>{req.preferredBranch}</span>
           </div>
+          {req.referenceEmployee && (
+            <div className="detail-item">
+              <span>Reference Employee</span>
+              <span>{req.referenceEmployee}</span>
+            </div>
+          )}
+          {req.personToMeet && (
+            <div className="detail-item">
+              <span>Person to Meet</span>
+              <span>{req.personToMeet}</span>
+            </div>
+          )}
+          <div className="detail-item">
+            <span>Existing Client?</span>
+            <span>{req.existingClient}</span>
+          </div>
+          {req.existingClient === 'Yes' && req.tradingAccountId && (
+            <div className="detail-item">
+              <span>Trading Account ID</span>
+              <span>{req.tradingAccountId}</span>
+            </div>
+          )}
+          {req.meetingType === "online" && (
+            <>
+              <div className="detail-item">
+                <span>Requested Date</span>
+                <span>{req.formattedDate}</span>
+              </div>
+              <div className="detail-item">
+                <span>Requested Time</span>
+                <span>{req.time}</span>
+              </div>
+            </>
+          )}
           <div className="detail-item">
             <span>Status</span>
-            <span className="status-badge pending">{req.status}</span>
+            <span className={`status-badge ${req.status.toLowerCase()}`}>{req.status.replace("_", " ")}</span>
           </div>
+          {req.additionalNotes && (
+            <div className="detail-item" style={{ gridColumn: "span 2" }}>
+              <span>Additional Notes</span>
+              <span style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>{req.additionalNotes}</span>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* QR Code Section for Offline (Visitor Pass) */}
+      {req.meetingType === "offline" && (
+        <div className="qr-code-container text-center my-6 p-6" style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: "8px", border: "1px dashed var(--border-silver)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", marginTop: "1.5rem" }}>
+          <span className="font-mono text-xs font-bold" style={{ color: "var(--gold)", letterSpacing: "1px" }}>SECURE ENTRY PASS QR CODE</span>
+          <img 
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(origin + "/visitor_form/checkin?id=" + req.id + "&token=" + req.checkinToken)}`} 
+            alt="Secure Visitor Pass QR Code" 
+            style={{ width: "180px", height: "180px", borderRadius: "8px", border: "4px solid white" }}
+          />
+          <p className="text-xs text-muted" style={{ maxWidth: "420px", margin: "0 auto", lineHeight: "1.5", color: "var(--text-secondary)" }}>
+            Please present this QR code to the bank security or receptionist at the <strong>{req.preferredBranch || 'Bengaluru'}</strong> branch upon arrival.
+          </p>
+        </div>
+      )}
 
       {/* Visual Workflow Timeline */}
       <div className="workflow-timeline">

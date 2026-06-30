@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TrustpilotWidget } from "./TrustpilotWidget";
 
 const items = [
   {
@@ -37,6 +38,13 @@ export function TestimonialsPreview() {
             </div>
           </div>
         ))}
+        <div className="testi-card reveal reveal-delay-3" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="testi-quote" style={{ marginBottom: "0.2rem", opacity: 0.15 }}>&quot;</div>
+          <h3 style={{ fontFamily: "var(--font-bebas), sans-serif", fontSize: "1.4rem", marginBottom: "1.2rem", color: "var(--gold)", letterSpacing: "0.05em", textAlign: "center" }}>
+            We are trusted on Trustpilot
+          </h3>
+          <TrustpilotWidget />
+        </div>
       </div>
 
       <div className="preview-cta reveal">
