@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -31,7 +31,14 @@ export default function VisitorCheckinPage() {
         <div className="page-container">
           <PageBreadcrumb currentPage="Check-in Verification" />
           <div className="visitor-container">
-            <CheckinComponent />
+            <Suspense fallback={
+              <div className="visitor-card reveal visible text-center py-12 flex-center" style={{ flexDirection: "column", gap: "1rem" }}>
+                <div className="spinner"></div>
+                <p className="font-mono text-muted">Loading check-in page...</p>
+              </div>
+            }>
+              <CheckinComponent />
+            </Suspense>
           </div>
         </div>
       </main>
