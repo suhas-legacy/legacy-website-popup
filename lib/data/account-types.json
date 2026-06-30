@@ -1,0 +1,67 @@
+[
+  {
+    "id": "standard",
+    "name": "Standard",
+    "deposit": "Min. Deposit: Flexible",
+    "isFeatured": false,
+    "isGoldText": false,
+    "price": "0",
+    "schemaDescription": "Flexible minimum deposit, 2.5 pip spread, no commission",
+    "features": [
+      { "label": "Spread From", "value": "2.5 pip" },
+      { "label": "Commission", "value": "$0" },
+      { "label": "Max Leverage", "value": "1:500" },
+      { "label": "Min. Lot", "value": "0.01" },
+      { "label": "Execution", "value": "Market" }
+    ]
+  },
+  {
+    "id": "classic",
+    "name": "Classic",
+    "deposit": "Min. Deposit: Flexible",
+    "isFeatured": false,
+    "isGoldText": false,
+    "price": "0",
+    "schemaDescription": "Flexible minimum deposit, 1.5 pip spread, no commission",
+    "features": [
+      { "label": "Spread From", "value": "1.5 pip" },
+      { "label": "Commission", "value": "$0" },
+      { "label": "Max Leverage", "value": "1:500" },
+      { "label": "Min. Lot", "value": "0.01" },
+      { "label": "Execution", "value": "Market" }
+    ]
+  },
+  {
+    "id": "pro",
+    "name": "Pro",
+    "deposit": "Min. Deposit: $500",
+    "isFeatured": true,
+    "isGoldText": true,
+    "badge": "Popular",
+    "price": "500",
+    "schemaDescription": "$500 minimum deposit, 1.5 pip spread, $2 commission per lot",
+    "features": [
+      { "label": "Spread From", "value": "1.5 pip" },
+      { "label": "Commission", "value": "2-Side / Lot" },
+      { "label": "Max Leverage", "value": "1:500" },
+      { "label": "Min. Lot", "value": "0.01" },
+      { "label": "Execution", "value": "Market" }
+    ]
+  },
+  {
+    "id": "vip",
+    "name": "VIP",
+    "deposit": "Min. Deposit: $1,000",
+    "isFeatured": false,
+    "isGoldText": false,
+    "price": "1000",
+    "schemaDescription": "$1,000 minimum deposit, 0.5 pip spread, $1 commission per lot",
+    "features": [
+      { "label": "Spread From", "value": "0.5 pip" },
+      { "label": "Commission", "value": "1-Side / Lot" },
+      { "label": "Max Leverage", "value": "1:500" },
+      { "label": "Min. Lot", "value": "0.01" },
+      { "label": "Execution", "value": "Market" }
+    ]
+  }
+]
