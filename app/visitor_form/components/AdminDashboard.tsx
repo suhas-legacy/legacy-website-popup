@@ -16,7 +16,8 @@ import {
   ChevronDown,
   ChevronUp,
   Inbox,
-  ShieldCheck
+  ShieldCheck,
+  QrCode
 } from "lucide-react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://legacy-backend-151726525663.europe-west1.run.app";
@@ -49,6 +50,160 @@ export function AdminDashboard() {
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [approveDate, setApproveDate] = useState("");
   const [approveTime, setApproveTime] = useState("");
+
+  // QR Scanner Modal State
+  const [showQRScannerModal, setShowQRScannerModal] = useState(false);
+  const [scannerError, setScannerError] = useState("");
+  const [scannerSuccessMsg, setScannerSuccessMsg] = useState("");
+  const [simulatedPassId, setSimulatedPassId] = useState("");
+
+  const handleSimulatedCheckin = () => {
+    if (!simulatedPassId) return;
+    setScannerError("");
+    setScannerSuccessMsg("");
+
+    fetch(`${apiUrl}/api/visitor/checkin-direct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: simulatedPassId })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setScannerSuccessMsg(`Check-In Verified for ${simulatedPassId}!`);
+          logToConsole(`[SCANNER-SIMULATOR] Checked in visitor ${simulatedPassId} directly.`, "success");
+          fetchRequests();
+          setSimulatedPassId("");
+          setTimeout(() => {
+            setShowQRScannerModal(false);
+          }, 1500);
+        } else {
+          setScannerError(data.message || "Invalid Pass ID.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setScannerError("Connection error during manual check-in.");
+      });
+  };
+
+  // Camera Scanning Effect
+  useEffect(() => {
+    let html5QrCode: any = null;
+
+    if (showQRScannerModal) {
+      setScannerError("");
+      setScannerSuccessMsg("");
+
+      const startScanner = () => {
+        // @ts-ignore
+        if (typeof Html5Qrcode === "undefined") {
+          setScannerError("Scanning library loading failed. Please try again.");
+          return;
+        }
+
+        try {
+          // @ts-ignore
+          html5QrCode = new Html5Qrcode("qr-reader-container");
+          
+          const qrCodeSuccessCallback = (decodedText: string) => {
+            logToConsole(`[SCANNER] Decoded QR Text: ${decodedText}`, "info");
+            
+            // Extract id and token query params from URL
+            try {
+              const url = new URL(decodedText);
+              const id = url.searchParams.get("id");
+              const token = url.searchParams.get("token");
+
+              if (id && token) {
+                setScannerSuccessMsg(`Pass detected: ${id}. Submitting check-in...`);
+                // Stop scanner first
+                html5QrCode.stop().then(() => {
+                  // Direct check-in API request
+                  fetch(`${apiUrl}/api/visitor/checkin`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ id, token })
+                  })
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data.success) {
+                        setScannerSuccessMsg(`Check-In Verified for ${id}!`);
+                        logToConsole(`[SCANNER] QR Pass ${id} successfully checked in at branch.`, "success");
+                        fetchRequests();
+                        // Close modal after 1.5 seconds
+                        setTimeout(() => {
+                          setShowQRScannerModal(false);
+                        }, 1500);
+                      } else {
+                        setScannerError(data.message || "Failed to process check-in.");
+                      }
+                    })
+                    .catch(err => {
+                      console.error(err);
+                      setScannerError("Network error occurred during check-in.");
+                    });
+                }).catch((err: any) => {
+                  console.error("Scanner stop error:", err);
+                });
+              } else {
+                setScannerError("Invalid QR Code payload. Make sure it is a valid Visitor Pass.");
+              }
+            } catch (urlErr) {
+              setScannerError("Invalid QR Code content. Make sure it is a valid Visitor Pass QR Code.");
+            }
+          };
+
+          const config = { fps: 10, qrbox: { width: 220, height: 220 } };
+          html5QrCode.start(
+            { facingMode: "environment" },
+            config,
+            qrCodeSuccessCallback
+          ).catch((startErr: any) => {
+            console.error("Scanner start error:", startErr);
+            setScannerError("Camera permission denied or camera not found.");
+          });
+        } catch (initErr: any) {
+          console.error("Scanner init error:", initErr);
+          setScannerError("Failed to initialize camera scanner.");
+        }
+      };
+
+      // Load script if not present
+      if (document.getElementById("html5-qrcode-script")) {
+        // Wait slightly for DOM node to mount
+        setTimeout(startScanner, 200);
+      } else {
+        const script = document.createElement("script");
+        script.id = "html5-qrcode-script";
+        script.src = "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js";
+        script.async = true;
+        script.onload = () => {
+          setTimeout(startScanner, 200);
+        };
+        script.onerror = () => {
+          setScannerError("Failed to load QR scanner library.");
+        };
+        document.body.appendChild(script);
+      }
+    }
+
+    return () => {
+      if (html5QrCode) {
+        try {
+          if (html5QrCode.isScanning) {
+            html5QrCode.stop().catch((e: any) => console.error("Error stopping scanner in cleanup:", e));
+          }
+        } catch (err) {
+          console.error("Cleanup error:", err);
+        }
+      }
+    };
+  }, [showQRScannerModal]);
 
   // Keep the ref in sync with the state on every render
   useEffect(() => {
@@ -382,6 +537,13 @@ export function AdminDashboard() {
           <p>Control bank visitations, manage security JWT credentials, check room conflicts, and verify scheduler logs.</p>
         </div>
         <div className="flex-center gap-4">
+          <button
+            onClick={() => setShowQRScannerModal(true)}
+            className="btn-gold font-mono flex-center gap-2"
+            style={{ padding: "0.5rem 1rem", fontSize: "0.75rem" }}
+          >
+            <QrCode size={14} /> Scan QR Pass
+          </button>
           <a href="/visitor_form" className="btn-outline font-mono" style={{ padding: "0.5rem 1rem", fontSize: "0.75rem" }}>
             Open Booking Form
           </a>
@@ -1069,6 +1231,87 @@ export function AdminDashboard() {
                 Approve & Sync Calendar
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* QR Scanner Modal */}
+      {showQRScannerModal && (
+        <div className="popup-overlay active" style={{ zIndex: 1150 }}>
+          <div className="popup-modal text-center" style={{ maxWidth: "450px" }}>
+            <button 
+              onClick={() => setShowQRScannerModal(false)} 
+              className="popup-close"
+            >
+              <X size={20} />
+            </button>
+            
+            <h3 className="gold-text font-mono" style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
+              Secure QR Code Scanner
+            </h3>
+            <p className="text-xs text-muted mb-4" style={{ color: "var(--text-secondary)", lineHeight: "1.4" }}>
+              Hold the client's visitor pass QR code in front of the camera to verify and check them in automatically.
+            </p>
+
+            {scannerSuccessMsg && (
+              <div className="form-error-banner" style={{ background: "rgba(46, 125, 50, 0.05)", border: "1px solid rgba(46, 125, 50, 0.2)", color: "#2E7D32", marginBottom: "1rem" }}>
+                <span className="icon">✓</span>
+                <p>{scannerSuccessMsg}</p>
+              </div>
+            )}
+
+            {scannerError && (
+              <div className="form-error-banner" style={{ marginBottom: "1rem" }}>
+                <span className="icon">✕</span>
+                <p>{scannerError}</p>
+              </div>
+            )}
+
+            <div 
+              id="qr-reader-container" 
+              style={{ 
+                width: "100%", 
+                minHeight: "250px", 
+                borderRadius: "8px", 
+                overflow: "hidden", 
+                background: "black",
+                border: "2px solid var(--border-silver)",
+                position: "relative"
+              }}
+            >
+              {/* Camera layout will render inside here */}
+            </div>
+
+            {/* Manual Pass ID Fallback for testing / dev without camera */}
+            <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px dashed rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", gap: "0.5rem", alignItems: "stretch" }}>
+              <span className="font-mono text-[10px] text-muted text-left" style={{ color: "var(--gold)" }}>MANUAL TESTING SIMULATOR</span>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <input
+                  type="text"
+                  placeholder="e.g. VIS-1007"
+                  value={simulatedPassId}
+                  onChange={(e) => setSimulatedPassId(e.target.value.toUpperCase().trim())}
+                  className="filter-select"
+                  style={{ flex: 1, height: "36px", fontSize: "0.8rem", padding: "0 0.5rem" }}
+                />
+                <button
+                  onClick={handleSimulatedCheckin}
+                  className="btn-gold font-mono"
+                  style={{ padding: "0 1rem", fontSize: "0.75rem", height: "36px" }}
+                  disabled={!simulatedPassId}
+                >
+                  Check In
+                </button>
+              </div>
+            </div>
+            
+            <button 
+              onClick={() => setShowQRScannerModal(false)}
+              className="btn-outline font-mono w-full" 
+              style={{ padding: "0.8rem", marginTop: "1rem", borderColor: "rgba(255, 255, 255, 0.15)" }}
+            >
+              Cancel Scanning
+            </button>
           </div>
         </div>
       )}
