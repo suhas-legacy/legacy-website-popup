@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
@@ -22,8 +22,6 @@ export function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
 
-  const [introPhase, setIntroPhase] = useState<"enter" | "move" | "done">("enter");
-
   const pathname = usePathname();
 
   const isHomePage = pathname === "/";
@@ -34,23 +32,15 @@ export function Navbar() {
 
 
 
-  const logoRef = useRef<HTMLDivElement | null>(null);
-
-  const [introTransform, setIntroTransform] = useState({ dx: 0, dy: 0, scale: 1 });
-
-
-
   const navClassName = useMemo(() => {
 
     const parts = [];
 
     if (scrolled) parts.push("scrolled");
 
-    if (introPhase !== "done") parts.push("intro-running");
-
     return parts.join(" ");
 
-  }, [introPhase, scrolled]);
+  }, [scrolled]);
 
 
 
@@ -72,177 +62,13 @@ export function Navbar() {
 
 
 
-  useLayoutEffect(() => {
-
-    if (introPhase === "done") return;
-
-
-
-    const compute = () => {
-
-      const el = logoRef.current;
-
-      if (!el) return;
-
-
-
-      const rect = el.getBoundingClientRect();
-
-      const targetX = rect.left + rect.width / 2;
-
-      const targetY = rect.top + rect.height / 2;
-
-
-
-      const centerX = window.innerWidth / 2;
-
-      const centerY = window.innerHeight / 2;
-
-
-
-      const dx = targetX - centerX;
-
-      const dy = targetY - centerY;
-
-
-
-      const introHeight = 240;
-
-      const targetHeight = rect.height || 120;
-
-      const scale = targetHeight / introHeight;
-
-
-
-      setIntroTransform({ dx, dy, scale });
-
-    };
-
-
-
-    compute();
-
-    window.addEventListener("resize", compute);
-
-    return () => window.removeEventListener("resize", compute);
-
-  }, [introPhase]);
-
-
-
-  useEffect(() => {
-
-    // Check if animation has already played
-
-    const hasPlayed = localStorage.getItem("navbarLogoAnimationPlayed");
-
-    
-
-    if (hasPlayed) {
-
-      // Skip animation if already played
-
-      setIntroPhase("done");
-
-      return;
-
-    }
-
-
-
-    if (introPhase !== "enter") return;
-
-
-
-    const t = window.setTimeout(() => {
-
-      setIntroPhase("move");
-
-      // Mark animation as played in localStorage
-
-      localStorage.setItem("navbarLogoAnimationPlayed", "true");
-
-    }, 1500);
-
-    return () => window.clearTimeout(t);
-
-  }, [introPhase]);
-
-
-
   return (
 
     <>
 
-      {introPhase !== "done" && (
-
-        <div className={`intro-overlay${introPhase === "move" ? " is-moving" : ""}`}>
-
-          <div
-
-            className="intro-logo"
-
-            style={
-
-              introPhase === "move"
-
-                ? {
-
-                    transform: `translate(calc(-50% + ${introTransform.dx}px), calc(-50% + ${introTransform.dy}px)) scale(${introTransform.scale})`,
-
-                  }
-
-                : undefined
-
-            }
-
-            onTransitionEnd={(e) => {
-
-              if (e.propertyName !== "transform") return;
-
-              setIntroPhase("done");
-
-            }}
-
-          >
-
-            <Image
-
-              src={logo}
-
-              alt="Legacy Global Bank"
-
-              width={800}
-
-              height={800}
-
-              priority
-
-              unoptimized
-
-              style={{
-
-                height: 240,
-
-                width: "auto",
-
-                filter: "drop-shadow(0 0 18px rgba(255,215,0,0.55))",
-
-              }}
-
-            />
-
-          </div>
-
-        </div>
-
-      )}
-
-
-
       <nav id="navbar" className={navClassName}>
 
-        <div className="nav-logo" ref={logoRef}>
+        <div className="nav-logo">
 
         <Image
 
@@ -365,6 +191,16 @@ export function Navbar() {
           <Link href="/calculators" onClick={closeMenu}>
 
             Calculators
+
+          </Link>
+
+        </li>
+
+        <li>
+
+          <Link href="/partnership" onClick={closeMenu} className={isActiveLink("/partnership") ? "active" : ""}>
+
+            Partnership
 
           </Link>
 

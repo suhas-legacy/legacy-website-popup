@@ -80,6 +80,9 @@ export function Footer() {
               <Link href="/career">Careers</Link>
             </li>
             <li>
+              <Link href="/partnership">Partnership</Link>
+            </li>
+            <li>
               <Link href="/privacy-policy">Privacy Policy</Link>
             </li>
             <li>
