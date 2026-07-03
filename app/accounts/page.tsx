@@ -4,6 +4,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 import { PANEL_URL_REGISTER } from "@/lib/constants";
+import accountTypesData from "@/lib/data/account-types.json";
+import { AccountTypeData } from "@/lib/accountTypes";
+
+const accountTypes = accountTypesData as AccountTypeData[];
 
 export const metadata: Metadata = {
   title: "Trading Account Types | Standard, Pro & VIP | Legacy Global Bank",
@@ -30,36 +34,13 @@ const productSchema = {
     "@type": "Brand",
     name: "Legacy Global Bank",
   },
-  offers: [
-    {
-      "@type": "Offer",
-      name: "Standard Account",
-      price: "0",
-      priceCurrency: "USD",
-      description: "Flexible minimum deposit, 1.8 pip spread, no commission",
-    },
-    {
-      "@type": "Offer",
-      name: "Classic Account",
-      price: "0",
-      priceCurrency: "USD",
-      description: "Flexible minimum deposit, 1.5 pip spread, no commission",
-    },
-    {
-      "@type": "Offer",
-      name: "Pro Account",
-      price: "500",
-      priceCurrency: "USD",
-      description: "$500 minimum deposit, 0 pip spread, $2 commission per lot",
-    },
-    {
-      "@type": "Offer",
-      name: "VIP Account",
-      price: "1000",
-      priceCurrency: "USD",
-      description: "$1,000 minimum deposit, 0 pip spread, $1 commission per lot",
-    },
-  ],
+  offers: accountTypes.map((account) => ({
+    "@type": "Offer",
+    name: `${account.name} Account`,
+    price: account.price,
+    priceCurrency: "USD",
+    description: account.schemaDescription,
+  })),
 };
 
 export default function AccountsPage() {
@@ -79,126 +60,29 @@ export default function AccountsPage() {
           </p>
 
           <div className="accounts-grid">
-            <div className="acc-card">
-              <div className="acc-type">Standard</div>
-              <div className="acc-deposit">Min. Deposit: Flexible</div>
-              <ul className="acc-rows">
-                <li>
-                  <span>Spread From</span>
-                  <span>1.8 pip</span>
-                </li>
-                <li>
-                  <span>Commission</span>
-                  <span>$0</span>
-                </li>
-                <li>
-                  <span>Max Leverage</span>
-                  <span>1:500</span>
-                </li>
-                <li>
-                  <span>Min. Lot</span>
-                  <span>0.01</span>
-                </li>
-                <li>
-                  <span>Execution</span>
-                  <span>Market</span>
-                </li>
-              </ul>
-              <a href={PANEL_URL_REGISTER} className="acc-cta">
-                Open Account
-              </a>
-            </div>
-
-            <div className="acc-card">
-              <div className="acc-type">Classic</div>
-              <div className="acc-deposit">Min. Deposit: Flexible</div>
-              <ul className="acc-rows">
-                <li>
-                  <span>Spread From</span>
-                  <span>1.5 pip</span>
-                </li>
-                <li>
-                  <span>Commission</span>
-                  <span>$0</span>
-                </li>
-                <li>
-                  <span>Max Leverage</span>
-                  <span>1:500</span>
-                </li>
-                <li>
-                  <span>Min. Lot</span>
-                  <span>0.01</span>
-                </li>
-                <li>
-                  <span>Execution</span>
-                  <span>Market</span>
-                </li>
-              </ul>
-              <a href={PANEL_URL_REGISTER} className="acc-cta">
-                Open Account
-              </a>
-            </div>
-
-            <div className="acc-card featured">
-              <div className="acc-badge">Popular</div>
-              <div className="acc-type gold-text">Pro</div>
-              <div className="acc-deposit">Min. Deposit: $500</div>
-              <ul className="acc-rows">
-                <li>
-                  <span>Spread From</span>
-                  <span>0 pip</span>
-                </li>
-                <li>
-                  <span>Commission</span>
-                  <span>2-Side / Lot</span>
-                </li>
-                <li>
-                  <span>Max Leverage</span>
-                  <span>1:500</span>
-                </li>
-                <li>
-                  <span>Min. Lot</span>
-                  <span>0.01</span>
-                </li>
-                <li>
-                  <span>Execution</span>
-                  <span>Market</span>
-                </li>
-              </ul>
-              <a href={PANEL_URL_REGISTER} className="acc-cta">
-                Open Account
-              </a>
-            </div>
-
-            <div className="acc-card">
-              <div className="acc-type">VIP</div>
-              <div className="acc-deposit">Min. Deposit: $1,000</div>
-              <ul className="acc-rows">
-                <li>
-                  <span>Spread From</span>
-                  <span>0 pip</span>
-                </li>
-                <li>
-                  <span>Commission</span>
-                  <span>1-Side / Lot</span>
-                </li>
-                <li>
-                  <span>Max Leverage</span>
-                  <span>1:500</span>
-                </li>
-                <li>
-                  <span>Min. Lot</span>
-                  <span>0.01</span>
-                </li>
-                <li>
-                  <span>Execution</span>
-                  <span>Market</span>
-                </li>
-              </ul>
-              <a href={PANEL_URL_REGISTER} className="acc-cta">
-                Open Account
-              </a>
-            </div>
+            {accountTypes.map((account) => (
+              <div
+                key={account.id}
+                className={`acc-card ${account.isFeatured ? "featured" : ""}`}
+              >
+                {account.badge && <div className="acc-badge">{account.badge}</div>}
+                <div className={`acc-type ${account.isGoldText ? "gold-text" : ""}`}>
+                  {account.name}
+                </div>
+                <div className="acc-deposit">{account.deposit}</div>
+                <ul className="acc-rows">
+                  {account.features.map((feature, fIndex) => (
+                    <li key={fIndex}>
+                      <span>{feature.label}</span>
+                      <span>{feature.value}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a href={PANEL_URL_REGISTER} className="acc-cta">
+                  Open Account
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </main>
@@ -206,3 +90,4 @@ export default function AccountsPage() {
     </>
   );
 }
+

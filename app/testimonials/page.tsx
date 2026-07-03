@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
+import { TrustpilotWidget } from "@/components/TrustpilotWidget";
 
 const items = [
   {
@@ -102,20 +103,32 @@ export default function TestimonialsPage() {
           <h1 className="page-title">
             What our <span className="gold-text">traders say</span>
           </h1>
-          <div className="testi-grid">
-            {items.map((t) => (
-              <div key={t.name} className="testi-card">
-                <div className="testi-quote">&quot;</div>
-                <p className="testi-text">{t.text}</p>
-                <div className="testi-author">
-                  <div className="testi-avatar">{t.initials}</div>
-                  <div>
-                    <div className="testi-name">{t.name}</div>
-                    <div className="testi-loc">{t.loc}</div>
+          <div className="testimonials-page-layout">
+            <div className="testi-grid" style={{ marginTop: 0 }}>
+              {items.map((t) => (
+                <div key={t.name} className="testi-card">
+                  <div className="testi-quote">&quot;</div>
+                  <p className="testi-text">{t.text}</p>
+                  <div className="testi-author">
+                    <div className="testi-avatar">{t.initials}</div>
+                    <div>
+                      <div className="testi-name">{t.name}</div>
+                      <div className="testi-loc">{t.loc}</div>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+            
+            <div className="testi-sidebar-container">
+              <div className="testi-sidebar-card">
+                <h3>Rate Us On Trustpilot</h3>
+                <p>
+                  Legacy Global Bank is highly trusted by traders globally. Check out our reviews and share your trading experience with us!
+                </p>
+                <TrustpilotWidget />
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </main>
