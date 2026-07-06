@@ -672,7 +672,7 @@ export function AdminDashboard() {
       {/* Pagination helpers - removed (server-driven) */}
 
       {/* Data Table */}
-      <div className="table-container">
+      <div className="table-container desktop-only-table">
         <table className="requests-table">
           <thead>
             <tr>
@@ -773,6 +773,105 @@ export function AdminDashboard() {
         </table>
       </div>
 
+      {/* Mobile view cards */}
+      <div className="mobile-only-cards">
+        {requests.length === 0 ? (
+          <div className="text-center py-8 text-muted font-mono" style={{ fontSize: "0.85rem", background: "var(--bg-card)", border: "1px solid var(--border-silver)", borderRadius: "8px", padding: "2rem" }}>
+            No requests found matching current criteria.
+          </div>
+        ) : (
+          <div className="mobile-cards-grid">
+            {requests.map((req: any) => (
+              <div key={req.id} className="mobile-request-card">
+                <div className="card-header">
+                  <button
+                    onClick={() => setSelectedRequest(req)}
+                    className="req-id-link font-mono"
+                    style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                  >
+                    {req.id}
+                  </button>
+                  <span className={`status-badge ${req.status.toLowerCase()}`}>
+                    {req.status.replace("_", " ")}
+                  </span>
+                </div>
+
+                <div className="card-body">
+                  <div className="visitor-info">
+                    <span className="visitor-name">{req.name}</span>
+                    <span className="visitor-contact font-mono">{req.email}</span>
+                    <span className="visitor-contact font-mono">{req.phone}</span>
+                  </div>
+
+                  <div className="meeting-info font-mono">
+                    <div className="info-row">
+                      <span className="info-label">Type</span>
+                      <span className="info-value">
+                        <span className="req-type-badge" style={{ textTransform: "none" }}>
+                          {req.meetingType === "online" ? (
+                            <>
+                              <Video size={12} className="text-blue-500" /> Online
+                            </>
+                          ) : (
+                            <>
+                              <MapPin size={12} className="text-amber-600" /> Offline
+                            </>
+                          )}
+                        </span>
+                      </span>
+                    </div>
+                    <div className="info-row">
+                      <span className="info-label">Schedule</span>
+                      <span className="info-value font-semibold">
+                        {req.formattedDate}
+                      </span>
+                    </div>
+                    <div className="info-row">
+                      <span className="info-label">Time Slot</span>
+                      <span className="info-value flex-center gap-1">
+                        <Clock size={10} /> {req.time}
+                      </span>
+                    </div>
+                    <div className="info-row">
+                      <span className="info-label">Created At</span>
+                      <span className="info-value text-muted" style={{ fontSize: "0.7rem" }}>
+                        {new Date(req.createdAt).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card-actions">
+                  <button
+                    onClick={() => setSelectedRequest(req)}
+                    className="btn-card-action view"
+                  >
+                    <Eye size={14} /> View Details
+                  </button>
+
+                  {req.status === "PENDING_APPROVAL" && (
+                    <div className="pending-actions">
+                      <button
+                        onClick={() => handleApprove(req)}
+                        className="btn-card-action approve"
+                      >
+                        <Check size={14} /> Approve
+                      </button>
+                      <button
+                        onClick={() => handleReject(req)}
+                        className="btn-card-action reject"
+                      >
+                        <X size={14} /> Reject
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Pagination Bar — driven by server response metadata */}
       {(() => {
         const safePage = Math.min(currentPage, totalPages);
@@ -791,16 +890,7 @@ export function AdminDashboard() {
         };
 
         return (
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0.85rem 1rem",
-            borderTop: "1px solid var(--border)",
-            background: "var(--bg-card)",
-            borderRadius: "0 0 10px 10px",
-            marginTop: "-1px",
-          }}>
+          <div className="pagination-bar">
             {/* Results summary */}
             <span className="font-mono" style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>
               {totalRecords === 0
