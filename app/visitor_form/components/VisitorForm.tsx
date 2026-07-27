@@ -54,7 +54,6 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
   // New visitor questions states
   const [purposeOfVisit, setPurposeOfVisit] = useState("");
   const [referenceEmployee, setReferenceEmployee] = useState("");
-  const [preferredBranch, setPreferredBranch] = useState("Bengaluru");
   const [personToMeet, setPersonToMeet] = useState("");
   const [existingClient, setExistingClient] = useState("");
   const [tradingAccountId, setTradingAccountId] = useState("");
@@ -175,7 +174,6 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
     if (!emailRegex.test(email)) return "Please enter a valid email address.";
 
     if (!purposeOfVisit) return "Purpose of visit is required.";
-    if (!preferredBranch) return "Preferred branch is required.";
     if (!existingClient) return "Please select if you are an existing client.";
     if (existingClient === "Yes" && !tradingAccountId.trim()) return "Trading Account ID is required.";
 
@@ -222,7 +220,6 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
         time: meetingType === "online" ? selectedTime : "N/A",
         purposeOfVisit,
         referenceEmployee,
-        preferredBranch,
         personToMeet,
         existingClient,
         tradingAccountId: existingClient === "Yes" ? tradingAccountId : "",
@@ -427,38 +424,18 @@ export function VisitorForm({ onSuccessSubmit }: VisitorFormProps) {
           </div>
         </div>
 
-        {/* Preferred Branch & Person to Meet Row */}
-        <div className="form-row">
-          <div className="form-field">
-            <label htmlFor="vis-branch">Preferred Branch *</label>
-            <div className="input-icon-wrapper">
-              <MapPin size={16} className="input-icon" />
-              <select
-                id="vis-branch"
-                value={preferredBranch}
-                onChange={(e) => {
-                  setPreferredBranch(e.target.value);
-                  setError("");
-                }}
-                required
-                style={{ width: "100%" }}
-              >
-                <option value="Bengaluru">Bengaluru</option>
-              </select>
-            </div>
-          </div>
-          <div className="form-field">
-            <label htmlFor="vis-meet-person">Person You Wish to Meet (Optional)</label>
-            <div className="input-icon-wrapper">
-              <UserCheck size={16} className="input-icon" />
-              <input
-                id="vis-meet-person"
-                type="text"
-                placeholder="e.g. Yogesh A"
-                value={personToMeet}
-                onChange={(e) => setPersonToMeet(e.target.value)}
-              />
-            </div>
+        {/* Person to Meet Row */}
+        <div className="form-field">
+          <label htmlFor="vis-meet-person">Person You Wish to Meet (Optional)</label>
+          <div className="input-icon-wrapper">
+            <UserCheck size={16} className="input-icon" />
+            <input
+              id="vis-meet-person"
+              type="text"
+              placeholder="e.g. Yogesh A"
+              value={personToMeet}
+              onChange={(e) => setPersonToMeet(e.target.value)}
+            />
           </div>
         </div>
 
@@ -740,10 +717,6 @@ export function VisitorSuccess({ requestId, onGoBack }: VisitorSuccessProps) {
             <span>Purpose of Visit</span>
             <span>{req.purposeOfVisit}</span>
           </div>
-          <div className="detail-item">
-            <span>Preferred Branch</span>
-            <span>{req.preferredBranch}</span>
-          </div>
           {req.referenceEmployee && (
             <div className="detail-item">
               <span>Reference Employee</span>
@@ -801,7 +774,7 @@ export function VisitorSuccess({ requestId, onGoBack }: VisitorSuccessProps) {
             style={{ width: "180px", height: "180px", borderRadius: "8px", border: "4px solid white" }}
           />
           <p className="text-xs text-muted" style={{ maxWidth: "420px", margin: "0 auto", lineHeight: "1.5", color: "var(--text-secondary)" }}>
-            Please present this QR code to the bank security or receptionist at the <strong>{req.preferredBranch || 'Bengaluru'}</strong> branch upon arrival.
+            Please present this QR code to the bank security or receptionist upon arrival.
           </p>
         </div>
       )}

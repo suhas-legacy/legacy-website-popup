@@ -209,10 +209,6 @@ function CheckinComponent() {
             <span>{req.phone}</span>
           </div>
           <div className="detail-item">
-            <span className="flex-center" style={{ justifyContent: "flex-start", gap: "0.4rem" }}><MapPin size={12} /> Preferred Branch</span>
-            <span style={{ color: "var(--text-primary)" }}>{req.preferredBranch}</span>
-          </div>
-          <div className="detail-item">
             <span className="flex-center" style={{ justifyContent: "flex-start", gap: "0.4rem" }}><Briefcase size={12} /> Purpose of Visit</span>
             <span style={{ color: "var(--text-primary)" }}>{req.purposeOfVisit}</span>
           </div>
