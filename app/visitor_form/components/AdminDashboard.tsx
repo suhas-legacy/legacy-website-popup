@@ -313,7 +313,7 @@ export function AdminDashboard() {
             sender: "System Notification",
             time: req.createdAt,
             subject: `New Visitor Meeting Request [${req.id}]`,
-            body: `Name:\n${req.name}\n\nPhone:\n${req.phone}\n\nEmail:\n${req.email}\n\nMeeting Type:\n${req.meetingType === 'online' ? 'Online' : 'Offline'}\n\nRequested Date:\n${req.formattedDate}\n\nRequested Time:\n${req.time}\n\nRequest ID:\n${req.id}\n\nPurpose of Visit:\n${req.purposeOfVisit}\n\nReference Employee:\n${req.referenceEmployee || 'N/A'}\n\nPreferred Branch:\n${req.preferredBranch}\n\nPerson to Meet:\n${req.personToMeet || 'N/A'}\n\nExisting Client:\n${req.existingClient}\n\nTrading Account ID:\n${req.tradingAccountId || 'N/A'}\n\nAdditional Notes:\n${req.additionalNotes || 'N/A'}`,
+            body: `Name:\n${req.name}\n\nPhone:\n${req.phone}\n\nEmail:\n${req.email}\n\nMeeting Type:\n${req.meetingType === 'online' ? 'Online' : 'Offline'}\n\nRequested Date:\n${req.formattedDate}\n\nRequested Time:\n${req.time}\n\nRequest ID:\n${req.id}\n\nPurpose of Visit:\n${req.purposeOfVisit}\n\nReference Employee:\n${req.referenceEmployee || 'N/A'}\n\nPerson to Meet:\n${req.personToMeet || 'N/A'}\n\nExisting Client:\n${req.existingClient}\n\nTrading Account ID:\n${req.tradingAccountId || 'N/A'}\n\nAdditional Notes:\n${req.additionalNotes || 'N/A'}`,
             approveUrl: `${apiUrl}/api/visitor/approve?id=${req.id}&token=${approveToken}`,
             rejectUrl: `${apiUrl}/api/visitor/reject?id=${req.id}&token=${rejectToken}`,
             unread: true
@@ -1025,10 +1025,6 @@ export function AdminDashboard() {
                   <div className="detail-item">
                     <span>Purpose of Visit</span>
                     <span>{selectedRequest.purposeOfVisit || "N/A"}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span>Preferred Branch</span>
-                    <span>{selectedRequest.preferredBranch || "N/A"}</span>
                   </div>
                   {selectedRequest.referenceEmployee && (
                     <div className="detail-item">
